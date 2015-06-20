@@ -33,8 +33,8 @@ $+(Q,1,Q'):$
 
 $-(Q,1,Q_1,Q_2):$
 \begin{itemize}
-\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to P_1(\alpha,\gamma)\to E(\gamma) Q_2(\beta))$, jump on zero
-\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to P_1(\alpha,\gamma)\to E(\gamma) P_1(\beta,\gamma)$, register 1 stays zero
+\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to P_1(\alpha,\gamma)\to E(\gamma)\to Q_2(\beta))$, jump on zero
+\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to P_1(\alpha,\gamma)\to E(\gamma)\to P_1(\beta,\gamma)$, register 1 stays zero
 \item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to P_1(\alpha,\gamma)\to D(\gamma)\to Q_1(\beta))$, change state if register 1 is greater zero
 \item $\forall\alpha\beta\gamma\delta(Q(\alpha)\to S(\alpha,\beta)\to P_1(\alpha,\gamma)\to D(\gamma) \to P(\gamma,\delta)\to P_1(\beta,\delta))$, decrement register 1
 \item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to P_2(\alpha,\gamma)\to P_2(\beta,\gamma))$, do not change register 2
