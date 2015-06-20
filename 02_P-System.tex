@@ -1,4 +1,5 @@
-\section{P-System}
+\section{System P}
+\subsection{Definitions}
 $\emph{FV}(\Gamma)=\bigcup\{\emph{FV}(A)\mid A\in \Gamma\}$\\
 Deduction Rules
 \begin{mdframed}
@@ -13,3 +14,29 @@ Deduction Rules
 \end{align*}
 \endgroup
 \end{mdframed}
+\subsection{Provability in System P is undecidable}
+$\Gamma_C:$
+\begin{itemize}
+\item $Q(\alpha)$
+\item $P_1(\alpha,\alpha_0),P(\alpha_{i-1},\alpha_i)~\text{for}~i\in\{1,\dots,m\}$
+\item $P_2(\alpha,\beta_0),P(\beta_{i-1},\beta_i)~\text{for}~i\in\{1,\dots,n\}$
+\item $D(\alpha)$\dots
+\end{itemize}
+
+$+(Q,1,Q'):$
+\begin{itemize}
+\item $\forall\alpha\beta(Q(\alpha)\to S(\alpha,\beta)\to Q'(\beta))$, change of state
+\item $\forall\alpha\beta\gamma\delta(Q(\alpha)\to S(\alpha,\beta)\to P_1(\alpha,\gamma)\to P_1(\beta,\delta)\to P(\delta\gamma))$, increment register 1
+\item $\forall\alpha\beta\gamma\delta(Q(\alpha)\to S(\alpha,\beta)\to P_1(\alpha,\gamma)\to D(\gamma)$, prevent zero %TODO necessary?
+\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to P_2(\alpha,\gamma)\to P_2(\beta,\gamma))$, do not change register 2
+\end{itemize}
+
+$-(Q,1,Q_1,Q_2):$
+\begin{itemize}
+\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to P_1(\alpha,\gamma)\to E(\gamma) Q_2(\beta))$, jump on zero
+\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to P_1(\alpha,\gamma)\to E(\gamma) P_1(\beta,\gamma)$, register 1 stays zero
+\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to P_1(\alpha,\gamma)\to D(\gamma)\to Q_1(\beta))$, change state if register 1 is greater zero
+\item $\forall\alpha\beta\gamma\delta(Q(\alpha)\to S(\alpha,\beta)\to P_1(\alpha,\gamma)\to D(\gamma) \to P(\gamma,\delta)\to P_1(\beta,\delta))$, decrement register 1
+\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to P_2(\alpha,\gamma)\to P_2(\beta,\gamma))$, do not change register 2
+\end{itemize}
+
