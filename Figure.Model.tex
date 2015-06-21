@@ -1,0 +1,27 @@
+\begin{tikzpicture}[execute at begin node=$, execute at end node=$,
+label/.style={scale=0.8},
+every path/.style={->,>=latex'},node distance = 1.4cm]
+\node (0) {0};
+\node[right of=0] (1) {1};
+\node[right of=1] (2) {\dots};
+\node[right of=2] (3) {m};
+\node[right of=3] (4) {\dots};
+\node[right of=4] (5) {n};
+\node[right of=5] (6) {\dots};
+\node[right of=6] (7) {q};
+\node[right of=7] (8) {\dots};
+
+\foreach \x in {0,...,7}{
+\pgfmathtruncatemacro{\xn}{\x+1}
+\path (\xn) edge[bend left=10] node[below,label] {P} (\x);
+\path (\x) edge[bend left=10] node[above,label] {S} (\xn);
+}
+
+\path (1) edge[bend right=60] node[above,label] {P_1} (0);
+\path (1) edge[bend left=60] node[below,label] {P_2} (0);
+
+\path (7) edge[bend right=50] node[above,label] {P_1} (3);
+\path (7) edge[bend left=60] node[below,label] {P_2} (5);
+
+
+\end{tikzpicture}

@@ -16,27 +16,6 @@ Deduction Rules
 \end{mdframed}
 An Interpretation $I$ of a P formula is a tuple $I=(\Delta,\cdot^I)$ where $\Delta$ is a set (called domain), $P^I\subseteq\Delta^k$ and $\alpha^I\in\Delta$.\dots\\
 If we interpret \false{} with the logical constant false ($\bot$) (denoted by $\vdash_f$) we can add a new deduction rule.
-%--------------------------------------------------------------------------------
-\begin{mdframed}
-\begin{align*}
-&(\exists\text{-Elimination}) &&\frac{\Gamma\vdashf \forall\alpha(A\to\false)\to\false}{\Gamma\vdashf A\left[ \alpha:=a\right]} &&a\notin\emph{FV}(\Gamma)
-\end{align*}
-\end{mdframed}
-\begin{proof}
-Let $I=(\Delta,\cdot^I)$ be a model of $\Gamma$ with $\false^I=\bot$.
-\begin{align*}
-I\models\Gamma&\Rightarrow I\models\forall\alpha(A\to\false)\to\false\\
-&\Rightarrow (\forall\alpha(A\to\false))^I\to\false^I\\
-&\Rightarrow (\forall\alpha(A\to\false))^I\to\bot\\
-&\Rightarrow \neg(\forall\alpha(A\to\false))^I\\
-&\Rightarrow \neg(\forall a\in\Delta:(A\to\false)^{I\left[\alpha:=a\right]})\\
-&\Rightarrow \exists a\in\Delta:\neg(A^{I\left[\alpha:=a\right]}\to\false^{I\left[\alpha:=a\right]})\\
-&\Rightarrow \exists a\in\Delta:\neg(A^{I\left[\alpha:=a\right]}\to\bot)\\
-&\Rightarrow \exists a\in\Delta:\neg(\neg A^{I\left[\alpha:=a\right]})\\
-&\Rightarrow \exists a\in\Delta:A^{I\left[\alpha:=a\right]}\\
-\end{align*}
-\end{proof}
-%--------------------------------------------------------------------------------
 \begin{mdframed}
 \begin{align*}
 &(\exists\text{-Elimination}) &&\frac
@@ -86,7 +65,7 @@ $-(Q,1,Q_1,Q_2):$
 \end{itemize}
 \begin{lemma}
 \begin{align*}
-&\text{$M$ terminates on input $(0,0)$}&& \text{iff} &\text{$\Gamma_M\vdash\false$ hold in system P.}
+&\text{$M$ terminates on input $(0,0)$}&& \text{iff} &\text{$\Gamma_M\vdash\false$ holds in system P.}
 \end{align*}
 \end{lemma}
 \begin{claim}
@@ -136,6 +115,21 @@ $$\cfrac{\cfrac{Q'(b)\vdash\falses}
       {\vdash Q'(b)}}
 {\vdashf \falses}$$
 \end{proof}
-
-
-
+\begin{claim}
+\begin{align*}
+&\text{$\Gamma_M\vdash\false$ holds in system P} && \implies &\text{$M$ terminates on input $(0,0)$}
+\end{align*}
+\end{claim}
+\begin{proof}
+Assume $M$ does not terminate then there is an infinite chain $C_0\Rightarrow_M C_1\Rightarrow_M C_3\Rightarrow_M\dots$. ($C_i=\langle Q_i,m_i,n_i\rangle$) Now we construct a model of $\Gamma_M$ which interprets \false{} with $\bot$ this contradicts $\Gamma_M\vdash\false$.
+The idea looks like this:\\
+\begin{figure}[H]
+\input{Figure.Model}
+\end{figure}
+Formal definition:\\
+$I=(\mathbb{N},\cdot^I)$
+\begin{align*}
+& P^I=\{(i+1,i)\mid i\in\mathbb{N}\} && P_1^I=\{(i,m_i)\mid i\in\mathbb{N}\} && P_2^I=\{(i,n_i)\mid i\in\mathbb{N}\}\\
+& Q_j^I=\{i\mid Q_j=Q_i, i\in\mathbb{N}\} && D^I=\mathbb{N}\setminus\{0\} && E^I=\{0\}\\
+\end{align*}
+\end{proof}
