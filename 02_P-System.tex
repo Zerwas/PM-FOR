@@ -10,33 +10,132 @@ Deduction Rules
 &(\rightarrow\text{-Introduction}) &&\frac{\Gamma,A\vdash B}{\Gamma\vdash A\to B}\\
 &(\rightarrow\text{-Elimination}) &&\frac{\Gamma\vdash A\to B \hspace{0.4cm}\Gamma\vdash A}{\Gamma\vdash B}\\
 &(\forall\text{-Introduction}) &&\frac{\Gamma\vdash B}{\Gamma\vdash \forall\alpha B} &&\alpha\notin\emph{FV}(\Gamma) \\
-&(\forall\text{-Elimination}) &&\frac{\Gamma\vdash \forall\alpha B }{\Gamma\vdash B\left[ \alpha:=\beta\right] } %TODO dot after \alpha?
+&(\forall\text{-Elimination}) &&\frac{\Gamma\vdash \forall\alpha B }{\Gamma\vdash B\left[ \alpha:=b\right] } %TODO dot after \alpha?
 \end{align*}
 \endgroup
 \end{mdframed}
+An Interpretation $I$ of a P formula is a tuple $I=(\Delta,\cdot^I)$ where $\Delta$ is a set (called domain), $P^I\subseteq\Delta^k$ and $\alpha^I\in\Delta$.\dots\\
+If we interpret \false{} with the logical constant false ($\bot$) (denoted by $\vdash_f$) we can add a new deduction rule.
+%--------------------------------------------------------------------------------
+\begin{mdframed}
+\begin{align*}
+&(\exists\text{-Elimination}) &&\frac{\Gamma\vdashf \forall\alpha(A\to\false)\to\false}{\Gamma\vdashf A\left[ \alpha:=a\right]} &&a\notin\emph{FV}(\Gamma)
+\end{align*}
+\end{mdframed}
+\begin{proof}
+Let $I=(\Delta,\cdot^I)$ be a model of $\Gamma$ with $\false^I=\bot$.
+\begin{align*}
+I\models\Gamma&\Rightarrow I\models\forall\alpha(A\to\false)\to\false\\
+&\Rightarrow (\forall\alpha(A\to\false))^I\to\false^I\\
+&\Rightarrow (\forall\alpha(A\to\false))^I\to\bot\\
+&\Rightarrow \neg(\forall\alpha(A\to\false))^I\\
+&\Rightarrow \neg(\forall a\in\Delta:(A\to\false)^{I\left[\alpha:=a\right]})\\
+&\Rightarrow \exists a\in\Delta:\neg(A^{I\left[\alpha:=a\right]}\to\false^{I\left[\alpha:=a\right]})\\
+&\Rightarrow \exists a\in\Delta:\neg(A^{I\left[\alpha:=a\right]}\to\bot)\\
+&\Rightarrow \exists a\in\Delta:\neg(\neg A^{I\left[\alpha:=a\right]})\\
+&\Rightarrow \exists a\in\Delta:A^{I\left[\alpha:=a\right]}\\
+\end{align*}
+\end{proof}
+%--------------------------------------------------------------------------------
+\begin{mdframed}
+\begin{align*}
+&(\exists\text{-Elimination}) &&\frac
+{\Gamma,A\left[\alpha:=a\right]\vdashf B}
+{\Gamma,\forall\alpha(A\to\false)\to\false\vdashf B} && a\notin\emph{FV}(\Gamma,A,B)
+\end{align*}
+\end{mdframed}
+\begin{proof}
+Let $I=(\Delta,\cdot^I)$ be a model of $\Gamma,\forall\alpha(A\to\false)\to\false$ with $\false^I=\bot$.
+\begin{align*}
+I\models\Gamma,\forall\alpha(A\to\false)\to\false&\Rightarrow I\models\forall\alpha(A\to\false)\to\false\\
+&\Rightarrow (\forall\alpha(A\to\false))^I\to\false^I\\
+&\Rightarrow (\forall\alpha(A\to\false))^I\to\bot\\
+&\Rightarrow \neg(\forall\alpha(A\to\false))^I\\
+&\Rightarrow \neg(\forall a\in\Delta:(A\to\false)^{I\left[\alpha\mapsto d\right]})\\
+&\Rightarrow \exists d\in\Delta:\neg(A^{I\left[\alpha\mapsto d\right]}\to\false^{I\left[\alpha\mapsto d\right]})\\
+&\Rightarrow \exists d\in\Delta:\neg(A^{I\left[\alpha\mapsto d\right]}\to\bot)\\
+&\Rightarrow \exists d\in\Delta:\neg(\neg A^{I\left[\alpha\mapsto d\right]})\\
+&\Rightarrow \exists d\in\Delta:A^{I\left[\alpha\mapsto d\right]}\\
+\end{align*}
+Together with $a\notin\emph{FV}(\Gamma,A)$, it follows that $I\left[a\mapsto d\right]$ is a model of $\Gamma,A\left[\alpha:=a\right]$. Which implies $I\left[a\mapsto d\right]\models B$.	Since $a$ is not free in $B$ we conclude that $I$ is also a model of $B$.
+\end{proof}
 \subsection{Provability in System P is undecidable}
 $\Gamma_C:$
 \begin{itemize}
-\item $Q(\alpha)$
-\item $P_1(\alpha,\alpha_0),P(\alpha_{i-1},\alpha_i)~\text{for}~i\in\{1,\dots,m\}$
-\item $P_2(\alpha,\beta_0),P(\beta_{i-1},\beta_i)~\text{for}~i\in\{1,\dots,n\}$
-\item $D(\alpha)$\dots
+\item $Q(a)$
+\item $P_1(a,a_0),P(a_{i-1},a_i)~\text{for}~i\in\{1,\dots,m\}$
+\item $P_2(a,b_0),P(b_{i-1},b_i)~\text{for}~i\in\{1,\dots,n\}$
+\item $D(a)$\dots
 \end{itemize}
 
 $+(Q,1,Q'):$
 \begin{itemize}
-\item $\forall\alpha\beta(Q(\alpha)\to S(\alpha,\beta)\to Q'(\beta))$, change of state
-\item $\forall\alpha\beta\gamma\delta(Q(\alpha)\to S(\alpha,\beta)\to P_1(\alpha,\gamma)\to P_1(\beta,\delta)\to P(\delta\gamma))$, increment register 1
-\item $\forall\alpha\beta\gamma\delta(Q(\alpha)\to S(\alpha,\beta)\to P_1(\alpha,\gamma)\to D(\gamma)$, prevent zero %TODO necessary?
-\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to P_2(\alpha,\gamma)\to P_2(\beta,\gamma))$, do not change register 2
+\item $\forall\alpha\beta(Q(\alpha)\to S(\alpha,\beta)\to Q'(\beta))$ \\change of state
+\item $\forall\alpha\beta\gamma\delta(Q(\alpha)\to S(\alpha,\beta)\to P_1(\alpha,\gamma)\to P_1(\beta,\delta)\to P(\delta,\gamma))$\\increment register 1
+\item $\forall\alpha\beta\gamma\delta(Q(\alpha)\to S(\alpha,\beta)\to P_1(\alpha,\gamma)\to D(\gamma)$ \\prevent zero %TODO necessary?
+\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to P_2(\alpha,\gamma)\to P_2(\beta,\gamma))$ \\do not change register 2
 \end{itemize}
 
 $-(Q,1,Q_1,Q_2):$
 \begin{itemize}
-\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to P_1(\alpha,\gamma)\to E(\gamma)\to Q_2(\beta))$, jump on zero
-\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to P_1(\alpha,\gamma)\to E(\gamma)\to P_1(\beta,\gamma)$, register 1 stays zero
-\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to P_1(\alpha,\gamma)\to D(\gamma)\to Q_1(\beta))$, change state if register 1 is greater zero
-\item $\forall\alpha\beta\gamma\delta(Q(\alpha)\to S(\alpha,\beta)\to P_1(\alpha,\gamma)\to D(\gamma) \to P(\gamma,\delta)\to P_1(\beta,\delta))$, decrement register 1
-\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to P_2(\alpha,\gamma)\to P_2(\beta,\gamma))$, do not change register 2
+\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to P_1(\alpha,\gamma)\to E(\gamma)\to Q_2(\beta))$\\jump on zero
+\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to P_1(\alpha,\gamma)\to E(\gamma)\to P_1(\beta,\gamma)$\\register 1 stays zero
+\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to P_1(\alpha,\gamma)\to D(\gamma)\to Q_1(\beta))$\\change state if register 1 is greater zero
+\item $\forall\alpha\beta\gamma\delta(Q(\alpha)\to S(\alpha,\beta)\to P_1(\alpha,\gamma)\to D(\gamma) \to P(\gamma,\delta)\to P_1(\beta,\delta))$\\decrement register 1
+\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to P_2(\alpha,\gamma)\to P_2(\beta,\gamma))$\\do not change register 2
 \end{itemize}
+\begin{lemma}
+\begin{align*}
+&\text{$M$ terminates on input $(0,0)$}&& \text{iff} &\text{$\Gamma_M\vdash\false$ hold in system P.}
+\end{align*}
+\end{lemma}
+\begin{claim}
+$\Gamma_C\cup\Gamma\vdash\false$\dots
+\end{claim}
+\begin{proof}
+For the tableau proofs we will abbreviate \false{} by \falses.\\
+Induction Base trivial \dots\\
+Induction Step\\
+$C\to D$\\
+Basic idea:\\
+$$
+\cfrac
+{\cfrac{IH}{\Gamma_C\cup\Gamma\cup\Gamma_D\vdash\falses}\hspace{0.6cm}
+\cfrac{}{\Gamma_C\cup\Gamma\vdash\Gamma_D}}
+{\Gamma_C\cup\Gamma\vdash\falses}
+$$
+Since $I\models\false$ holds trivially if $I$ interprets \false{} with $\top$ we only need to consider models (there are none if $M$ terminates) of $\Gamma_C\cup\Gamma$ that interpret \false{} with $\bot$ (so we can use our new deduction rule)\\
+We will just drop $\Gamma_C\cup\Gamma$ and only write new formulas on the left side
+We first introduce the new variables needed for $\Gamma_D$ (let $b,\in \VarP\setminus\text{FV}(\Gamma_C\cup\Gamma)$):
+$$\cfrac
+{\cfrac{\cfrac{\cfrac{S(a,b),D(b)\vdashf\falses}
+                     {S(a,b)\vdashf D(b)\to\falses}
+               \hspace{0.4cm}
+               \cfrac{\cfrac{S(a,b)\vdashf \forall\alpha\beta S(\alpha,\beta)\to D(\beta)}
+                            {S(a,b)\vdashf S(a,b)\to D(b)}} %TODO S(a,b)\vdashf S(a,b)
+                     {S(a,b)\vdashf D(b)}}
+              {S(a,b)\vdashf\falses}}
+       {\vdashf(\forall\beta(S(a,\beta)\to\falses)\to\falses)\to\falses}
+ \hspace{0.6cm}
+ \cfrac{\vdashf\forall\alpha(\forall\beta(S(\alpha,\beta)\to\falses)\to\falses)}
+       {\vdashf\forall\beta(S(a,\beta)\to\falses)\to\falses}}
+{\Gamma_C\cup\Gamma\vdashf\falses}
+$$
+
+Now we create $\Gamma_D$ 
+$$\cfrac{\cfrac{Q'(b)\vdash\falses}
+               {\vdash Q'(b)\to\falses}
+\hspace{0.4cm}
+\cfrac{\cfrac{\cfrac{\vdash \forall\alpha\beta(Q(\alpha)\to S(\alpha,\beta)\to Q'(\beta))}
+                    {\vdash Q(a)\to S(a,b)\to Q'(b)}
+              \hspace{0.4cm}
+              \vdash Q(a)}
+             {\vdash S(a,b)\to Q'(b)}
+       \hspace{0.4cm}
+       \vdash S(a,b)}
+      {\vdash Q'(b)}}
+{\vdashf \falses}$$
+\end{proof}
+
+
 
