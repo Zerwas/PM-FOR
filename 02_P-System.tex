@@ -138,22 +138,24 @@ child {node(2) {\vdashf Q'(b)\to\falses} \rm
 %define lengths
 \newlength{\sleft}
 \newlength{\sright}
-%draw lines for each node with 2 children
-\foreach \x in {1,11,121}{
-\pgfmathtruncatemacro{\xn}{\x+1}
+%draw lines for each node with 2 children (add parents with 2 children)
+\foreach \x in {,1,12}{
 %calculate with of line
-\getwidthofnode{\sleft}{\xn}
-\getwidthofnode{\sright}{\x}
+\getwidthofnode{\sright}{\x1}
+\getwidthofnode{\sleft}{\x2}
 %draw line
-\draw[shorten >=-\sleft/2, shorten <=-\sright/2] ([yshift=-0.25cm]c\x) -- ([yshift=-0.25cm]c\xn);
+\draw[shorten <=-\sright/2, shorten >=-\sleft/2] ([yshift=-0.25cm]c\x1) -- ([yshift=-0.25cm]c\x2);
 }
 
-%draw lines for each node with 1 child
-\foreach \x in {21,1221}{
+%draw lines for each node with 1 child (add parents with 1 child)
+\foreach \x in {2,122}{
 %calculate with of line
-\getwidthofnode{\sright}{\x}
+\getwidthofnode{\sleft}{\x}
+\getwidthofnode{\sright}{\x1}
+%get widht corresponding to the widht of the bigger node
+\pgfmathsetlength{\sright}{max(\sright,\sleft)}
 %draw line
-\draw (c\x)+(-\sright/2,-0.25) -- +(\sright/2,-0.25);
+\draw (c\x)+(-\sright/2,+0.25) -- +(\sright/2,+0.25);
 }
 \end{tikzpicture}
 \end{figure}
