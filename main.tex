@@ -29,6 +29,10 @@
     \pgfextractx{\pgf@xa}{\pgfpointanchor{#2}{west}}% \pgf@xa is a length defined by PGF for temporary storage. No need to create a new temporary length.
     \addtolength{#1}{-\pgf@xa}%
 }
+
+\long\def\ifnodedefined#1#2#3{%
+    \@ifundefined{pgf@sh@ns@#1}{#3}{#2}%
+}
 \makeatother
 
 \begin{document}
