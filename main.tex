@@ -19,9 +19,11 @@
 
 \newcommand{\false}{\emph{false}}
 \newcommand{\falses}{\emph{f}} %false short
-\newcommand{\VarP}{V_P}
+\newcommand{\VarP}{\ensuremath{V_P}}
+\newcommand{\RelP}{\ensuremath{R_P}}
 \newcommand{\vdashf}{\vdash_f}
-
+\newcommand{\FV}{\emph{FV}}
+\newcommand{\SysP}{\textbf{P}}
 
 \makeatletter
 \newcommand\getwidthofnode[2]{%
@@ -41,8 +43,12 @@
 \newlength{\sright}
 
 \begin{document}
+	\binoppenalty=10000
+	\relpenalty=10000
 	\tableofcontents
+	\begin{sloppypar}
 	\newpage
 	\input{01_Introduction}
 	\input{02_P-System}
+	\end{sloppypar}
 \end{document}
