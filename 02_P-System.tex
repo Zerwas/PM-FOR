@@ -26,7 +26,7 @@ An Interpretation $I$ of a P formula is a tuple $I=(\Delta,\cdot^I)$ where $\Del
 If we interpret \false{} with the logical constant false ($\bot$) (denoted by $\vdash_f$) we can add a new deduction rule.
 \begin{mdframed}
 \begin{align*}
-&(\exists\text{-Elimination}) &&\frac
+&(\exists\text{-Introduction}) &&\frac
 {\Gamma,A\left[\alpha:=a\right]\vdashf B}
 {\Gamma,\forall\alpha(A\to\false)\to\false\vdashf B} && a\notin\emph{FV}(\Gamma,A,B)
 \end{align*}
@@ -38,7 +38,7 @@ I\models\Gamma,\forall\alpha(A\to\false)\to\false&\Rightarrow I\models\forall\al
 &\Rightarrow (\forall\alpha(A\to\false))^I\to\false^I\\
 &\Rightarrow (\forall\alpha(A\to\false))^I\to\bot\\
 &\Rightarrow \neg(\forall\alpha(A\to\false))^I\\
-&\Rightarrow \neg(\forall a\in\Delta:(A\to\false)^{I\left[\alpha\mapsto d\right]})\\
+&\Rightarrow \neg(\forall d\in\Delta:(A\to\false)^{I\left[\alpha\mapsto d\right]})\\
 &\Rightarrow \exists d\in\Delta:\neg(A^{I\left[\alpha\mapsto d\right]}\to\false^{I\left[\alpha\mapsto d\right]})\\
 &\Rightarrow \exists d\in\Delta:\neg(A^{I\left[\alpha\mapsto d\right]}\to\bot)\\
 &\Rightarrow \exists d\in\Delta:\neg(\neg A^{I\left[\alpha\mapsto d\right]})\\
@@ -240,16 +240,32 @@ Now we have $\Gamma_C$ (Since $P(a_{i-1},a_i)$ is already in $\Gamma_D$) and can
 \end{align*}
 \end{claim}
 \begin{proof}
-Assume $M$ does not terminate then there is an infinite chain $C_0\Rightarrow_M C_1\Rightarrow_M C_3\Rightarrow_M\dots$. ($C_i=\langle Q_i,m_i,n_i\rangle$) Now we construct a model of $\Gamma_M$ which interprets \false{} with $\bot$ this contradicts $\Gamma_M\vdash\false$.\\
-The idea looks like this:\\
+Assume $M$ does not terminate then there is an infinite chain $C_1\Rightarrow_M C_2\Rightarrow_M C_3\Rightarrow_M\dots$. ($C_i=\langle Q_i,m_i,n_i\rangle$) Now we construct a model of $\Gamma_M$ which interprets \false{} with $\bot$ this contradicts $\Gamma_M\vdash\false$.
+
+To illustrate the idea we will use a graphical notation for an interpretation $I$.
+By
+\tikz[baseline=-3pt]{
+\node (1) {$d_1$};
+\node[right of=1] (2) {$d_2$};
+\path[->,>=latex'] (1) edge node[above,scale=0.8] {R} (2);}
+we say that $(d_1,d_2)\in R^I$. And we use
+\tikz[baseline=5pt]{
+\node (1) {$d$};
+\node[node distance = 0.6cm,above of=1,scale=0.8] {P};}
+to say that $d\in P^I$ for unary predicate symbols. Now the idea for our model of $\Gamma_M$ looks like this:
+
 \begin{figure}[H]
 \input{Figure.Model}
 \end{figure}
-Formal definition:\\
-$I=(\mathbb{N},\cdot^I)$
+We have $0\in E^I$ and all other numbers are in $D^I$.
+
+Here is the more formal definition of our model $I=(\mathbb{N},\cdot^I)$.
 \begin{align*}
 & P^I=\{(i+1,i)\mid i\in\mathbb{N}\} && R_1^I=\{(i,m_i)\mid i\in\mathbb{N}\} && R_2^I=\{(i,n_i)\mid i\in\mathbb{N}\}\\
-& Q^I=\{ i\in\mathbb{N}\mid Q=Q_i\} && D^I=\mathbb{N}\setminus\{0\} && E^I=\{0\}\\
+& Q^I=\{ i\in\mathbb{N}\setminus\{0\}\mid Q=Q_i\} && D^I=\mathbb{N}\setminus\{0\} && E^I=\{0\}\\
 & S^I=\{(i,i+1)\mid i\in\mathbb{N}\}
+\end{align*}
+\begin{align*}
+& a^I=1 && a_0^I=0 && b_0^I=0
 \end{align*}
 \end{proof}

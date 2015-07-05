@@ -4,12 +4,19 @@ every path/.style={->,>=latex'},node distance = 1.4cm]
 \node (0) {0};
 \node[right of=0] (1) {1};
 \node[right of=1] (2) {\dots};
-\node[right of=2] (3) {m};
+\node[right of=2] (3) {m_i};
 \node[right of=3] (4) {\dots};
-\node[right of=4] (5) {n};
+\node[right of=4] (5) {n_i};
 \node[right of=5] (6) {\dots};
-\node[right of=6] (7) {Q};
+\node[right of=6] (7) {i};
 \node[right of=7] (8) {\dots};
+
+
+\node[node distance = 0.6cm,above of=1,label]     {Q_1};
+\node[node distance = 0.6cm,above of=3,label]     {Q_{m_i}};
+\node[node distance = 0.6cm,above of=5,label]     {Q_{n_i}};
+\node[node distance = 0.6cm,above of=7,label]     {Q_i};
+
 
 \foreach \x in {0,...,7}{
 \pgfmathtruncatemacro{\xn}{\x+1}
