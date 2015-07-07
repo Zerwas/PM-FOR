@@ -67,7 +67,7 @@ $+(Q,1,Q'):$
 $-(Q,1,Q_1,Q_2):$
 \begin{itemize}
 \item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to R_1(\alpha,\gamma)\to E(\gamma)\to Q_2(\beta))$\\jump on zero
-\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to R_1(\alpha,\gamma)\to E(\gamma)\to R_1(\beta,\gamma)$\\register 1 stays zero
+\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to R_1(\alpha,\gamma)\to E(\gamma)\to R_1(\beta,\gamma))$\\register 1 stays zero
 \item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to R_1(\alpha,\gamma)\to D(\gamma)\to Q_1(\beta))$\\change state if register 1 is greater zero
 \item $\forall\alpha\beta\gamma\delta(Q(\alpha)\to S(\alpha,\beta)\to R_1(\alpha,\gamma)\to D(\gamma) \to P(\gamma,\delta)\to R_1(\beta,\delta))$\\decrement register 1
 \item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to R_2(\alpha,\gamma)\to R_2(\beta,\gamma))$\\do not change register 2
@@ -161,6 +161,12 @@ Since register two should not change we only need $R_2(b,b_0)$.
 \begin{figure}[H]
 \input{Figure.Tableau.6}
 \end{figure}
+%TODO
 Now we have $\Gamma_C$ (Since $P(a_{i-1},a_i)$ is already in $\Gamma_D$) and can deduce \false{} by induction hypothesis.\\
 \underline{Case $r=-(Q,1,Q_1,Q_2)$}
+$r1=0$
+
+\begin{figure}[H]
+\input{Figure.Tableau.7}
+\end{figure}
 \end{proof}
