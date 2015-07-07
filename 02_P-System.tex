@@ -151,7 +151,16 @@ Starting from $Q'(b)\vdashf\false$ we can connect $d$ and $a_0$.
 \begin{figure}[H]
 \input{Figure.Tableau.4}
 \end{figure}
-$R_2(b,b_0)$ can be deduced in the same way.\\
+For register one we still need $D(d)$.
+
+\begin{figure}[H]
+\input{Figure.Tableau.5}
+\end{figure}
+Since register two should not change we only need $R_2(b,b_0)$.
+
+\begin{figure}[H]
+\input{Figure.Tableau.6}
+\end{figure}
 Now we have $\Gamma_C$ (Since $P(a_{i-1},a_i)$ is already in $\Gamma_D$) and can deduce \false{} by induction hypothesis.\\
 \underline{Case $r=-(Q,1,Q_1,Q_2)$}
 \end{proof}
