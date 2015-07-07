@@ -1,0 +1,54 @@
+\begin{tikzpicture}[grow=up,level distance=0.5cm,
+execute at begin node=$, execute at end node=$,
+every node/.style={opacity=1},
+every child/.style={edge from parent/.style={opacity=0}}]
+\node(e) {\vdashf \falses} [sibling distance=8cm] 
+	child [sibling distance=3cm] {node(1) {\vdashf P(d,a_0)} 
+		child {node(11) {\vdashf R_1(b,d)} }
+		child [sibling distance=3.7cm] {node(12) {\vdashf R_1(b,d)\to Q'(b)} 
+			child {node(121) {\vdashf R_1(a,a_0)} }
+			child [sibling distance=4.5cm] {node(122) {\vdashf R_1(a,a_0)\to R_1(b,d)\to Q'(b)} 
+				child {node(1221) {\vdashf S(a,b)} }
+				child [sibling distance=5cm] {node(1222) {\vdashf S(a,b)\to R_1(a,a_0)\to R_1(b,d)\to Q'(b)}
+					child {node(12221) {\vdashf Q(a)} }
+					child {node(12222) {\vdashf Q(a)\to S(a,b)\to R_1(a,a_0)\to R_1(b,d)\to Q'(b)}
+						child {node(122221) {\vdashf \forall\alpha\beta\gamma\delta(Q(\alpha)\to S(\alpha,\beta)\to R_1(\alpha,\gamma)\to R_1(\beta,\delta)\to P(\delta,\gamma))}}}
+					child {}}
+				child {}}
+			child {}}
+		child {}}
+				%child {node(1221) {\vdashf\forall\alpha\beta(Q(\alpha)\to S(\alpha,\beta)\to Q'(\beta))} }}}}
+	child {node(2) {\vdashf P(d,a_0)\to\falses} 
+		child {node(21) {P(d,a_0)\vdashf\falses} 
+			child {node[label={[yshift=-0.3cm]above:\vdots}](211) {}}}};
+
+%set of all positions in the tree
+\def\nodes{,1,2,11,12,21,121,122,1221,1222,12221,12222,122221}
+%the yshift does not work on nodes so we create a coordinate for every node
+\foreach \x in \nodes{
+\ifnodedefined{\x}{
+	\coordinate(c\x) at (\x);
+}{}
+}
+
+%draw lines for each node with 2 children (add parents with 2 children)
+\foreach \x in \nodes{
+\ifnodedefined{\x1}{
+	%calculate with of line
+	\getwidthofnode{\sright}{\x1}
+	%if there is a right child draw wide line
+	\ifnodedefined{\x2}{
+		\getwidthofnode{\sleft}{\x2}
+		%draw line
+		\draw[shorten <=-\sright/2, shorten >=-\sleft/2] ([yshift=-0.25cm]c\x1) -- ([yshift=-0.25cm]c\x2);
+	} %else only one child
+	{
+		\getwidthofnode{\sleft}{\x}
+		%get widht corresponding to the widht of the bigger node
+		\pgfmathsetlength{\sright}{max(\sright,\sleft)}
+		%draw line
+		\draw (c\x)+(-\sright/2,+0.25) -- +(\sright/2,+0.25);
+	}
+}{}
+}
+\end{tikzpicture}
