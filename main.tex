@@ -9,6 +9,7 @@
 \usepackage{float}
 \usepackage{tikz}
 \usepackage{calc}
+\usepackage[normalem]{ulem}
 \usepackage[framemethod=TikZ]{mdframed}
 
 \usetikzlibrary{arrows}
@@ -16,11 +17,14 @@
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{claim}[theorem]{Claim}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
 
 \newcommand{\false}{\emph{false}}
 \newcommand{\falses}{\ensuremath{f}} %false short
-\newcommand{\VarP}{\ensuremath{V_P}}
-\newcommand{\RelP}{\ensuremath{R_P}}
+\newcommand{\VarP}{\ensuremath{\mathcal{V}_P}}
+\newcommand{\RelP}{\ensuremath{\mathcal{P}_P}}
+\newcommand{\rank}{\emph{rk}}
 \newcommand{\vdashf}{\vdash_f}
 \newcommand{\FV}{\emph{FV}}
 \newcommand{\SysP}{\textbf{P}}
@@ -49,6 +53,7 @@
 	\begin{sloppypar}
 	\newpage
 	\input{01_Introduction}
+	\input{02_Basic_Definitions}
 	\input{02_P-System}
 	\end{sloppypar}
 \end{document}

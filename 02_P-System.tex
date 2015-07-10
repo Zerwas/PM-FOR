@@ -1,13 +1,13 @@
 \section{System P}
 \subsection{Definitions}
-Let $\VarP=\{\alpha,\beta,\dots\}$ be a countably infinite set (of variables) and $\RelP=\{\false^{(0)},P^{(2)},Q^{(2)},\dots\}$ a ranked alphabet (of relation symbols).
-A first-order logic formula $\varphi$ is an
+Let $\VarP=\{\alpha,\beta,\dots\}$ be a countably infinite set (of variables) and $\RelP=\{\false^{(0)},P^{(2)},Q^{(2)},\dots\}$ a ranked set (of predicate symbols) such that $\RelP^{(0)}=\{\false\}$ and $\RelP^{(k)}=\emptyset$ for all $k\in\mathbb{N}\setminus\{0,2\}$.
+A first-order logic formula $\varphi$ over $(\VarP,\emptyset,\RelP)$ is an
 \begin{description} %TODO \overrightarrow{\alpha}
 \item[atomic formula] if $\varphi=\false$ or $\varphi=P(\alpha,\beta)$ for some $P\in\RelP$ and $\alpha,\beta\in\VarP$.
 \item[universal formula] if $\varphi=\forall\overrightarrow{\alpha}(A_1\to A_2 \to\dots\to A_n)$ where $A_i$ is an atomic formula for $i\in\left[n\right]$, $A_i\neq\false$ for $i\in\left[n-1\right]$ and for each $\alpha\in\FV(\varphi)\cap\FV(A_n)$ there exists an $i\in\left[n-1\right]$ such that $\alpha\in\FV(A_i)$.
 \item[existential formula] if there exits $n\ge0$,  atomic formulas $A_i\neq\false$ for $i\in\left[n\right]$ such that $\varphi=\forall\overrightarrow{\alpha}(A_1\to A_2 \to\dots\to A_{n-1}\to\forall\beta(A_n\to\false)\to\false)$.
 \end{description}
-The set of formulas of System \SysP{} over \VarP{} and \RelP{} is the set of all first order formulas over the same "alphabet" that are either an atomic, universal or existential formula.\\ 
+The set of formulas of System \SysP{} over $(\VarP,\RelP)$ is the set of all first-order formulas over $(\VarP,\emptyset,\RelP)$ that are either an atomic, universal or existential formula.\\ 
 $\FV(\Gamma)=\bigcup\{\FV(A)\mid A\in \Gamma\}$\\
 Deduction Rules
 \begin{mdframed}
