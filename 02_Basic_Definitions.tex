@@ -1,8 +1,21 @@
 \section{Basic Definitions}
 We will denote the set $\{1,\dots,n\}$ by $\left[n\right]$.
 \begin{definition}
-A \uline{ranked set} is a tuple $(\Sigma,\rank)$, where $\Sigma$ is a countable set and $\rank:\Sigma\to\mathbb{N}$ is a function that maps every symbol from $\Sigma$ to a natural number (its rank).
+A \define{ranked set} is a tuple $(\Sigma,\rank)$, where $\Sigma$ is a countable set and $\rank:\Sigma\to\mathbb{N}$ is a function that maps every symbol from $\Sigma$ to a natural number (its rank).
 \end{definition}
-If the function \rank is understood we will just write $\Sigma$ instead of $(\Sigma,\rank)$. The set of all elements with a certain rank $k$ in $\Sigma$, denoted by $\Sigma^{(k)}$, is defined by $\Sigma^{(k)}:=rk^{-1}(k)$. In the following we will write $\Sigma=\{P^{(0)},Q^{(3)}\}$ to say that $\Sigma=\{P,Q\}$, $\rank(P)=0$, and $\rank(Q)=3$.
-\subsection{First-order logic}
-Let $\mathcal{V}=\{x_0,x_1,\dots\}$ be a countable set (of variables), $\mathcal{F}=\{\}$ a ranked set (of function symbols), and $\mathcal{P}=\{\}$ a ranked set (of predicate symbols). The first-order formulas over $(\mathcal{V},\mathcal{F},\mathcal{P})$, are defined as follows:
+If the function \rank{} is understood we will just write $\Sigma$ instead of $(\Sigma,\rank)$. The set of all elements with a certain rank $k$ in $\Sigma$, denoted by $\Sigma^{(k)}$, is defined by $\Sigma^{(k)}:=rk^{-1}(k)$. In the following we will write $\Sigma=\{P^{(0)},Q^{(3)}\}$ to say that $\Sigma=\{P,Q\}$, $\rank(P)=0$, and $\rank(Q)=3$.
+
+First-order logic
+\begin{definition}
+Let $\mathcal{V}=\{x_0,x_1,\dots\}$ be a countable set (of variables), $\mathcal{F}=\{\}$ a ranked set (of function symbols), and $\mathcal{P}=\{\}$ a ranked set (of predicate symbols). Then the set of \define{terms over $(\mathcal{V},\mathcal{F})$}, denoted by $\mathcal{T}_{(\mathcal{V},\mathcal{F})}$, is the smallest set $\mathcal{T}$ satisfying the following conditions:
+\begin{itemize}
+\item $\mathcal{V} \subseteq \mathcal{T}$, and
+\item for every $k\in\mathbb{N}$ if $f\in\mathcal{F}^{(k)}$ and $t_1,t_2,\dots,t_k\in\mathcal{T}$ then $f(t_1,t_2,\dots,t_k)\in\mathcal{T}$.
+\end{itemize}
+The set of \define{first-order formulas over $(\mathcal{V},\mathcal{F},\mathcal{P})$}, denoted by $\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$, is the smallest set $\mathcal{L}$ satisfying the following conditions:
+\begin{itemize}
+\item for every $k\in\mathbb{N}$ if $P\in\mathcal{P}^{(k)}$ and $t_1,t_2,\dots,t_k\in\mathcal{T}$ then $P(t_1,t_2,\dots,t_k)\in\mathcal{L}$.
+\item If $\varphi,\psi\in\mathcal{L}$ then $(\varphi\wedge\psi), (\varphi\vee\psi), (\varphi\to\psi), \neg \varphi\in\mathcal{L}$, and %TODO really include implies?
+\item if $x\in\mathcal{V}$ and $\varphi\in\mathcal{L}$ then $\exists x\varphi,\forall x\varphi\in\mathcal{L}$. %TODO dots?
+\end{itemize}
+\end{definition}
