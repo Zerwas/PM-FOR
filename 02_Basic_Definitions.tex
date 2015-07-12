@@ -19,3 +19,22 @@ The set of \define{first-order formulas over $(\mathcal{V},\mathcal{F},\mathcal{
 \item if $x\in\mathcal{V}$ and $\varphi\in\mathcal{L}$ then $\exists x\varphi,\forall x\varphi\in\mathcal{L}$. %TODO dots?
 \end{itemize}
 \end{definition}
+\begin{definition}
+The \define{free variables of a formula $\varphi$}, denoted by $\FV(\varphi)$, are defined as follows:
+\[\FV(\varphi)=
+\begin{cases}
+V(t_1)\cup V(t_2)\cup\dots\cup V(t_k) & \text{if $\varphi=P(t_1,t_2,\dots,t_k)$}\\ %TODO V(t)
+\FV(\varphi_1)\cup\FV(\varphi_2) & \text{if $\varphi=\varphi_1\circ\varphi_2$, $\circ\in\{\wedge,\vee,\to\}$}\\
+\FV(\psi)\setminus\{x\} & \text{if $\varphi=Q x\psi$, $Q\in\{\forall,\exists\}$}
+\end{cases}\]
+\end{definition}
+\begin{definition}
+An \define{interpretation $I$ over $(\mathcal{V},\mathcal{F},\mathcal{P})$} is a triple $(\Delta,\cdot^I,\omega)$
+\begin{tabular}{llp{0.78\linewidth}}
+		where & $\Delta$      & is a set (domain),                                                                                                       \\
+		      & $\cdot^I$ & is a function such that  \\
+		      & & $f^I:\Delta^k\to\Delta$  is a function for every $k\in\mathbb{N}$, $f\in\mathcal{F}^{(k)}$ \\
+		      & & $P^I\subseteq\Delta^k$ is a relation for every $k\in\mathbb{N}$, $f\in\mathcal{P}^{(k)}$ \\
+		      & $\omega$ & is a function from $\mathcal{V}$ to $\Delta$                       
+	\end{tabular}
+\end{definition}
