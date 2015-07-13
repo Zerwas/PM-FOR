@@ -49,8 +49,15 @@ An \define{interpretation $I$ over $(\mathcal{V},\mathcal{F},\mathcal{P})$} is a
 		      & $\omega$ & is a function from $\mathcal{V}$ to $\Delta$.                       
 	\end{tabular}
 \end{definition}
+%TODO allways write over (...) or make a commnt about it
+Let $I=(\Delta,\cdot^I,\omega)$ be an interpretation, $x\in\mathcal{V}$, and $d\in\Delta$ the interpretation $I\left[x\to d\right]$ is defined as $(\Delta,\cdot^I,\omega\left[x\to d\right])$ where
+\[(\omega\left[x\to d\right])(y)=
+\begin{cases}
+d & \text{if $y=x$}\\
+\omega(y) & \text{otherwise.}
+\end{cases}\]
 \begin{definition}
-Let $I=(\Delta,\cdot^I,\omega)$ be an interpretation and $t$ a term the interpretation of $t$ under $I$, denoted by $t^I$, is defined as follows:
+Let $I=(\Delta,\cdot^I,\omega)$ be an interpretation and $t$ a term the \define{interpretation of $t$ under $I$}, denoted by $t^I$, is defined as follows:
 \[t^I=
 \begin{cases}
 \omega(x) & \text{if $t=x$}\\
@@ -58,5 +65,18 @@ f^I(t^I_1,\dots,t^I_k) & \text{if $t=f(t_1,\dots,t_k)$}
 \end{cases}\]
 \end{definition}
 \begin{definition}
-An interpretation $I$ is a \define{model of a formula $\varphi$}, denoted by $I\models\varphi$, if  
+Let $I=(\Delta,\cdot^I,\omega)$ be an interpretation and $\varphi$ a formula the \define{interpretation of $\varphi$ under $I$}, denoted by $\varphi^I$, is defined recursively as follows:
+\[\varphi^I=
+\begin{cases}
+%TODO quantify k?
+\top & \text{if $\varphi=P(t_1,\dots,t_k)$ and $(t^I_1,\dots,t^I_k)\in P^I$}\\
+\bot & \text{if $\varphi=P(t_1,\dots,t_k)$ and $(t^I_1,\dots,t^I_k)\notin P^I$}\\
+\text{not}~\psi^I & \text{if $\varphi=\neg\psi$}\\
+\varphi^I_1~\text{and}~\varphi^I_2 & \text{if $\varphi=(\varphi_1\wedge\varphi_2)$}\\
+\varphi^I_1~\text{or}~\varphi^I_2 & \text{if $\varphi=(\varphi_1\vee\varphi_2)$}\\
+%TODO how to handle implies?
+\text{exists $d\in\Delta$}~\psi^{I\left[x\to d\right]} & \text{if $\varphi=\exists x\psi$}\\
+\text{forall $d\in\Delta$}~\psi^{I\left[x\to d\right]} & \text{if $\varphi=\forall x\psi$}\\
+\end{cases}\]
+The interpretation $I$ is a \define{model} of $\varphi$, denoted by $I\models\varphi$, if $\varphi^I=\top$.
 \end{definition}

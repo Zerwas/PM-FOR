@@ -1,5 +1,12 @@
 \section{Introduction}
 $\emph{FV}(\Gamma)=\bigcup\{\emph{FV}(t)\mid (x:t)\in \Gamma\}$\\
+The set of all $\lambda2$ types \lambdaTypes{} is the smallest set $\Lambda$ satisfying the following conditions:
+\begin{itemize}
+\item $\lambdaTypVar\subseteq\Lambda$,
+\item if $t_1,t_2\in\Lambda$ then $t_1\to t_2\in\Lambda$, and
+\item if $t\in\Lambda$ and $\alpha\in\lambdaTypVar$ then $\forall\alpha.t\in\Lambda$.
+\end{itemize}
+
 $\lambda2$ deduction Rules
 \begin{mdframed}
 \begingroup
