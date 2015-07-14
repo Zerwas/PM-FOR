@@ -17,8 +17,8 @@ Let \lambdaTypVar{} be a countable set (of type-variables) and $\lambdaValVar=\{
 \item $\lambdaValVar\subseteq\Lambda_T$,
 \item if $e_1,e_2\in\Lambda_T$ then $e_1e_2\in\Lambda_T$,
 \item if $x\in\lambdaValVar$, $t\in\lambdaTypes$, and $e\in\Lambda_T$ then $\lambda x:t.e\in\Lambda_T$,
-\item if $x\in\lambdaTypVar$ and $e\in\Lambda_T$ then $\Lambda x.e\in\Lambda_T$, and
-\item if $e\in\Lambda_T$ and $t\in\lambdaTypes$ then $et\in\Lambda_T$.
+\item if $\alpha\in\lambdaTypVar$ and $e\in\Lambda_T$ then $\Lambda \alpha.e\in\Lambda_T$, and
+\item if $e\in\Lambda_T$ and $t\in\lambdaTypes$ then $e\:t\in\Lambda_T$.
 \end{itemize}
 \end{definition}
 $\lambda2$ deduction Rules
@@ -115,4 +115,11 @@ Let $I=(\Delta,\cdot^I,\omega)$ be an interpretation and $\varphi$ a formula the
 \text{forall $d\in\Delta$}~\psi^{I\left[x\to d\right]} & \text{if $\varphi=\forall x\psi$}\\
 \end{cases}\]
 The interpretation $I$ is a \define{model} of $\varphi$, denoted by $I\models\varphi$, if $\varphi^I=\top$.
+\end{definition}
+\begin{definition}
+Let $\Gamma$ be a set of first-oder formulas.
+\begin{description}
+\item We say that an interpretation $I$ is a \define{model} of $\Gamma$ if $I\models\psi$ for every $\psi$ in $\Gamma$.
+\item The formula $\varphi$ is a \define{semantic consequence} of $\Gamma$, denoted by $\Gamma\folmodels\varphi$, if every model of $\Gamma$ is also a model of $\varphi$.
+\end{description}
 \end{definition}
