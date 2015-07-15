@@ -18,19 +18,33 @@ Let \lambdaTypVar{} be a countable set (of type-variables) and $\lambdaValVar=\{
 \item if $e_1,e_2\in\Lambda_T$ then $e_1e_2\in\Lambda_T$,
 \item if $x\in\lambdaValVar$, $t\in\lambdaTypes$, and $e\in\Lambda_T$ then $\lambda x:t.e\in\Lambda_T$,
 \item if $\alpha\in\lambdaTypVar$ and $e\in\Lambda_T$ then $\Lambda \alpha.e\in\Lambda_T$, and
-\item if $e\in\Lambda_T$ and $t\in\lambdaTypes$ then $e\:t\in\Lambda_T$.
+\item if $e\in\Lambda_T$ and $t\in\lambdaTypes$ then $e\,t\in\Lambda_T$.
 \end{itemize}
 \end{definition}
+\begin{definition}
+The \define{free variables of a term $e$}, denoted by $\FV(e)$, are defined inductively as follows:
+\[\FV(e)=
+\begin{cases}
+\{x\} & \text{if $e=x$}\\ %TODO, for some $x\in\lambdaValVar$?
+\FV(e_1)\cup\FV(e_2) & \text{if $e=e_1e_2$}\\
+\FV(e')\setminus\{x\} & \text{if $e=\lambda x:t.e'$}\\
+\FV(e') & \text{if $e=\Lambda\alpha.e'$}\\
+\FV(e') & \text{if $e=e'\,t$}\\
+\end{cases}\]
+\end{definition}
+\begin{definition} 
+A \define{basis} is a finite subset of $\lambdaValVar\times\lambdaTerms$ %TODO continue ... 
+\end{definition}
 $\lambda2$ deduction Rules
-\begin{mdframed}
+\begin{mdframed} 
 \begingroup
 \addtolength{\jot}{0.3cm}
 \begin{align*}
-&(\text{Axiom}) &&\Gamma,x:t\vdash x:t\\
+&(\text{Axiom}) &&\Gamma,x:t\vdash x:t\vphantom{\frac{t_1}{t_1}}\\
 &(\lambda\text{-Introduction}) &&\frac{\Gamma,x:t_1\vdash e:t_2}{\Gamma\vdash \lambda x.e:t_1\to t_2}\\
 &(\lambda\text{-Elimination}) &&\frac{\Gamma\vdash e_1:t_1\to t_2 \hspace{0.4cm}\Gamma\vdash e_2:t_1}{\Gamma\vdash e_1e_2:t_2}\\
 &(\forall\text{-Introduction}) &&\frac{\Gamma\vdash e:t}{\Gamma\vdash \Lambda\alpha.e:\forall\alpha.t} &&\alpha\notin\FV(\Gamma) \\
-&(\forall\text{-Elimination}) &&\frac{\Gamma\vdash e:\forall\alpha.t }{\Gamma\vdash et':t\left[ \alpha:=t'\right] }
+&(\forall\text{-Elimination}) &&\frac{\Gamma\vdash e:\forall\alpha.t }{\Gamma\vdash e\,t':t\left[ \alpha:=t'\right] }
 \end{align*}
 \endgroup
 \end{mdframed}
@@ -55,7 +69,7 @@ The set of \define{first-order formulas over $(\mathcal{V},\mathcal{F},\mathcal{
 \item if $x\in\mathcal{V}$ and $\varphi\in\mathcal{L}$ then $\exists x\varphi,\forall x\varphi\in\mathcal{L}$. %TODO dots?
 \end{itemize}
 \end{definition}
-To define the free variables of a formula we first need to define variables of a term.
+To define the free variables of a formula we first need to define the variables of a term.
 \begin{definition}
 The \define{variables of a term $t$}, denoted by $\V(t)$, are defined by:
 \[\V(t)=
@@ -78,7 +92,7 @@ Now we come to the semantics of first-order formulas.
 \begin{definition}
 An \define{interpretation $I$ over $(\mathcal{V},\mathcal{F},\mathcal{P})$} is a triple $(\Delta,\cdot^I,\omega)$
 \begin{tabular}{llp{0.78\linewidth}}
-		where & $\Delta$      & is a set (which we call  domain),                                                                                                       \\
+		where & $\Delta$      & is a nonempty set (which we call  domain),                                                                                                       \\
 		      & $\cdot^I$ & is a function such that\\
 		      & & $f^I:\Delta^k\to\Delta$  is a function for every $k\in\mathbb{N}$, $f\in\mathcal{F}^{(k)}$ and \\
 		      & & $P^I\subseteq\Delta^k$ is a relation for every $k\in\mathbb{N}$, $f\in\mathcal{P}^{(k)}$ \\
@@ -117,9 +131,10 @@ Let $I=(\Delta,\cdot^I,\omega)$ be an interpretation and $\varphi$ a formula the
 The interpretation $I$ is a \define{model} of $\varphi$, denoted by $I\models\varphi$, if $\varphi^I=\top$.
 \end{definition}
 \begin{definition}
-Let $\Gamma$ be a set of first-oder formulas.
+Let $\Gamma$ be a finite set of first-oder formulas.
 \begin{description}
 \item We say that an interpretation $I$ is a \define{model} of $\Gamma$ if $I\models\psi$ for every $\psi$ in $\Gamma$.
 \item The formula $\varphi$ is a \define{semantic consequence} of $\Gamma$, denoted by $\Gamma\folmodels\varphi$, if every model of $\Gamma$ is also a model of $\varphi$.
+\item The free variables of $\Gamma$, denoted by $\FV(\Gamma)$, are $\bigcup\{\FV(\varphi)\mid \varphi\in \Gamma\}$.
 \end{description}
 \end{definition}
