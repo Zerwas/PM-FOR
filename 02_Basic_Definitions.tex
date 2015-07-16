@@ -2,8 +2,9 @@
 We will denote the set $\{1,\dots,n\}$ by $\left[n\right]$.
 \subsection{$\lambda$-calculus $\lambda2$}
 $\emph{FV}(\Gamma)=\bigcup\{\emph{FV}(t)\mid (x:t)\in \Gamma\}$\\
+In the following let $\lambdaTypVar=\{\alpha,\beta,\dots\}$ be a countable set (of type-variables) and $\lambdaValVar=\{x_1,x_2,\dots\}$ be a countable set (of value-variables).
 \begin{definition}
-Let $\lambdaTypVar=\{\alpha,\beta,\dots\}$ be a countable set (of type-variables) the \define{set of all $\lambda2$ types over \lambdaTypVar}, denoted by \lambdaTypes{}, is the smallest set T satisfying the following conditions:
+The \define{set of all $\lambda2$ types over \lambdaTypVar}, denoted by \lambdaTypes{}, is the smallest set T satisfying the following conditions:
 \begin{itemize}
 \item $\lambdaTypVar\subseteq\text{T}$,
 \item if $t_1,t_2\in\text{T}$ then $t_1\to t_2\in\text{T}$, and
@@ -12,7 +13,7 @@ Let $\lambdaTypVar=\{\alpha,\beta,\dots\}$ be a countable set (of type-variables
 \end{definition}
 
 \begin{definition}
-Let \lambdaTypVar{} be a countable set (of type-variables) and $\lambdaValVar=\{x_1,x_2,\dots\}$ a countable set (of value-variables) the \define{set of all $\lambda2$ terms over \lambdaTypVar{} and \lambdaValVar}, denoted by \lambdaTerms{}, is the smallest set $\Lambda_T$ satisfying the following conditions: %TODO \Lambda_T bad name + lambda2 explicit
+The \define{set of all $\lambda2$ terms over \lambdaTypVar{} and \lambdaValVar}, denoted by \lambdaTerms{}, is the smallest set $\Lambda_T$ satisfying the following conditions: %TODO \Lambda_T bad name + lambda2 explicit
 \begin{itemize}
 \item $\lambdaValVar\subseteq\Lambda_T$,
 \item if $e_1,e_2\in\Lambda_T$ then $e_1e_2\in\Lambda_T$,
@@ -22,7 +23,7 @@ Let \lambdaTypVar{} be a countable set (of type-variables) and $\lambdaValVar=\{
 \end{itemize}
 \end{definition}
 \begin{definition}
-The \define{free variables of a term $e$}, denoted by $\FV(e)$, are defined inductively as follows:
+Let $e\in\lambdaTerms$. The \define{free variables of $e$}, denoted by $\FV(e)$, are defined inductively as follows:
 \[\FV(e)=
 \begin{cases}
 \{x\} & \text{if $e=x$}\\ %TODO, for some $x\in\lambdaValVar$?
@@ -31,6 +32,17 @@ The \define{free variables of a term $e$}, denoted by $\FV(e)$, are defined indu
 \FV(e') & \text{if $e=\Lambda\alpha.e'$}\\
 \FV(e') & \text{if $e=e'\,t$}\\
 \end{cases}\]
+\end{definition}
+Or is this definition better?
+\begin{definition}
+Let $e\in\lambdaTerms$. The \define{free variables of $e$}, denoted by $\FV(e)$, are defined inductively as follows:
+\begin{align*}
+\FV(y)&=\{x\}\\
+\FV(e_1e_2)&=\FV(e_1)\cup\FV(e_2)\\
+\FV(\lambda x:t.e')&=\FV(e')\setminus\{x\}\\
+\FV(\Lambda\alpha.e')&=\FV(e')\\
+\FV(e'\,t)&=\FV(e')\\
+\end{align*}
 \end{definition}
 \begin{definition} 
 A \define{basis} is a finite subset of $\lambdaValVar\times\lambdaTerms$ %TODO continue ... 
@@ -65,11 +77,12 @@ The set of \define{terms over $(\mathcal{V},\mathcal{F})$}, denoted by $\mathcal
 The set of \define{first-order formulas over $(\mathcal{V},\mathcal{F},\mathcal{P})$}, denoted by $\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$, is the smallest set $\mathcal{L}$ satisfying the following conditions:
 \begin{itemize}
 \item for every $k\in\mathbb{N}$ if $P\in\mathcal{P}^{(k)}$ and $t_1,t_2,\dots,t_k\in\mathcal{T}_{(\mathcal{V},\mathcal{F})}$ then $P(t_1,t_2,\dots,t_k)\in\mathcal{L}$.
-\item If $\varphi,\psi\in\mathcal{L}$ then $(\varphi\wedge\psi), (\varphi\vee\psi), \neg \varphi\in\mathcal{L}$, and
-\item if $x\in\mathcal{V}$ and $\varphi\in\mathcal{L}$ then $\exists x\varphi,\forall x\varphi\in\mathcal{L}$. %TODO dots?
+\item If $\varphi,\psi\in\mathcal{L}$ then $(\varphi\wedge\psi)$, $(\varphi\vee\psi)$, $\neg \varphi\in\mathcal{L}$, and
+\item if $x\in\mathcal{V}$ and $\varphi\in\mathcal{L}$ then $\exists x\varphi$, $\forall x\varphi\in\mathcal{L}$. %TODO dots?
 \end{itemize}
 \end{definition}
-To define the free variables of a formula we first need to define the variables of a term.
+We introduce an additional binary operation $\to$ on formulas, where for some $\varphi$, $\psi\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$ the formula $(\varphi\to\psi)$ is defined as $(\neg\varphi\vee\psi)$.
+
 \begin{definition}
 The \define{variables of a term $t\in\mathcal{T}_{(\mathcal{V},\mathcal{F})}$}, denoted by $\V(t)$, are defined by:
 \[\V(t)=
@@ -77,9 +90,7 @@ The \define{variables of a term $t\in\mathcal{T}_{(\mathcal{V},\mathcal{F})}$}, 
 \{x\} & \text{if $t=x$}\\ %TODO for some x in V?
 \V(t_1)\cup \V(t_2)\cup\dots\cup \V(t_k) & \text{if $t=f(t_1,t_2,\dots,t_k)$}
 \end{cases}\]
-\end{definition}
 
-\begin{definition}
 The \define{free variables of a formula $\varphi\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$}, denoted by $\FV(\varphi)$, are defined as follows:
 \[\FV(\varphi)=
 \begin{cases} %TODO for some?
