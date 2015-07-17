@@ -2,12 +2,12 @@
 execute at begin node=$, execute at end node=$,
 every node/.style={opacity=1},
 every child/.style={edge from parent/.style={opacity=0}}]
-\node(e) {\vdashf \falses} [sibling distance=7cm] 
+\node(e) {\vdashf \falses} [sibling distance=8cm] 
 	child [sibling distance=4cm] {node(1) {\vdashf\forall\beta(S(a,\beta)\to\falses)\to\falses} 
 		child {node(11) {\vdashf\forall\alpha(\forall\beta(S(\alpha,\beta)\to\falses)\to\falses)}}}
 	child {node(2) {\vdashf(\forall\beta(S(a,\beta)\to\falses)\to\falses)\to\falses}
 		child {node(21) {\forall\beta(S(a,\beta)\to\falses)\to\falses\vdashf\falses}
-			child[xshift=1cm,sibling distance=8.2cm] {node(211) {S(a,b)\vdashf\falses}
+			child[xshift=1cm,sibling distance=8.8cm] {node(211) {S(a,b)\vdashf\falses}
 				child[xshift=1cm,sibling distance=3.6cm] {node(2111) {S(a,b)\vdashf D(b)}
 					child {node(21111) {S(a,b)\vdashf S(a,b)}}
 					child {node(21112) {S(a,b)\vdashf S(a,b)\to D(b)}

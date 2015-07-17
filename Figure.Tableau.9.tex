@@ -2,28 +2,29 @@
 execute at begin node=$, execute at end node=$,
 every node/.style={opacity=1},
 every child/.style={edge from parent/.style={opacity=0}}]
-\def\dist{0.4cm}
-\node(e) {\vdashf \falses} [sibling distance=2*\dist+4cm] 
-	child {node(1) {\vdashf D(d)} [sibling distance=\dist+2.8cm]
-		child[xshift=2cm] {node(11) {\vdashf R_1(b,d)}}
-		child[xshift=2cm] {node(12) {\vdashf R_1(b,d)\to D(d)} [sibling distance=\dist+3.5cm]
-			child[xshift=2cm] {node(121) {\vdashf S(a,b)}}
-			child[xshift=2cm] {node(122) {\vdashf S(a,b)\to R_1(b,d)\to D(d)} [sibling distance=\dist+4.1cm]
-				child[xshift=2cm] {node(1221) {\vdashf Q(a)}}
-				child[xshift=2cm] {node(1222) {\vdashf Q(a)\to S(a,b)\to R_1(b,d)\to D(d)}
-					child {node(12221) {\vdashf\forall\alpha\beta\delta(Q(\alpha)\to S(\alpha,\beta)\to R_1(\beta,\delta)\to D(\delta))}}}}}}
-	child {node(2) {\vdashf D(d)\to\falses}
-		child {node(21) {D(d)\vdashf\falses}
+\node(e) {\vdashf \falses} [sibling distance=6.4cm] 
+	child {node(1) {\vdashf Q_1(b)} [sibling distance=3.2cm]
+		child[xshift=1.7cm] {node(11) {\vdashf D(a_0)}}
+		child[xshift=1.7cm] {node(12) {\vdashf D(a_0)\to Q_1(b)} [sibling distance=4.5cm]
+			child[xshift=2cm] {node(121) {\vdashf R_1(a,a_0)}}
+			child[xshift=2cm] {node(122) {\vdashf R_1(a,a_0)\to D(a_0)\to Q_1(b)} [sibling distance=5.2cm]
+				child[xshift=2cm] {node(1221) {\vdashf S(a,b)}}
+				child[xshift=2cm] {node(1222) {\vdashf S(a,b)\to R_1(a,a_0)\to D(a_0)\to Q_1(b)} [sibling distance=5.9cm]
+					child[xshift=2cm] {node(12221) {\vdashf Q(a)}}
+					child[xshift=2cm] {node(12222) {\vdashf Q(a)\to S(a,b)\to R_1(a,a_0)\to D(a_0)\to Q_1(b)}
+						child {node(122221) {\vdashf\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to R_1(\alpha,\gamma)\to D(\gamma)\to Q_1(\beta))}}}}}}}
+	child {node(2) {\vdashf Q_1(b)\to\falses}
+		child {node(21) {Q_1(b)\vdashf\falses}
 			child {node[label={[yshift=-0.3cm]above:\vdots}](211) {}}}};
 
 
 %tikz did not want to do this in the loop no idea why
-\coordinate(c1222) at (1222);
-\getwidthofnode{\sright}{12221}
-\draw (c1222)+(-\sright/2,+0.25) -- +(\sright/2,+0.25);
+%\coordinate(c1222) at (1222);
+%\getwidthofnode{\sright}{12221}
+%\draw (c1222)+(-\sright/2,+0.25) -- +(\sright/2,+0.25);
 
 %set of all positions in the tree
-\def\nodes{,1,2,11,12,21,121,122,1221}
+\def\nodes{,1,2,11,12,21,121,122,1221,1222,12222,12221}
 %the yshift does not work on nodes so we create a coordinate for every node
 \foreach \x in \nodes{
 \ifnodedefined{\x}{

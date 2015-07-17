@@ -2,14 +2,15 @@
 execute at begin node=$, execute at end node=$,
 every node/.style={opacity=1},
 every child/.style={edge from parent/.style={opacity=0}}]
-\node(e) {\vdashf \falses} [sibling distance=8cm] 
-	child [sibling distance=3cm] {node(1) {\vdashf P(d,a_0)} 
+\def\dist{0.4cm}
+\node(e) {\vdashf \falses} [sibling distance=2*\dist+8cm] 
+	child [sibling distance=\dist+3cm] {node(1) {\vdashf P(d,a_0)} 
 		child {node(11) {\vdashf R_1(b,d)} }
-		child [sibling distance=3.7cm] {node(12) {\vdashf R_1(b,d)\to Q'(b)} 
+		child [sibling distance=\dist+3.9cm] {node(12) {\vdashf R_1(b,d)\to Q'(b)} 
 			child {node(121) {\vdashf R_1(a,a_0)} }
-			child [sibling distance=4.5cm] {node(122) {\vdashf R_1(a,a_0)\to R_1(b,d)\to Q'(b)} 
+			child [sibling distance=\dist+4.5cm] {node(122) {\vdashf R_1(a,a_0)\to R_1(b,d)\to Q'(b)} 
 				child {node(1221) {\vdashf S(a,b)} }
-				child [sibling distance=5cm] {node(1222) {\vdashf S(a,b)\to R_1(a,a_0)\to R_1(b,d)\to Q'(b)}
+				child [sibling distance=\dist+5cm] {node(1222) {\vdashf S(a,b)\to R_1(a,a_0)\to R_1(b,d)\to Q'(b)}
 					child {node(12221) {\vdashf Q(a)} }
 					child {node(12222) {\vdashf Q(a)\to S(a,b)\to R_1(a,a_0)\to R_1(b,d)\to Q'(b)}
 						child {node(122221) {\vdashf \forall\alpha\beta\gamma\delta(Q(\alpha)\to S(\alpha,\beta)\to R_1(\alpha,\gamma)\to R_1(\beta,\delta)\to P(\delta,\gamma))}}}

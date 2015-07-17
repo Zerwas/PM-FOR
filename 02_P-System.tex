@@ -163,9 +163,30 @@ Since register two should not change we only need $R_2(b,b_0)$.
 %TODO
 Now we have $\Gamma_C$ (Since $P(a_{i-1},a_i)$ is already in $\Gamma_D$) and can deduce \false{} by induction hypothesis.\\
 \underline{Case $r=-(Q,1,Q_1,Q_2)$}
-$r1=0$
+%TODO note that r2 does not change same for all cases
+\\\uline{$r_1=0$}
 
 \begin{figure}[H]
 \input{Figure.Tableau.7}
 \end{figure}
+
+$r_1$ stays zero
+
+\begin{figure}[H]
+\input{Figure.Tableau.8}
+\end{figure}
+\uline{$r_1\geq1$}
+
+new state $Q_1$
+
+\begin{figure}[H]
+\input{Figure.Tableau.9}
+\end{figure}
+
+decrement $r_1$
+
+\begin{figure}[H]
+\input{Figure.Tableau.10}
+\end{figure}
+
 \end{proof}
