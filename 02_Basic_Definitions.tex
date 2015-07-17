@@ -56,7 +56,7 @@ $\lambda2$ deduction Rules
 &(\lambda\text{-Introduction}) &&\frac{\Gamma,x:t_1\vdash e:t_2}{\Gamma\vdash \lambda x.e:t_1\to t_2}\\
 &(\lambda\text{-Elimination}) &&\frac{\Gamma\vdash e_1:t_1\to t_2 \hspace{0.4cm}\Gamma\vdash e_2:t_1}{\Gamma\vdash e_1e_2:t_2}\\
 &(\forall\text{-Introduction}) &&\frac{\Gamma\vdash e:t}{\Gamma\vdash \Lambda\alpha.e:\forall\alpha.t} &&\alpha\notin\FV(\Gamma) \\
-&(\forall\text{-Elimination}) &&\frac{\Gamma\vdash e:\forall\alpha.t }{\Gamma\vdash e\,t':t\left[ \alpha:=t'\right] }
+&(\forall\text{-Elimination}) &&\frac{\Gamma\vdash e:\forall\alpha.t }{\Gamma\vdash e\,t':t\left[ \alpha:=t'\right] } && t'\in\lambdaTypes %TODO  t'\in\lambdaTypes necessary?
 \end{align*}
 \endgroup
 \end{mdframed}

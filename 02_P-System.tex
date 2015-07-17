@@ -1,9 +1,10 @@
 \section{System P}
 \subsection{Definitions}
-Let $\VarP=\{\alpha,\beta,\dots\}$ be a countably infinite set (of variables) and $\RelP=\{\false^{(0)},P^{(2)},Q^{(2)},\dots\}$ a ranked set (of predicate symbols) such that $\RelP^{(0)}=\{\false\}$, $\RelP^{(2)}=\{P,Q,\dots\}$ is a countably infinite set, and $\RelP^{(k)}=\emptyset$ for all $k\in\mathbb{N}\setminus\{0,2\}$.
-A first-order logic formula $\varphi$ over $(\VarP,\emptyset,\RelP)$ is an %TODO sets are infinite
+%TODO meintion the convention that a free and \alpha not or change the convention :D
+In the following let $\VarP=\{\alpha,a,\beta,b,\dots\}$ be a countably infinite set (of variables) and $\RelP=\{\false^{(0)},P^{(2)},Q^{(2)},\dots\}$ a ranked set (of predicate symbols) such that $\RelP^{(0)}=\{\false\}$, $\RelP^{(2)}=\{P,Q,\dots\}$ is a countably infinite set, and $\RelP^{(k)}=\emptyset$ for all $k\in\mathbb{N}\setminus\{0,2\}$.
+A first-order logic formula $\varphi$ over $(\VarP,\emptyset,\RelP)$ is an 
 \begin{description} %TODO \overrightarrow{\alpha}
-\item[atomic formula] if $\varphi=\false$ or $\varphi=P(\alpha,\beta)$ for some $P\in\RelP$ and $\alpha,\beta\in\VarP$.
+\item[atomic formula] if $\varphi=\false$ or $\varphi=P(a,b)$ for some $P\in\RelP$ and $a,b\in\VarP$.
 \item[universal formula] if $\varphi=\forall\overrightarrow{\alpha}(A_1\to A_2 \to\dots\to A_n)$ where $A_i$ is an atomic formula for $i\in\left[n\right]$, $A_i\neq\false$ for $i\in\left[n-1\right]$ and for each $\alpha\in\FV(\varphi)\cap\FV(A_n)$ there exists an $i\in\left[n-1\right]$ such that $\alpha\in\FV(A_i)$.
 \item[existential formula] if there exits $n\ge0$,  atomic formulas $A_i\neq\false$ for $i\in\left[n\right]$ such that $\varphi=\forall\overrightarrow{\alpha}(A_1\to A_2 \to\dots\to A_{n-1}\to\forall\beta(A_n\to\false)\to\false)$.
 \end{description}
@@ -17,7 +18,8 @@ Deduction Rules
 &(\rightarrow\text{-Introduction}) &&\frac{\Gamma,A\vdash B}{\Gamma\vdash A\to B}\\
 &(\rightarrow\text{-Elimination}) &&\frac{\Gamma\vdash A\to B \hspace{0.4cm}\Gamma\vdash A}{\Gamma\vdash B}\\
 &(\forall\text{-Introduction}) &&\frac{\Gamma\vdash B}{\Gamma\vdash \forall\alpha B} &&\alpha\notin\FV(\Gamma) \\
-&(\forall\text{-Elimination}) &&\frac{\Gamma\vdash \forall\alpha B }{\Gamma\vdash B\left[ \alpha:=b\right] } %TODO dot after \alpha?
+&(\forall\text{-Elimination}) &&\frac{\Gamma\vdash \forall\alpha B }{\Gamma\vdash B\left[ \alpha:=b\right] }
+&& b\in\VarP %TODO dot after \alpha?, b\in\VarP necessary?
 \end{align*}
 \endgroup
 \end{mdframed}
