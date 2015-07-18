@@ -124,7 +124,7 @@ Q y(\psi\left[x:=t'\right]) & \text{if $\varphi=Q y\psi$, $Q\in\{\forall,\exists
 Now we come to the semantics of first-order formulas.
 \begin{definition}
 An \define{interpretation $I$ over $(\mathcal{V},\mathcal{F},\mathcal{P})$} is a triple $(\Delta,\cdot^I,\omega)$
-\begin{tabular}{llp{0.78\linewidth}}
+	\begin{tabular}{llp{0.78\linewidth}}
 		where & $\Delta$      & is a nonempty set (which we call  domain),                                                                                                       \\
 		      & $\cdot^I$ & is a function such that\\
 		      & & $f^I:\Delta^k\to\Delta$  is a function for every $k\in\mathbb{N}$, $f\in\mathcal{F}^{(k)}$ and \\
@@ -169,4 +169,34 @@ Let $\Gamma$ be a finite set of first-oder formulas.
 \item The formula $\varphi$ is a \define{semantic consequence} of $\Gamma$, denoted by $\Gamma\folmodels\varphi$, if every model of $\Gamma$ is also a model of $\varphi$.
 \item The free variables of $\Gamma$, denoted by $\FV(\Gamma)$, are $\bigcup\{\FV(\varphi)\mid \varphi\in \Gamma\}$.
 \end{description}
+\end{definition}
+
+\subsection{two-counter automaton} %TODO maby later in System P proof
+%TODO a two counter automaton has two registers in which natural numbers are stored
+We will use a version of two-counter automaton which only has two types of transitions. First it can increment a register and second it can try to decrement a register and jump of the register is already zero. Formally:
+\begin{definition}
+	A \define{deterministic two-counter automaton} is a 4-tuple $M=(\autStates,q_0,q_f,\autRules)$,
+	\begin{tabular}{llp{0.78\linewidth}}
+		where & $\autStates$      & is a finite set (of states),\\
+		      & $q_0$ & is in $\autStates$ (the initial state),\\
+		      & $q_f$ & is in $\autStates$ (the final state), and\\
+		      & $\autRules$ & is a function from $\autStates\setminus\{q_f\}$ to $\mathcal{R}_\autStates$,\\
+		      & & where $\mathcal{R}_\autStates=\{+(i,q')\mid i\in\{0,1\},q'\in\autStates\}$\\
+		      & &~ \hphantom{where $\mathcal{R}_\autStates$}$\cup\{-(i,q_1,q_2)\mid i\in\{0,1\},q_1,q_2\in\autStates\}$
+	\end{tabular}\\
+	An \define{ID} of our automaton is a triple $\langle q,m,n\rangle$, where $q\in\autStates$ and $m,n\in\mathbb{N}$.
+	Let $r$ be in $\autRules(\autStates\setminus\{q_f\})$, then $\Rightarrow^r_M$ is a binary relation on the ID's of $M$ such that
+	\begin{align*}
+	\hspace{3cm}& \hspace{-3cm}\langle q,m,n\rangle\Rightarrow^r_M\langle q',m',n'\rangle~\text{iff}\\
+	& q\neq q_f, r=\autRules(q),~\text{and}\\
+	& \text{if}~r=+(0,p)~\text{then}~q'=p, m'=m+1,~\text{and}~n'=n\\
+	& \text{if}~r=+(1,p)~\text{then}~q'=p, m'=m,~\text{and}~n'=n+1\\
+	& \text{if}~r=-(0,p_1,p_2)~\text{then}\\
+	& \hphantom{\text{if}~r=-(0,p_1,p_2)~} \text{if}~ m=0 ~\text{then}~q'=p_2, m'=0,~\text{and}~n'=n\\
+	& \hphantom{\text{if}~r=-(0,p_1,p_2)~} \text{if}~ m\geq1 ~\text{then}~q'=p_1, m'=m-1,~\text{and}~n'=n\\
+	& \text{if}~r=-(1,p_1,p_2)~\text{then}\\
+	& \hphantom{\text{if}~r=-(1,p_1,p_2)~} \text{if}~ n=0 ~\text{then}~q'=p_2, m'=m,~\text{and}~n'=0\\
+	& \hphantom{\text{if}~r=-(1,p_1,p_2)~} \text{if}~ n\geq1 ~\text{then}~q'=p_1, m'=m,~\text{and}~n'=n-1\\
+	\end{align*}
+	Finally $\Rightarrow_M$ is defined as $\bigcup_{r\in\autRules(Q\setminus\{q_f\})}\Rightarrow^r_M$.
 \end{definition}
