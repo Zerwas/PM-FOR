@@ -185,18 +185,17 @@ We will use a version of two-counter automaton which only has two types of trans
 		      & &~ \hphantom{where $\mathcal{R}_\autStates$}$\cup\{-(i,q_1,q_2)\mid i\in\{0,1\},q_1,q_2\in\autStates\}$
 	\end{tabular}\\
 	An \define{ID} of our automaton is a triple $\langle q,m,n\rangle$, where $q\in\autStates$ and $m,n\in\mathbb{N}$.
-	Let $r$ be in $\autRules(\autStates\setminus\{q_f\})$, then $\Rightarrow^r_M$ is a binary relation on the ID's of $M$ such that
-	\begin{align*}
-	\hspace{3cm}& \hspace{-3cm}\langle q,m,n\rangle\Rightarrow^r_M\langle q',m',n'\rangle~\text{iff}\\
-	& q\neq q_f, r=\autRules(q),~\text{and}\\
-	& \text{if}~r=+(0,p)~\text{then}~q'=p, m'=m+1,~\text{and}~n'=n\\
-	& \text{if}~r=+(1,p)~\text{then}~q'=p, m'=m,~\text{and}~n'=n+1\\
-	& \text{if}~r=-(0,p_1,p_2)~\text{then}\\
-	& \hphantom{\text{if}~r=-(0,p_1,p_2)~} \text{if}~ m=0 ~\text{then}~q'=p_2, m'=0,~\text{and}~n'=n\\
-	& \hphantom{\text{if}~r=-(0,p_1,p_2)~} \text{if}~ m\geq1 ~\text{then}~q'=p_1, m'=m-1,~\text{and}~n'=n\\
-	& \text{if}~r=-(1,p_1,p_2)~\text{then}\\
-	& \hphantom{\text{if}~r=-(1,p_1,p_2)~} \text{if}~ n=0 ~\text{then}~q'=p_2, m'=m,~\text{and}~n'=0\\
-	& \hphantom{\text{if}~r=-(1,p_1,p_2)~} \text{if}~ n\geq1 ~\text{then}~q'=p_1, m'=m,~\text{and}~n'=n-1\\
-	\end{align*}
+	Let $r$ be in $\autRules(\autStates\setminus\{q_f\})$, then $\Rightarrow^r_M$ is a binary relation on the ID's of $M$ such that two ID's $\langle q,m,n\rangle$, $\langle q',m',n'\rangle$ of $M$ are in the in the relation if the following conditions hold:
+	\begin{itemize}
+		\item $q\neq q_f$, $r=\autRules(q)$,
+		\item if $r=+(0,p)$ for some $p\in \autStates$ then $q'=p$, $m'=m+1$, and $n'=n$,
+		\item if $r=+(1,p)$ for some $p\in \autStates$ then $q'=p$, $m'=m$, and $n'=n+1$,
+		\item if $r=-(0,p_1,p_2)$ for some $p_1,p_2\in \autStates$ then
+			\subitem if $m=0$ then $q'=p_2$, $m'=0$, and $n'=n$,
+			\subitem if $m\geq1$ then $q'=p_1$, $m'=m-1$, and $n'=n$,
+		\item if $r=-(1,p_1,p_2)$ for some $p_1,p_2\in \autStates$ then
+			\subitem if $n=0$ then $q'=p_2$, $m'=m$, and $n'=0$,
+			\subitem if $n\geq1$ then $q'=p_1$, $m'=m$, and $n'=n-1$.
+	\end{itemize}
 	Finally $\Rightarrow_M$ is defined as $\bigcup_{r\in\autRules(Q\setminus\{q_f\})}\Rightarrow^r_M$.
 \end{definition}
