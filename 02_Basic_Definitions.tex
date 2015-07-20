@@ -4,171 +4,171 @@ We will denote the set $\{1,\dots,n\}$ by $\left[n\right]$.
 $\emph{FV}(\Gamma)=\bigcup\{\emph{FV}(t)\mid (x:t)\in \Gamma\}$\\
 In the following let $\lambdaTypVar=\{\alpha,\beta,\dots\}$ be a countable set (of type-variables) and $\lambdaValVar=\{x_1,x_2,\dots\}$ be a countable set (of value-variables).
 \begin{definition}
-The \define{set of all $\lambda2$ types over \lambdaTypVar}, denoted by \lambdaTypes{}, is the smallest set T satisfying the following conditions:
-\begin{itemize}
-\item $\lambdaTypVar\subseteq\text{T}$,
-\item if $t_1,t_2\in\text{T}$ then $t_1\to t_2\in\text{T}$, and
-\item if $t\in\text{T}$ and $\alpha\in\lambdaTypVar$ then $\forall\alpha.t\in\text{T}$.
-\end{itemize}
+	The \define{set of all $\lambda2$ types over \lambdaTypVar}, denoted by \lambdaTypes{}, is the smallest set T satisfying the following conditions:
+	\begin{itemize}
+		\item $\lambdaTypVar\subseteq\text{T}$,
+		\item if $t_1,t_2\in\text{T}$ then $t_1\to t_2\in\text{T}$, and
+		\item if $t\in\text{T}$ and $\alpha\in\lambdaTypVar$ then $\forall\alpha.t\in\text{T}$.
+	\end{itemize}
 \end{definition}
 
 \begin{definition}
-The \define{set of all $\lambda2$ terms over \lambdaTypVar{} and \lambdaValVar}, denoted by \lambdaTerms{}, is the smallest set $\Lambda_T$ satisfying the following conditions: %TODO \Lambda_T bad name + lambda2 explicit
-\begin{itemize}
-\item $\lambdaValVar\subseteq\Lambda_T$,
-\item if $e_1,e_2\in\Lambda_T$ then $e_1e_2\in\Lambda_T$,
-\item if $x\in\lambdaValVar$, $t\in\lambdaTypes$, and $e\in\Lambda_T$ then $\lambda x:t.e\in\Lambda_T$,
-\item if $\alpha\in\lambdaTypVar$ and $e\in\Lambda_T$ then $\Lambda \alpha.e\in\Lambda_T$, and
-\item if $e\in\Lambda_T$ and $t\in\lambdaTypes$ then $e\,t\in\Lambda_T$.
-\end{itemize}
+	The \define{set of all $\lambda2$ terms over \lambdaTypVar{} and \lambdaValVar}, denoted by \lambdaTerms{}, is the smallest set $\Lambda_T$ satisfying the following conditions: %TODO \Lambda_T bad name + lambda2 explicit
+	\begin{itemize}
+		\item $\lambdaValVar\subseteq\Lambda_T$,
+		\item if $e_1,e_2\in\Lambda_T$ then $e_1e_2\in\Lambda_T$,
+		\item if $x\in\lambdaValVar$, $t\in\lambdaTypes$, and $e\in\Lambda_T$ then $\lambda x:t.e\in\Lambda_T$,
+		\item if $\alpha\in\lambdaTypVar$ and $e\in\Lambda_T$ then $\Lambda \alpha.e\in\Lambda_T$, and
+		\item if $e\in\Lambda_T$ and $t\in\lambdaTypes$ then $e\,t\in\Lambda_T$.
+	\end{itemize}
 \end{definition}
 \begin{definition}
-Let $e\in\lambdaTerms$. The \define{free variables of $e$}, denoted by $\FV(e)$, are defined inductively as follows:
-\[\FV(e)=
-\begin{cases}
-\{x\} & \text{if $e=x$}\\ %TODO, for some $x\in\lambdaValVar$?
-\FV(e_1)\cup\FV(e_2) & \text{if $e=e_1e_2$}\\
-\FV(e')\setminus\{x\} & \text{if $e=\lambda x:t.e'$}\\
-\FV(e') & \text{if $e=\Lambda\alpha.e'$}\\
-\FV(e') & \text{if $e=e'\,t$}\\
-\end{cases}\]
+	Let $e\in\lambdaTerms$. The \define{free variables of $e$}, denoted by $\FV(e)$, are defined inductively as follows:
+	\[\FV(e)=
+		\begin{cases}
+			\{x\}                 & \text{if $e=x$}                \\ %TODO, for some $x\in\lambdaValVar$?
+			\FV(e_1)\cup\FV(e_2)  & \text{if $e=e_1e_2$}           \\
+			\FV(e')\setminus\{x\} & \text{if $e=\lambda x:t.e'$}   \\
+			\FV(e')               & \text{if $e=\Lambda\alpha.e'$} \\
+			\FV(e')               & \text{if $e=e'\,t$}            \\
+		\end{cases}\]
 \end{definition}
 Or is this definition better?
 \begin{definition}
-Let $e\in\lambdaTerms$. The \define{free variables of $e$}, denoted by $\FV(e)$, are defined inductively as follows:
-\begin{align*}
-\FV(y)&=\{x\}\\
-\FV(e_1e_2)&=\FV(e_1)\cup\FV(e_2)\\
-\FV(\lambda x:t.e')&=\FV(e')\setminus\{x\}\\
-\FV(\Lambda\alpha.e')&=\FV(e')\\
-\FV(e'\,t)&=\FV(e')\\
-\end{align*}
+	Let $e\in\lambdaTerms$. The \define{free variables of $e$}, denoted by $\FV(e)$, are defined inductively as follows:
+	\begin{align*}
+		\FV(y)                & =\{x\}                 \\
+		\FV(e_1e_2)           & =\FV(e_1)\cup\FV(e_2)  \\
+		\FV(\lambda x:t.e')   & =\FV(e')\setminus\{x\} \\
+		\FV(\Lambda\alpha.e') & =\FV(e')               \\
+		\FV(e'\,t)            & =\FV(e')               \\
+	\end{align*}
 \end{definition}
 \begin{definition} 
-A \define{basis} is a finite subset of $\lambdaValVar\times\lambdaTerms$ %TODO continue ... 
+	A \define{basis} is a finite subset of $\lambdaValVar\times\lambdaTerms$ %TODO continue ... 
 \end{definition}
 $\lambda2$ deduction Rules
 \begin{mdframed} 
-\begingroup
-\addtolength{\jot}{0.3cm}
-\begin{align*}
-&(\text{Axiom}) &&\Gamma,x:t\vdash x:t\vphantom{\frac{t_1}{t_1}}\\
-&(\lambda\text{-Introduction}) &&\frac{\Gamma,x:t_1\vdash e:t_2}{\Gamma\vdash \lambda x.e:t_1\to t_2}\\
-&(\lambda\text{-Elimination}) &&\frac{\Gamma\vdash e_1:t_1\to t_2 \hspace{0.4cm}\Gamma\vdash e_2:t_1}{\Gamma\vdash e_1e_2:t_2}\\
-&(\forall\text{-Introduction}) &&\frac{\Gamma\vdash e:t}{\Gamma\vdash \Lambda\alpha.e:\forall\alpha.t} &&\alpha\notin\FV(\Gamma) \\
-&(\forall\text{-Elimination}) &&\frac{\Gamma\vdash e:\forall\alpha.t }{\Gamma\vdash e\,t':t\left[ \alpha:=t'\right] } && t'\in\lambdaTypes %TODO  t'\in\lambdaTypes necessary?
-\end{align*}
-\endgroup
+	\begingroup
+	\addtolength{\jot}{0.3cm}
+	\begin{align*}
+		&(\text{Axiom}) &&\Gamma,x:t\vdash x:t\vphantom{\frac{t_1}{t_1}}\\
+		&(\lambda\text{-Introduction}) &&\frac{\Gamma,x:t_1\vdash e:t_2}{\Gamma\vdash \lambda x.e:t_1\to t_2}\\
+		&(\lambda\text{-Elimination}) &&\frac{\Gamma\vdash e_1:t_1\to t_2 \hspace{0.4cm}\Gamma\vdash e_2:t_1}{\Gamma\vdash e_1e_2:t_2}\\
+& (\forall\text{-Introduction}) &   & \frac{\Gamma\vdash e:t}{\Gamma\vdash \Lambda\alpha.e:\forall\alpha.t}                 &   & \alpha\notin\FV(\Gamma) \\
+& (\forall\text{-Elimination})  &   & \frac{\Gamma\vdash e:\forall\alpha.t }{\Gamma\vdash e\,t':t\left[ \alpha:=t'\right] } &   & t'\in\lambdaTypes %TODO  t'\in\lambdaTypes necessary?   
+	\end{align*}
+	\endgroup
 \end{mdframed}
 
 \subsection{first-order logic}
 \begin{definition}
-A \define{ranked set} is a tuple $(\Sigma,\rank)$, where $\Sigma$ is a countable set and $\rank:\Sigma\to\mathbb{N}$ is a function that maps every symbol from $\Sigma$ to a natural number (its rank).
+	A \define{ranked set} is a tuple $(\Sigma,\rank)$, where $\Sigma$ is a countable set and $\rank:\Sigma\to\mathbb{N}$ is a function that maps every symbol from $\Sigma$ to a natural number (its rank).
 \end{definition}
 If the function \rank{} is understood we will just write $\Sigma$ instead of $(\Sigma,\rank)$. The set of all elements with a certain rank $k$ in $\Sigma$, denoted by $\Sigma^{(k)}$, is defined by $\Sigma^{(k)}:=rk^{-1}(k)$. In the following we will write $\Sigma=\{P^{(0)},Q^{(3)}\}$ to say that $\Sigma=\{P,Q\}$, $\rank(P)=0$, and $\rank(Q)=3$.
 
 In the following let $\mathcal{V}=\{x_0,x_1,\dots\}$ be a countable set (of variables), $\mathcal{F}$ a ranked set (of function symbols), and $\mathcal{P}$ a ranked set (of predicate symbols).
 \begin{definition}
-The set of \define{terms over $(\mathcal{V},\mathcal{F})$}, denoted by $\mathcal{T}_{(\mathcal{V},\mathcal{F})}$, is the smallest set $\mathcal{T}$ satisfying the following conditions:
-\begin{itemize}
-\item $\mathcal{V} \subseteq \mathcal{T}$, and
-\item for every $k\in\mathbb{N}$ if $f\in\mathcal{F}^{(k)}$ and $t_1,t_2,\dots,t_k\in\mathcal{T}$ then $f(t_1,t_2,\dots,t_k)\in\mathcal{T}$.
-\end{itemize}
-The set of \define{first-order formulas over $(\mathcal{V},\mathcal{F},\mathcal{P})$}, denoted by $\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$, is the smallest set $\mathcal{L}$ satisfying the following conditions:
-\begin{itemize}
-\item for every $k\in\mathbb{N}$ if $P\in\mathcal{P}^{(k)}$ and $t_1,t_2,\dots,t_k\in\mathcal{T}_{(\mathcal{V},\mathcal{F})}$ then $P(t_1,t_2,\dots,t_k)\in\mathcal{L}$.
-\item If $\varphi,\psi\in\mathcal{L}$ then $(\varphi\wedge\psi)$, $(\varphi\vee\psi)$, $\neg \varphi\in\mathcal{L}$, and
-\item if $x\in\mathcal{V}$ and $\varphi\in\mathcal{L}$ then $\exists x\varphi$, $\forall x\varphi\in\mathcal{L}$. %TODO dots?
-\end{itemize}
+	The set of \define{terms over $(\mathcal{V},\mathcal{F})$}, denoted by $\mathcal{T}_{(\mathcal{V},\mathcal{F})}$, is the smallest set $\mathcal{T}$ satisfying the following conditions:
+	\begin{itemize}
+		\item $\mathcal{V} \subseteq \mathcal{T}$, and
+		\item for every $k\in\mathbb{N}$ if $f\in\mathcal{F}^{(k)}$ and $t_1,t_2,\dots,t_k\in\mathcal{T}$ then $f(t_1,t_2,\dots,t_k)\in\mathcal{T}$.
+	\end{itemize}
+	The set of \define{first-order formulas over $(\mathcal{V},\mathcal{F},\mathcal{P})$}, denoted by $\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$, is the smallest set $\mathcal{L}$ satisfying the following conditions:
+	\begin{itemize}
+		\item for every $k\in\mathbb{N}$ if $P\in\mathcal{P}^{(k)}$ and $t_1,t_2,\dots,t_k\in\mathcal{T}_{(\mathcal{V},\mathcal{F})}$ then $P(t_1,t_2,\dots,t_k)\in\mathcal{L}$.
+		\item If $\varphi,\psi\in\mathcal{L}$ then $(\varphi\wedge\psi)$, $(\varphi\vee\psi)$, $\neg \varphi\in\mathcal{L}$, and
+		\item if $x\in\mathcal{V}$ and $\varphi\in\mathcal{L}$ then $\exists x\varphi$, $\forall x\varphi\in\mathcal{L}$. %TODO dots?
+	\end{itemize}
 \end{definition}
 We introduce an additional binary operation $\to$ on formulas, where for some $\varphi$, $\psi\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$ the formula $(\varphi\to\psi)$ is defined as $(\neg\varphi\vee\psi)$.
 
 \begin{definition}
-The \define{variables of a term $t\in\mathcal{T}_{(\mathcal{V},\mathcal{F})}$}, denoted by $\V(t)$, are defined by:
-\[\V(t)=
-\begin{cases}
-\{x\} & \text{if $t=x$}\\ %TODO for some x in V?
-\V(t_1)\cup \V(t_2)\cup\dots\cup \V(t_k) & \text{if $t=f(t_1,t_2,\dots,t_k)$}
-\end{cases}\]
-
-The \define{free variables of a formula $\varphi\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$}, denoted by $\FV(\varphi)$, are defined as follows:
-\[\FV(\varphi)=
-\begin{cases} %TODO for some?
-\V(t_1)\cup \V(t_2)\cup\dots\cup \V(t_k) & \text{if $\varphi=P(t_1,t_2,\dots,t_k)$}\\
-\FV(\varphi_1)\cup\FV(\varphi_2) & \text{if $\varphi=\varphi_1\circ\varphi_2$, $\circ\in\{\wedge,\vee\}$}\\
-\FV(\psi)\setminus\{x\} & \text{if $\varphi=Q x\psi$, $Q\in\{\forall,\exists\}$}
-\end{cases}\]
+	The \define{variables of a term $t\in\mathcal{T}_{(\mathcal{V},\mathcal{F})}$}, denoted by $\V(t)$, are defined by:
+	\[\V(t)=
+		\begin{cases}
+			\{x\}                                    & \text{if $t=x$}                    \\ %TODO for some x in V?
+			\V(t_1)\cup \V(t_2)\cup\dots\cup \V(t_k) & \text{if $t=f(t_1,t_2,\dots,t_k)$} 
+		\end{cases}\]
+	
+	The \define{free variables of a formula $\varphi\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$}, denoted by $\FV(\varphi)$, are defined as follows:
+	\[\FV(\varphi)=
+		\begin{cases} %TODO for some?
+			\V(t_1)\cup \V(t_2)\cup\dots\cup \V(t_k) & \text{if $\varphi=P(t_1,t_2,\dots,t_k)$}                               \\
+			\FV(\varphi_1)\cup\FV(\varphi_2)         & \text{if $\varphi=\varphi_1\circ\varphi_2$, $\circ\in\{\wedge,\vee\}$} \\
+			\FV(\psi)\setminus\{x\}                  & \text{if $\varphi=Q x\psi$, $Q\in\{\forall,\exists\}$}                 
+		\end{cases}\]
 \end{definition}
 
 \begin{definition}
-Let $x$ be in $\mathcal{V}$ and $t,t'\in\mathcal{T}_{(\mathcal{V},\mathcal{F})}$. The \define{substitution of $x$ by $t'$ in $t$}, denoted by $t\left[x:=t'\right]$, is defined as follows:
-\[t\left[x:=t'\right]=
-\begin{cases}
-t' & \text{if $t=x$}\\ 
-y & \text{if $t=y$ and $y\neq x$}\\%TODO for some
-f(t_1\left[x:=t'\right],\dots,t_k\left[x:=t'\right]) & \text{if $t=f(t_1,\dots,t_k)$}
-\end{cases}\]
-
-Now we can lift this definition to formulas, let $\varphi$ be in $\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$. The \define{substitution of $x$ by $t'$ in $\varphi$}, denoted by $\varphi\left[x:=t'\right]$, is defined as follows:
-\[\varphi\left[x:=t'\right]=
-\begin{cases}
-%TODO quantify k?
-P(t_1\left[x:=t'\right],\dots,t_k\left[x:=t'\right]) & \text{if $\varphi=P(t_1,\dots,t_k)$}\\
-\psi\left[x:=t'\right] & \text{if $\varphi=\neg\psi$}\\
-\varphi_1\left[x:=t'\right]\circ\varphi_2\left[x:=t'\right] & \text{if $\varphi=(\varphi_1\circ\varphi_2)$, $\circ\in\{\wedge,\vee\}$}\\
-\varphi & \text{if $\varphi=Q x\psi$, $Q\in\{\forall,\exists\}$}\\
-Q y(\psi\left[x:=t'\right]) & \text{if $\varphi=Q y\psi$, $Q\in\{\forall,\exists\}$ and $y\neq x$}
-\end{cases}\]
+	Let $x$ be in $\mathcal{V}$ and $t,t'\in\mathcal{T}_{(\mathcal{V},\mathcal{F})}$. The \define{substitution of $x$ by $t'$ in $t$}, denoted by $t\left[x:=t'\right]$, is defined as follows:
+	\[t\left[x:=t'\right]=
+		\begin{cases}
+			t'                                                   & \text{if $t=x$}                \\ 
+			y                                                    & \text{if $t=y$ and $y\neq x$}  \\%TODO for some
+			f(t_1\left[x:=t'\right],\dots,t_k\left[x:=t'\right]) & \text{if $t=f(t_1,\dots,t_k)$} 
+		\end{cases}\]
+	
+	Now we can lift this definition to formulas, let $\varphi$ be in $\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$. The \define{substitution of $x$ by $t'$ in $\varphi$}, denoted by $\varphi\left[x:=t'\right]$, is defined as follows:
+	\[\varphi\left[x:=t'\right]=
+		\begin{cases}
+			%TODO quantify k?
+			P(t_1\left[x:=t'\right],\dots,t_k\left[x:=t'\right])        & \text{if $\varphi=P(t_1,\dots,t_k)$}                                     \\
+			\psi\left[x:=t'\right]                                      & \text{if $\varphi=\neg\psi$}                                             \\
+			\varphi_1\left[x:=t'\right]\circ\varphi_2\left[x:=t'\right] & \text{if $\varphi=(\varphi_1\circ\varphi_2)$, $\circ\in\{\wedge,\vee\}$} \\
+			\varphi                                                     & \text{if $\varphi=Q x\psi$, $Q\in\{\forall,\exists\}$}                   \\
+			Q y(\psi\left[x:=t'\right])                                 & \text{if $\varphi=Q y\psi$, $Q\in\{\forall,\exists\}$ and $y\neq x$}     
+		\end{cases}\]
 
 \end{definition}
 Now we come to the semantics of first-order formulas.
 \begin{definition}
-An \define{interpretation $I$ over $(\mathcal{V},\mathcal{F},\mathcal{P})$} is a triple $(\Delta,\cdot^I,\omega)$
+	An \define{interpretation $I$ over $(\mathcal{V},\mathcal{F},\mathcal{P})$} is a triple $(\Delta,\cdot^I,\omega)$
 	\begin{tabular}{llp{0.78\linewidth}}
-		where & $\Delta$      & is a nonempty set (which we call  domain),                                                                                                       \\
-		      & $\cdot^I$ & is a function such that\\
-		      & & $f^I:\Delta^k\to\Delta$  is a function for every $k\in\mathbb{N}$, $f\in\mathcal{F}^{(k)}$ and \\
-		      & & $P^I\subseteq\Delta^k$ is a relation for every $k\in\mathbb{N}$, $f\in\mathcal{P}^{(k)}$ \\
-		      & $\omega$ & is a function from $\mathcal{V}$ to $\Delta$.                       
+		where & $\Delta$  & is a nonempty set (which we call  domain),                                                     \\
+& $\cdot^I$ & is a function such that                                                                        \\
+&           & $f^I:\Delta^k\to\Delta$  is a function for every $k\in\mathbb{N}$, $f\in\mathcal{F}^{(k)}$ and \\
+&           & $P^I\subseteq\Delta^k$ is a relation for every $k\in\mathbb{N}$, $f\in\mathcal{P}^{(k)}$       \\
+& $\omega$  & is a function from $\mathcal{V}$ to $\Delta$.                                                  
 	\end{tabular}
 \end{definition}
 Let $I=(\Delta,\cdot^I,\omega)$ be an interpretation, $x\in\mathcal{V}$, and $d\in\Delta$ the interpretation $I\left[x\to d\right]$ is defined as $(\Delta,\cdot^I,\omega\left[x\to d\right])$ where
 \[(\omega\left[x\to d\right])(y)=
-\begin{cases}
-d & \text{if $y=x$}\\
-\omega(y) & \text{otherwise.}
-\end{cases}\]
+	\begin{cases}
+		d         & \text{if $y=x$}   \\
+		\omega(y) & \text{otherwise.} 
+	\end{cases}\]
 \begin{definition}
-Let $I=(\Delta,\cdot^I,\omega)$ be an interpretation and $t$ a term the \define{interpretation of $t$ under $I$}, denoted by $t^I$, is defined as follows:
-\[t^I=
-\begin{cases}
-\omega(x) & \text{if $t=x$}\\
-f^I(t^I_1,\dots,t^I_k) & \text{if $t=f(t_1,\dots,t_k)$}
-\end{cases}\]
+	Let $I=(\Delta,\cdot^I,\omega)$ be an interpretation and $t$ a term the \define{interpretation of $t$ under $I$}, denoted by $t^I$, is defined as follows:
+	\[t^I=
+		\begin{cases}
+			\omega(x)              & \text{if $t=x$}                \\
+			f^I(t^I_1,\dots,t^I_k) & \text{if $t=f(t_1,\dots,t_k)$} 
+		\end{cases}\]
 \end{definition}
 \begin{definition}
-Let $I=(\Delta,\cdot^I,\omega)$ be an interpretation and $\varphi$ a formula the \define{interpretation of $\varphi$ under $I$}, denoted by $\varphi^I$, is defined recursively as follows:
-\[\varphi^I=
-\begin{cases}
-%TODO quantify k?
-\top & \text{if $\varphi=P(t_1,\dots,t_k)$ and $(t^I_1,\dots,t^I_k)\in P^I$}\\
-\bot & \text{if $\varphi=P(t_1,\dots,t_k)$ and $(t^I_1,\dots,t^I_k)\notin P^I$}\\
-\text{not}~\psi^I & \text{if $\varphi=\neg\psi$}\\
-\varphi^I_1~\text{and}~\varphi^I_2 & \text{if $\varphi=(\varphi_1\wedge\varphi_2)$}\\
-\varphi^I_1~\text{or}~\varphi^I_2 & \text{if $\varphi=(\varphi_1\vee\varphi_2)$}\\
-%TODO how to handle implies?
-\text{exists $d\in\Delta$}~\psi^{I\left[x\to d\right]} & \text{if $\varphi=\exists x\psi$}\\
-\text{forall $d\in\Delta$}~\psi^{I\left[x\to d\right]} & \text{if $\varphi=\forall x\psi$}\\
-\end{cases}\]
-The interpretation $I$ is a \define{model} of $\varphi$, denoted by $I\models\varphi$, if $\varphi^I=\top$.
+	Let $I=(\Delta,\cdot^I,\omega)$ be an interpretation and $\varphi$ a formula the \define{interpretation of $\varphi$ under $I$}, denoted by $\varphi^I$, is defined recursively as follows:
+	\[\varphi^I=
+		\begin{cases}
+			%TODO quantify k?
+			\top                                                   & \text{if $\varphi=P(t_1,\dots,t_k)$ and $(t^I_1,\dots,t^I_k)\in P^I$}    \\
+			\bot                                                   & \text{if $\varphi=P(t_1,\dots,t_k)$ and $(t^I_1,\dots,t^I_k)\notin P^I$} \\
+			\text{not}~\psi^I                                      & \text{if $\varphi=\neg\psi$}                                             \\
+			\varphi^I_1~\text{and}~\varphi^I_2                     & \text{if $\varphi=(\varphi_1\wedge\varphi_2)$}                           \\
+			\varphi^I_1~\text{or}~\varphi^I_2                      & \text{if $\varphi=(\varphi_1\vee\varphi_2)$}                             \\
+			%TODO how to handle implies?
+			\text{exists $d\in\Delta$}~\psi^{I\left[x\to d\right]} & \text{if $\varphi=\exists x\psi$}                                        \\
+			\text{forall $d\in\Delta$}~\psi^{I\left[x\to d\right]} & \text{if $\varphi=\forall x\psi$}                                        \\
+		\end{cases}\]
+	The interpretation $I$ is a \define{model} of $\varphi$, denoted by $I\models\varphi$, if $\varphi^I=\top$.
 \end{definition}
 \begin{definition} %TODO finite?
-Let $\Gamma$ be a finite set of first-oder formulas.
-\begin{description}
-\item We say that an interpretation $I$ is a \define{model} of $\Gamma$ if $I\models\psi$ for every $\psi$ in $\Gamma$.
-\item The formula $\varphi$ is a \define{semantic consequence} of $\Gamma$, denoted by $\Gamma\folmodels\varphi$, if every model of $\Gamma$ is also a model of $\varphi$.
-\item The free variables of $\Gamma$, denoted by $\FV(\Gamma)$, are $\bigcup\{\FV(\varphi)\mid \varphi\in \Gamma\}$.
-\end{description}
+	Let $\Gamma$ be a finite set of first-oder formulas.
+	\begin{description}
+		\item We say that an interpretation $I$ is a \define{model} of $\Gamma$ if $I\models\psi$ for every $\psi$ in $\Gamma$.
+		\item The formula $\varphi$ is a \define{semantic consequence} of $\Gamma$, denoted by $\Gamma\folmodels\varphi$, if every model of $\Gamma$ is also a model of $\varphi$.
+		\item The free variables of $\Gamma$, denoted by $\FV(\Gamma)$, are $\bigcup\{\FV(\varphi)\mid \varphi\in \Gamma\}$.
+	\end{description}
 \end{definition}
 
 \subsection{two-counter automaton} %TODO maby later in System P proof
@@ -177,35 +177,35 @@ We will use a version of two-counter automaton which only has two types of trans
 \begin{definition}
 	A \define{deterministic two-counter automaton} is a 4-tuple $M=(\autStates,q_0,q_f,\autRules)$,
 	\begin{tabular}{llp{0.78\linewidth}}
-		where & $\autStates$      & is a finite set (of states),\\
-		      & $q_0$ & is in $\autStates$ (the initial state),\\
-		      & $q_f$ & is in $\autStates$ (the final state), and\\
-		      & $\autRules$ & is a function from $\autStates\setminus\{q_f\}$ to $\mathcal{R}_\autStates$,\\
-		      & & where $\mathcal{R}_\autStates=\{+(i,q')\mid i\in\{0,1\},q'\in\autStates\}$\\
-		      & &~ \hphantom{where $\mathcal{R}_\autStates$}$\cup\{-(i,q_1,q_2)\mid i\in\{0,1\},q_1,q_2\in\autStates\}$
+		where & $\autStates$ & is a finite set (of states),                                                                           \\
+& $q_0$        & is in $\autStates$ (the initial state),                                                                \\
+& $q_f$        & is in $\autStates$ (the final state), and                                                              \\
+& $\autRules$  & is a function from $\autStates\setminus\{q_f\}$ to $\mathcal{R}_\autStates$,                           \\
+&              & where $\mathcal{R}_\autStates=\{+(i,q')\mid i\in\{0,1\},q'\in\autStates\}$                             \\
+&              & ~ \hphantom{where $\mathcal{R}_\autStates$}$\cup\{-(i,q_1,q_2)\mid i\in\{0,1\},q_1,q_2\in\autStates\}$ 
 	\end{tabular}\\
-	An \define{ID} of our automaton is a triple $\langle q,m,n\rangle$, where $q\in\autStates$ and $m,n\in\mathbb{N}$.
-	Let $r$ be in $\autRules(\autStates\setminus\{q_f\})$, then $\Rightarrow^r_M$ is a binary relation on the ID's of $M$ such that two ID's $\langle q,m,n\rangle$, $\langle q',m',n'\rangle$ of $M$ are in the in the relation if the following conditions hold:
+	A \define{configuration} $C$ of our automaton is a triple $\langle q,m,n\rangle$, where $q\in\autStates$ and $m,n\in\mathbb{N}$.
+	Let $r$ be in $\autRules(\autStates\setminus\{q_f\})$, then $\Rightarrow^r_M$ is a binary relation on the configurations of $M$ such that two configurations $\langle q,m,n\rangle$, $\langle q',m',n'\rangle$ of $M$ are in the in the relation if all of the following conditions hold:
 	\begin{itemize}
 		\item $q\neq q_f$, $r=\autRules(q)$,
 		\item if $r=+(0,p)$ for some $p\in \autStates$ then $q'=p$, $m'=m+1$, and $n'=n$,
 		\item if $r=+(1,p)$ for some $p\in \autStates$ then $q'=p$, $m'=m$, and $n'=n+1$,
 		\item if $r=-(0,p_1,p_2)$ for some $p_1,p_2\in \autStates$ then
-			\subitem if $m=0$ then $q'=p_2$, $m'=0$, and $n'=n$,
-			\subitem if $m\geq1$ then $q'=p_1$, $m'=m-1$, and $n'=n$,
+\subitem if $m=0$ then $q'=p_2$, $m'=0$, and $n'=n$,
+\subitem if $m\geq1$ then $q'=p_1$, $m'=m-1$, and $n'=n$,
 		\item if $r=-(1,p_1,p_2)$ for some $p_1,p_2\in \autStates$ then
-			\subitem if $n=0$ then $q'=p_2$, $m'=m$, and $n'=0$,
-			\subitem if $n\geq1$ then $q'=p_1$, $m'=m$, and $n'=n-1$.
+\subitem if $n=0$ then $q'=p_2$, $m'=m$, and $n'=0$,
+\subitem if $n\geq1$ then $q'=p_1$, $m'=m$, and $n'=n-1$.
 	\end{itemize}
 	The \define{transition relation of $M$}, denoted by $\Rightarrow_M$, is defined as $\bigcup_{r\in\autRules(Q\setminus\{q_f\})}\Rightarrow^r_M$. We denote the transitive reflexive closure of $\Rightarrow_M$ by $\Rightarrow^*_M$
-	
+		
 	Let $m$, $n$ be in $\mathbb{N}$, we say that $M$ terminates on input $(m,n)$ if there exist $m',n'\in\mathbb{N}$ such that $\langle q_0,m,n\rangle\Rightarrow^*_M\langle q_f,m',n'\rangle$.
 \end{definition}
 \begin{definition}
-The halting problem for two-counter automaton, denoted by \autHalt{}, is defined as follows.
-Given a two-counter automaton $M$. 
-\begin{center}
-Does $M$ terminate on input $(0,0)$.
-\end{center}
+	The halting problem for two-counter automaton, denoted by \autHalt{}, is defined as follows.
+	Given a two-counter automaton $M$. 
+	\begin{center}
+		Does $M$ terminate on input $(0,0)$.
+	\end{center}
 \end{definition}
 It is well known that \autHalt{} is undecidable. %TODO find reference with proof

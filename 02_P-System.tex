@@ -1,202 +1,213 @@
 \section{System P}
 \subsection{Definitions}
-%TODO meintion the convention that a free and \alpha not or change the convention :D
+%TODO mention the convention that a free and \alpha not or change the convention :D
 In the following let $\VarP=\{\alpha,a,\beta,b,\dots\}$ be a countably infinite set (of variables) and $\RelP=\{\false^{(0)},P^{(2)},Q^{(2)},\dots\}$ a ranked set (of predicate symbols) such that $\RelP^{(0)}=\{\false\}$, $\RelP^{(2)}=\{P,Q,\dots\}$ is a countably infinite set, and $\RelP^{(k)}=\emptyset$ for all $k\in\mathbb{N}\setminus\{0,2\}$.
 A first-order logic formula $\varphi$ over $(\VarP,\emptyset,\RelP)$ is an 
 \begin{description} %TODO \overrightarrow{\alpha}
-\item[atomic formula] if $\varphi=\false$ or $\varphi=P(a,b)$ for some $P\in\RelP$ and $a,b\in\VarP$.
-\item[universal formula] if $\varphi=\forall\overrightarrow{\alpha}(A_1\to A_2 \to\dots\to A_n)$ where $A_i$ is an atomic formula for $i\in\left[n\right]$, $A_i\neq\false$ for $i\in\left[n-1\right]$ and for each $\alpha\in\FV(\varphi)\cap\FV(A_n)$ there exists an $i\in\left[n-1\right]$ such that $\alpha\in\FV(A_i)$.
-\item[existential formula] if there exits $n\ge0$,  atomic formulas $A_i\neq\false$ for $i\in\left[n\right]$ such that $\varphi=\forall\overrightarrow{\alpha}(A_1\to A_2 \to\dots\to A_{n-1}\to\forall\beta(A_n\to\false)\to\false)$.
+	\item[atomic formula] if $\varphi=\false$ or $\varphi=P(a,b)$ for some $P\in\RelP$ and $a,b\in\VarP$.
+	\item[universal formula] if $\varphi=\forall\overrightarrow{\alpha}(A_1\to A_2 \to\dots\to A_n)$ where $A_i$ is an atomic formula for $i\in\left[n\right]$, $A_i\neq\false$ for $i\in\left[n-1\right]$ and for each $\alpha\in\FV(\varphi)\cap\FV(A_n)$ there exists an $i\in\left[n-1\right]$ such that $\alpha\in\FV(A_i)$.
+	\item[existential formula] if there exits $n\ge0$,  atomic formulas $A_i\neq\false$ for $i\in\left[n\right]$ such that $\varphi=\forall\overrightarrow{\alpha}(A_1\to A_2 \to\dots\to A_{n-1}\to\forall\beta(A_n\to\false)\to\false)$.
 \end{description}
 The set of formulas of System \SysP{} (= set of \SysP-formulas) over $(\VarP,\RelP)$ is the set of all first-order formulas over $(\VarP,\emptyset,\RelP)$ that are either an atomic, universal or existential formula.\\ 
 Deduction Rules
 \begin{mdframed}
-\begingroup%TODO maybe not A and B for terms?
-\addtolength{\jot}{0.3cm}
-\begin{align*}
-&(\text{Axiom}) &&\Gamma,A\vdash A\vphantom{\frac{\Gamma}{\Gamma}}\\
-&(\rightarrow\text{-Introduction}) &&\frac{\Gamma,A\vdash B}{\Gamma\vdash A\to B}\\
-&(\rightarrow\text{-Elimination}) &&\frac{\Gamma\vdash A\to B \hspace{0.4cm}\Gamma\vdash A}{\Gamma\vdash B}\\
-&(\forall\text{-Introduction}) &&\frac{\Gamma\vdash B}{\Gamma\vdash \forall\alpha B} &&\alpha\notin\FV(\Gamma) \\
-&(\forall\text{-Elimination}) &&\frac{\Gamma\vdash \forall\alpha B }{\Gamma\vdash B\left[ \alpha:=b\right] }
-&& b\in\VarP %TODO dot after \alpha?, b\in\VarP necessary?
-\end{align*}
-\endgroup
+	\begingroup%TODO maybe not A and B for terms?
+	\addtolength{\jot}{0.3cm}
+	\begin{align*}
+		&(\text{Axiom}) &&\Gamma,A\vdash A\vphantom{\frac{\Gamma}{\Gamma}}\\
+		&(\rightarrow\text{-Introduction}) &&\frac{\Gamma,A\vdash B}{\Gamma\vdash A\to B}\\
+		&(\rightarrow\text{-Elimination}) &&\frac{\Gamma\vdash A\to B \hspace{0.4cm}\Gamma\vdash A}{\Gamma\vdash B}\\
+		  & (\forall\text{-Introduction}) &   & \frac{\Gamma\vdash B}{\Gamma\vdash \forall\alpha B} &   & \alpha\notin\FV(\Gamma) \\
+		&(\forall\text{-Elimination}) &&\frac{\Gamma\vdash \forall\alpha B }{\Gamma\vdash B\left[ \alpha:=b\right] }
+		&& b\in\VarP %TODO dot after \alpha?, b\in\VarP necessary?
+	\end{align*}
+	\endgroup
 \end{mdframed}
 An Interpretation $I$ of a P formula is a tuple $I=(\Delta,\cdot^I)$ where $\Delta$ is a set (called domain), $P^I\subseteq\Delta^k$ and $\alpha^I\in\Delta$.\dots\\
 If we interpret \false{} with the logical constant false ($\bot$) (denoted by $\vdash_f$) we can add a new deduction rule.
 \begin{mdframed}
-\begin{align*}
-&(\exists\text{-Introduction}) &&\frac
-{\Gamma,A\left[\alpha:=a\right]\vdashf B}
-{\Gamma,\forall\alpha(A\to\false)\to\false\vdashf B} && a\notin\emph{FV}(\Gamma,A,B)
-\end{align*}
+	\begin{align*}
+		  & (\exists\text{-Introduction}) &   & \frac 
+		{\Gamma,A\left[\alpha:=a\right]\vdashf B}
+		{\Gamma,\forall\alpha(A\to\false)\to\false\vdashf B} && a\notin\emph{FV}(\Gamma,A,B)
+	\end{align*}
 \end{mdframed}
 \begin{proof}
-Let $I=(\Delta,\cdot^I)$ be a model of $\Gamma,\forall\alpha(A\to\false)\to\false$ with $\false^I=\bot$.
-\begin{align*}
-I\models\Gamma,\forall\alpha(A\to\false)\to\false&\Rightarrow I\models\forall\alpha(A\to\false)\to\false\\
-&\Rightarrow (\forall\alpha(A\to\false))^I\to\false^I\\
-&\Rightarrow (\forall\alpha(A\to\false))^I\to\bot\\
-&\Rightarrow \neg(\forall\alpha(A\to\false))^I\\
-&\Rightarrow \neg(\forall d\in\Delta:(A\to\false)^{I\left[\alpha\mapsto d\right]})\\
-&\Rightarrow \exists d\in\Delta:\neg(A^{I\left[\alpha\mapsto d\right]}\to\false^{I\left[\alpha\mapsto d\right]})\\
-&\Rightarrow \exists d\in\Delta:\neg(A^{I\left[\alpha\mapsto d\right]}\to\bot)\\
-&\Rightarrow \exists d\in\Delta:\neg(\neg A^{I\left[\alpha\mapsto d\right]})\\
-&\Rightarrow \exists d\in\Delta:A^{I\left[\alpha\mapsto d\right]}\\
-\end{align*}
-Together with $a\notin\emph{FV}(\Gamma,A)$, it follows that $I\left[a\mapsto d\right]$ is a model of $\Gamma,A\left[\alpha:=a\right]$. Which implies $I\left[a\mapsto d\right]\models B$.	Since $a$ is not free in $B$ we conclude that $I$ is also a model of $B$.
+	Let $I=(\Delta,\cdot^I)$ be a model of $\Gamma,\forall\alpha(A\to\false)\to\false$ with $\false^I=\bot$.
+	\begin{align*}
+		I\models\Gamma,\forall\alpha(A\to\false)\to\false & \Rightarrow I\models\forall\alpha(A\to\false)\to\false                                                          \\
+        & \Rightarrow (\forall\alpha(A\to\false))^I\to\false^I                                                            \\
+        & \Rightarrow (\forall\alpha(A\to\false))^I\to\bot                                                                \\
+        & \Rightarrow \neg(\forall\alpha(A\to\false))^I                                                                   \\
+        & \Rightarrow \neg(\forall d\in\Delta:(A\to\false)^{I\left[\alpha\mapsto d\right]})                               \\
+        & \Rightarrow \exists d\in\Delta:\neg(A^{I\left[\alpha\mapsto d\right]}\to\false^{I\left[\alpha\mapsto d\right]}) \\
+        & \Rightarrow \exists d\in\Delta:\neg(A^{I\left[\alpha\mapsto d\right]}\to\bot)                                   \\
+        & \Rightarrow \exists d\in\Delta:\neg(\neg A^{I\left[\alpha\mapsto d\right]})                                     \\
+        & \Rightarrow \exists d\in\Delta:A^{I\left[\alpha\mapsto d\right]}
+	\end{align*}
+	Together with $a\notin\emph{FV}(\Gamma,A)$, it follows that $I\left[a\mapsto d\right]$ is a model of $\Gamma,A\left[\alpha:=a\right]$. Which implies $I\left[a\mapsto d\right]\models B$.	Since $a$ is not free in $B$ we conclude that $I$ is also a model of $B$.
 \end{proof}
 \begin{definition}
-The problem to decide whether a given set of \SysP-formulas is consistency, denoted by \PCons, is defined as follows.
-Given a set of \SysP-formulas $\Gamma$. 
-\begin{center}
-Does $\Gamma\vdash\false$ not hold.
-\end{center}
+	The problem to decide whether a given set of \SysP-formulas is consistent, denoted by \PCons, is defined as follows.
+	Given a set of \SysP-formulas $\Gamma$. 
+	\begin{center}
+		Does $\Gamma\vdash\false$ not hold.
+	\end{center}
 \end{definition}
 \subsection{\PCons{} is undecidable}
-We will show that $\autHalt\leq\PCons$ then the undecidability of \PCons{} directly follows from the undecidability of \autHalt.
+We will show that $\autHalt\leq\PCons$ then the undecidability of \PCons{} directly follows from the undecidability of \autHalt. For a given two-counter automaton $M$ we will effectively construct a set of \SysP-formulas $\Gamma_M$ such that 
 $\Gamma_C:$
 \begin{itemize}
-\item $Q(a)$
-\item $R_1(a,a_0),P(a_{i-1},a_i)~\text{for}~i\in\{1,\dots,m\}$
-\item $R_2(a,b_0),P(b_{i-1},b_i)~\text{for}~i\in\{1,\dots,n\}$
-\item $D(a),D(a_i),D(b_j)~\text{for}~i\in\{1,\dots,m\}~\text{and}~j\in\{1,\dots,n\}$
-\item $E(a_m),E(b_n)$
+	\item $Q(a)$
+	\item $R_1(a,a_0),P(a_{i-1},a_i)~\text{for}~i\in\{1,\dots,m\}$
+	\item $R_2(a,b_0),P(b_{i-1},b_i)~\text{for}~i\in\{1,\dots,n\}$
+	\item $D(a),D(a_i),D(b_j)~\text{for}~i\in\{1,\dots,m\}~\text{and}~j\in\{1,\dots,n\}$
+	\item $E(a_m),E(b_n)$
 \end{itemize}
 
 $+(Q,1,Q'):$
 \begin{itemize}
-\item $\forall\alpha\beta(Q(\alpha)\to S(\alpha,\beta)\to Q'(\beta))$ \\change of state
-\item $\forall\alpha\beta\gamma\delta(Q(\alpha)\to S(\alpha,\beta)\to R_1(\alpha,\gamma)\to R_1(\beta,\delta)\to P(\delta,\gamma))$\\increment register 1
-\item $\forall\alpha\beta\delta(Q(\alpha)\to S(\alpha,\beta)\to R_1(\beta,\delta)\to D(\delta))$ \\prevent zero
-\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to R_2(\alpha,\gamma)\to R_2(\beta,\gamma))$ \\do not change register 2
+	\item $\forall\alpha\beta(Q(\alpha)\to S(\alpha,\beta)\to Q'(\beta))$ \\change of state
+	\item $\forall\alpha\beta\gamma\delta(Q(\alpha)\to S(\alpha,\beta)\to R_1(\alpha,\gamma)\to R_1(\beta,\delta)\to P(\delta,\gamma))$\\increment register 1
+	\item $\forall\alpha\beta\delta(Q(\alpha)\to S(\alpha,\beta)\to R_1(\beta,\delta)\to D(\delta))$ \\prevent zero
+	\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to R_2(\alpha,\gamma)\to R_2(\beta,\gamma))$ \\do not change register 2
 \end{itemize}
 
 $-(Q,1,Q_1,Q_2):$
 \begin{itemize}
-\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to R_1(\alpha,\gamma)\to E(\gamma)\to Q_2(\beta))$\\jump on zero
-\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to R_1(\alpha,\gamma)\to E(\gamma)\to R_1(\beta,\gamma))$\\register 1 stays zero
-\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to R_1(\alpha,\gamma)\to D(\gamma)\to Q_1(\beta))$\\change state if register 1 is greater zero
-\item $\forall\alpha\beta\gamma\delta(Q(\alpha)\to S(\alpha,\beta)\to R_1(\alpha,\gamma)\to D(\gamma) \to P(\gamma,\delta)\to R_1(\beta,\delta))$\\decrement register 1
-\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to R_2(\alpha,\gamma)\to R_2(\beta,\gamma))$\\do not change register 2
+	\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to R_1(\alpha,\gamma)\to E(\gamma)\to Q_2(\beta))$\\jump on zero
+	\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to R_1(\alpha,\gamma)\to E(\gamma)\to R_1(\beta,\gamma))$\\register 1 stays zero
+	\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to R_1(\alpha,\gamma)\to D(\gamma)\to Q_1(\beta))$\\change state if register 1 is greater zero
+	\item $\forall\alpha\beta\gamma\delta(Q(\alpha)\to S(\alpha,\beta)\to R_1(\alpha,\gamma)\to D(\gamma) \to P(\gamma,\delta)\to R_1(\beta,\delta))$\\decrement register 1
+	\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to R_2(\alpha,\gamma)\to R_2(\beta,\gamma))$\\do not change register 2
 \end{itemize}
-\begin{lemma}
-\begin{align*}
-&\text{$M$ terminates on input $(0,0)$}&& \text{iff} &\text{$\Gamma_M\vdash\false$ holds in system P.}
-\end{align*}
-\end{lemma}
-\begin{claim}
-\begin{align*}
-&\text{$\Gamma_M\vdash\false$ holds in system P} && \implies &\text{$M$ terminates on input $(0,0)$}
-\end{align*}
+\begin{claim}\label{cla.17}
+	\begin{align*}
+		  & \text{$\Gamma_M\vdash\false$ holds in system P} &   & \implies & \text{$M$ terminates on input $(0,0)$} 
+	\end{align*}
 \end{claim}
 \begin{proof}
-Assume $M$ does not terminate then there is an infinite chain $C_1\Rightarrow_M C_2\Rightarrow_M C_3\Rightarrow_M\dots$. ($C_i=\langle Q_i,m_i,n_i\rangle$) Now we construct a model of $\Gamma_M$ which interprets \false{} with $\bot$ this contradicts $\Gamma_M\vdash\false$.
-
-To illustrate the idea we will use a graphical notation for an interpretation $I$.
-By
-\tikz[baseline=-3pt]{
-\node (1) {$d_1$};
-\node[right of=1] (2) {$d_2$};
-\path[->,>=latex'] (1) edge node[above,scale=0.8] {R} (2);}
-we say that $(d_1,d_2)\in R^I$. And we use
-\tikz[baseline=5pt]{
-\node (1) {$d$};
-\node[node distance = 0.6cm,above of=1,scale=0.8] {P};}
-to say that $d\in P^I$ for unary predicate symbols. Now the idea for our model of $\Gamma_M$ looks like this:
-
-\begin{figure}[H]
-\input{Figure.Model}
-\end{figure}
-We have $0\in E^I$ and all other numbers are in $D^I$.
-
-Here is the more formal definition of our model $I=(\mathbb{N},\cdot^I)$.
-\begin{align*}
-& P^I=\{(i+1,i)\mid i\in\mathbb{N}\} && R_1^I=\{(i,m_i)\mid i\in\mathbb{N}\} && R_2^I=\{(i,n_i)\mid i\in\mathbb{N}\}\\
-& Q^I=\{ i\in\mathbb{N}\setminus\{0\}\mid Q=Q_i\} && D^I=\mathbb{N}\setminus\{0\} && E^I=\{0\}\\
-& S^I=\{(i,i+1)\mid i\in\mathbb{N}\}
-\end{align*}
-\begin{align*}
-& a^I=1 && a_0^I=0 && b_0^I=0
-\end{align*}
+	Assume $M$ does not terminate then there is an infinite chain $C_1\Rightarrow_M C_2\Rightarrow_M C_3\Rightarrow_M\dots$. ($C_i=\langle Q_i,m_i,n_i\rangle$) Now we construct a model of $\Gamma_M$ which interprets \false{} with $\bot$ this contradicts $\Gamma_M\vdash\false$.
+	
+	To illustrate the idea we will use a graphical notation for an interpretation $I$.
+	By
+	\tikz[baseline=-3pt]{
+		\node (1) {$d_1$};
+		\node[right of=1] (2) {$d_2$};
+		\path[->,>=latex'] (1) edge node[above,scale=0.8] {R} (2);}
+	we say that $(d_1,d_2)\in R^I$. And we use
+	\tikz[baseline=5pt]{
+		\node (1) {$d$};
+		\node[node distance = 0.6cm,above of=1,scale=0.8] {P};}
+	to say that $d\in P^I$ for unary predicate symbols. Now the idea for our model of $\Gamma_M$ looks like this:
+	
+	\begin{figure}[H]
+		\input{Figure.Model}
+	\end{figure}
+	We have $0\in E^I$ and all other numbers are in $D^I$.
+	
+	Here is the more formal definition of our model $I=(\mathbb{N},\cdot^I)$.
+	\begin{align*}
+		  & P^I=\{(i+1,i)\mid i\in\mathbb{N}\}              &   & R_1^I=\{(i,m_i)\mid i\in\mathbb{N}\} &   & R_2^I=\{(i,n_i)\mid i\in\mathbb{N}\} \\
+		  & Q^I=\{ i\in\mathbb{N}\setminus\{0\}\mid Q=Q_i\} &   & D^I=\mathbb{N}\setminus\{0\}         &   & E^I=\{0\}                            \\
+		& S^I=\{(i,i+1)\mid i\in\mathbb{N}\}
+	\end{align*}
+	\begin{align*}
+		  & a^I=1 &   & a_0^I=0 &   & b_0^I=0 
+	\end{align*}
 \end{proof}
-\begin{claim}
-If a final state is reachable from $C$ then $\Gamma_C\cup\Gamma\vdash\false$.
+\begin{claim}\label{cla.18}
+	Let $C$ be a configuration of $M$. If a final state is reachable from $C$ then $\Gamma_C\cup\Gamma\vdash\false$.
 \end{claim}
 \begin{proof} By induction on the length of the computation.
-For the tableau proofs we will abbreviate \false{} by \falses.\\
-Induction Base trivial \dots\\
-Induction Step\\
-$C\Rightarrow_M^r D$\\
-We need to make a case distinction on the rule $r$.\\
-\underline{Case $r=+(Q,1,Q')$}\\
-Basic idea:\\
-\[
-\cfrac
-{\cfrac{IH}{\Gamma_C\cup\Gamma\cup\Gamma_D\vdash\falses}\hspace{0.6cm}
-\cfrac{}{\Gamma_C\cup\Gamma\vdash\Gamma_D}}
-{\Gamma_C\cup\Gamma\vdash\falses}
-\]
-Since $I\models\false$ holds trivially if $I$ interprets \false{} with $\top$ we only need to consider models (note that there are none if $M$ terminates which is exactly what we want to proof) of $\Gamma_C\cup\Gamma$ that interpret \false{} with $\bot$ (so we can use our new deduction rule).\\
-We will just drop $\Gamma_C\cup\Gamma$ and only write new formulas on the left side.\\
-We first introduce the new variables needed for $\Gamma_D$ (let $b,d\in \VarP\setminus\text{FV}(\Gamma_C\cup\Gamma)$). Intuitively $b$ will represent the successor state and $d$ will be the anchor for register one.
+	For the tableau proofs we will abbreviate \false{} by \falses.\\
+	Induction Base trivial \dots\\
+	Induction Step\\
+	$C\Rightarrow_M^r D$\\
+	We need to make a case distinction on the rule $r$.\\
+	\underline{Case $r=+(Q,1,Q')$}\\
+	Basic idea:\\
+	\[
+		\cfrac
+		{\cfrac{IH}{\Gamma_C\cup\Gamma\cup\Gamma_D\vdash\falses}\hspace{0.6cm}
+			\cfrac{}{\Gamma_C\cup\Gamma\vdash\Gamma_D}}
+		{\Gamma_C\cup\Gamma\vdash\falses}
+	\]
+	Since $I\models\false$ holds trivially if $I$ interprets \false{} with $\top$ we only need to consider models (note that there are none if $M$ terminates which is exactly what we want to proof) of $\Gamma_C\cup\Gamma$ that interpret \false{} with $\bot$ (so we can use our new deduction rule).\\
+	We will just drop $\Gamma_C\cup\Gamma$ and only write new formulas on the left side.\\
+	We first introduce the new variables needed for $\Gamma_D$ (let $b,d\in \VarP\setminus\text{FV}(\Gamma_C\cup\Gamma)$). Intuitively $b$ will represent the successor state and $d$ will be the anchor for register one.
+	
+	\begin{figure}[H]
+		\input{Figure.Tableau.1}
+	\end{figure}
+	The formula $R_1(b,d)$ can be acquired in a similar way. Again we will just drop $S(a,b)$ and $D(b)$ on the left side for comprehensibility.
+	
+	\begin{figure}[H]
+		\input{Figure.Tableau.2}
+	\end{figure}
+	Now we have all the new free variables we need and we continue by ensuring that these variables fulfill all the formulas in $\Gamma_D$.
+	
+	\begin{figure}[H]
+		\input{Figure.Tableau.3}
+	\end{figure}
+	Starting from $Q'(b)\vdashf\false$ we can connect $d$ and $a_0$.
+	
+	\begin{figure}[H]
+		\input{Figure.Tableau.4}
+	\end{figure}
+	For register one we still need $D(d)$.
+	
+	\begin{figure}[H]
+		\input{Figure.Tableau.5}
+	\end{figure}
+	Since register two should not change we only need $R_2(b,b_0)$.
+	
+	\begin{figure}[H]
+		\input{Figure.Tableau.6}
+	\end{figure}
+	%TODO
+	Now we have $\Gamma_C$ (Since $P(a_{i-1},a_i)$ is already in $\Gamma_D$) and can deduce \false{} by induction hypothesis.\\
+	\underline{Case $r=-(Q,1,Q_1,Q_2)$}
+	%TODO note that r2 does not change, same for all cases
+	\\\uline{$r_1=0$}
+	
+	\begin{figure}[H]
+		\input{Figure.Tableau.7}
+	\end{figure}
+	
+	$r_1$ stays zero
+	
+	\begin{figure}[H]
+		\input{Figure.Tableau.8}
+	\end{figure}
+	\uline{$r_1\geq1$}
+	
+	new state $Q_1$
+	
+	\begin{figure}[H]
+		\input{Figure.Tableau.9}
+	\end{figure}
+	
+	decrement $r_1$
+	
+	\begin{figure}[H]
+		\input{Figure.Tableau.10}
+	\end{figure}
+	
+\end{proof}
 
-\begin{figure}[H]
-\input{Figure.Tableau.1}
-\end{figure}
-The formula $R_1(b,d)$ can be acquired in a similar way. Again we will just drop $S(a,b)$ and $D(b)$ on the left side for comprehensibility.
+\begin{lemma}\label{lem.19}
+	\begin{align*} %TODO for any M one can effectively construct? or is M the M from the construction
+		  & \text{$M$ terminates on input $(0,0)$} &   & \text{iff} & \text{$\Gamma_M\vdash\false$ holds in system P.} 
+	\end{align*}
+\end{lemma}
+\begin{proof}
+	The $\Leftarrow$ directions follows directly from Claim \ref{cla.17}. And the $\Rightarrow$ direction is a direct consequence of Claim \ref{cla.18} with $C=\langle q_0,0,0\rangle$.
+\end{proof}
 
-\begin{figure}[H]
-\input{Figure.Tableau.2}
-\end{figure}
-Now we have all the new free variables we need and we continue by ensuring that these variables fulfill all the formulas in $\Gamma_D$.
-
-\begin{figure}[H]
-\input{Figure.Tableau.3}
-\end{figure}
-Starting from $Q'(b)\vdashf\false$ we can connect $d$ and $a_0$.
-
-\begin{figure}[H]
-\input{Figure.Tableau.4}
-\end{figure}
-For register one we still need $D(d)$.
-
-\begin{figure}[H]
-\input{Figure.Tableau.5}
-\end{figure}
-Since register two should not change we only need $R_2(b,b_0)$.
-
-\begin{figure}[H]
-\input{Figure.Tableau.6}
-\end{figure}
-%TODO
-Now we have $\Gamma_C$ (Since $P(a_{i-1},a_i)$ is already in $\Gamma_D$) and can deduce \false{} by induction hypothesis.\\
-\underline{Case $r=-(Q,1,Q_1,Q_2)$}
-%TODO note that r2 does not change same for all cases
-\\\uline{$r_1=0$}
-
-\begin{figure}[H]
-\input{Figure.Tableau.7}
-\end{figure}
-
-$r_1$ stays zero
-
-\begin{figure}[H]
-\input{Figure.Tableau.8}
-\end{figure}
-\uline{$r_1\geq1$}
-
-new state $Q_1$
-
-\begin{figure}[H]
-\input{Figure.Tableau.9}
-\end{figure}
-
-decrement $r_1$
-
-\begin{figure}[H]
-\input{Figure.Tableau.10}
-\end{figure}
-
+\begin{theorem}
+	\PCons{} is undecidable.
+\end{theorem}
+\begin{proof}
+	Since by Lemma \ref{lem.19} for a given two-counter automaton $M$ we can effectively construct a set of \SysP-formulas $\Gamma_M$ such that $M$ terminates on input $(0,0)$ iff $\Gamma_M$ is not consistent. It follows that $\autHalt\leq\PCons$. Hence, since \autHalt{} is undecidable, we have shown that \PCons{} is undecidable too.
 \end{proof}
