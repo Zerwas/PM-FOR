@@ -182,19 +182,19 @@ We will use a version of two-counter automaton which only has two types of trans
 & $q_0$        & is in $\autStates$ (the initial state),                                                                \\
 & $q_f$        & is in $\autStates$ (the final state), and                                                              \\
 & $\autRules$  & is a function from $\autStates\setminus\{q_f\}$ to $\mathcal{R}_\autStates$,                           \\
-&              & where $\mathcal{R}_\autStates=\{+(i,q')\mid i\in\{0,1\},q'\in\autStates\}$                             \\
-&              & ~ \hphantom{where $\mathcal{R}_\autStates$}$\cup\{-(i,q_1,q_2)\mid i\in\{0,1\},q_1,q_2\in\autStates\}$ 
+&              & where $\mathcal{R}_\autStates=\{+(i,q')\mid i\in\{1,2\},q'\in\autStates\}$                             \\
+&              & ~ \hphantom{where $\mathcal{R}_\autStates$}$\cup\{-(i,q_1,q_2)\mid i\in\{1,2\},q_1,q_2\in\autStates\}$ 
 	\end{tabular}\\
 	A \define{configuration} $C$ of our automaton is a triple $\langle q,m,n\rangle$, where $q\in\autStates$ and $m,n\in\mathbb{N}$.
 	Let $r$ be in $\autRules(\autStates\setminus\{q_f\})$, then $\Rightarrow^r_M$ is a binary relation on the configurations of $M$ such that two configurations $\langle q,m,n\rangle$, $\langle q',m',n'\rangle$ of $M$ are in the in the relation if all of the following conditions hold:
 	\begin{itemize}
 		\item $q\neq q_f$, $r=\autRules(q)$,
-		\item if $r=+(0,p)$ for some $p\in \autStates$ then $q'=p$, $m'=m+1$, and $n'=n$,
-		\item if $r=+(1,p)$ for some $p\in \autStates$ then $q'=p$, $m'=m$, and $n'=n+1$,
-		\item if $r=-(0,p_1,p_2)$ for some $p_1,p_2\in \autStates$ then
+		\item if $r=+(1,p)$ for some $p\in \autStates$ then $q'=p$, $m'=m+1$, and $n'=n$,
+		\item if $r=+(2,p)$ for some $p\in \autStates$ then $q'=p$, $m'=m$, and $n'=n+1$,
+		\item if $r=-(1,p_1,p_2)$ for some $p_1,p_2\in \autStates$ then
 \subitem if $m=0$ then $q'=p_2$, $m'=0$, and $n'=n$,
 \subitem if $m\geq1$ then $q'=p_1$, $m'=m-1$, and $n'=n$,
-		\item if $r=-(1,p_1,p_2)$ for some $p_1,p_2\in \autStates$ then
+		\item if $r=-(2,p_1,p_2)$ for some $p_1,p_2\in \autStates$ then
 \subitem if $n=0$ then $q'=p_2$, $m'=m$, and $n'=0$,
 \subitem if $n\geq1$ then $q'=p_1$, $m'=m$, and $n'=n-1$.
 	\end{itemize}

@@ -36,7 +36,7 @@ If we interpret \false{} with the logical constant false ($\bot$) (denoted by $\
 	\end{align*}
 \end{mdframed}
 \begin{proof}
-	Let $I=(\Delta,\cdot^I)$ be a model of $\Gamma,\forall\alpha(A\to\false)\to\false$ with $\false^I=\bot$.
+	Let $I=(\Delta,\cdot^I,\omega)$ be a model of $\Gamma,\forall\alpha(A\to\false)\to\false$ with $\false^I=\bot$ and $a\in\VarP$ a variable such that $a\notin\emph{FV}(\Gamma,A,B)$.
 	\begin{align*}
 		I\models\Gamma,\forall\alpha(A\to\false)\to\false & \Rightarrow I\models\forall\alpha(A\to\false)\to\false                                                          \\
         & \Rightarrow (\forall\alpha(A\to\false))^I\to\false^I                                                            \\
@@ -72,8 +72,9 @@ For a configuration $C=\langle Q,m,n\rangle$ of $M$ we define a set of \SysP-for
 	\item $D(a),D(a_i),D(b_j)~\text{for}~i\in\{0,\dots,m-1\}~\text{and}~j\in\{0,\dots,n-1\}$
 	\item $E(a_m),E(b_n)$
 \end{itemize}
-
-$+(Q,1,Q'):$
+Next we need sets of \SysP-formulas for every possible transition.
+For every $Q\in\autStates\setminus\{Q_f\}$ and $r\in\mathcal{R}_\autStates$ we define $\Gamma_{Q,r}$.
+If $r=+(1,Q')$ for some $Q'\in\autStates$ then $\Gamma_{Q,+(1,Q')}$ contains the following formulas:
 \begin{itemize}
 	\item $\forall\alpha\beta(Q(\alpha)\to S(\alpha,\beta)\to Q'(\beta))$ \\change of state
 	\item $\forall\alpha\beta\gamma\delta(Q(\alpha)\to S(\alpha,\beta)\to R_1(\alpha,\gamma)\to R_1(\beta,\delta)\to P(\delta,\gamma))$\\increment register 1
@@ -81,7 +82,7 @@ $+(Q,1,Q'):$
 	\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to R_2(\alpha,\gamma)\to R_2(\beta,\gamma))$ \\do not change register 2
 \end{itemize}
 
-$-(Q,1,Q_1,Q_2):$
+If $r=-(1,Q_1,Q_2)$ for some $Q_1,Q_2\in\autStates$ then $\Gamma_{Q,-(1,Q_1,Q_2)}$ contains the following formulas:
 \begin{itemize}
 	\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to R_1(\alpha,\gamma)\to E(\gamma)\to Q_2(\beta))$\\jump on zero
 	\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to R_1(\alpha,\gamma)\to E(\gamma)\to R_1(\beta,\gamma))$\\register 1 stays zero
@@ -89,13 +90,27 @@ $-(Q,1,Q_1,Q_2):$
 	\item $\forall\alpha\beta\gamma\delta(Q(\alpha)\to S(\alpha,\beta)\to R_1(\alpha,\gamma)\to D(\gamma) \to P(\gamma,\delta)\to R_1(\beta,\delta))$\\decrement register 1
 	\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to R_2(\alpha,\gamma)\to R_2(\beta,\gamma))$\\do not change register 2
 \end{itemize}
+
+For $r=+(2,Q')$ for some $Q'\in\autStates$ and $r=-(2,Q_1,Q_2)$ for some $Q_1,Q_2\in\autStates$ the sets $\Gamma_{Q,r}$ are defined analogously.
+
+We also need a set $\Gamma_1$ to ensure that our representation works correctly. The following formula are in $\Gamma_1$:
+\begin{itemize}
+	\item $\forall\alpha\beta(S(\alpha,\beta)\to D(\beta))$\\no successor is the end of a chain
+	%\item $\forall\alpha(D(\alpha)\to\forall\beta(P(\alpha,\beta)\to\false)\to\false)$\\every %element that is not the end of a chain has a predecessor
+	%TODO necessary?
+	\item $\forall\alpha(D(\alpha)\to\forall\beta(R_1(\alpha,\beta)\to\false)\to\false)$\\every element that represents a configuration has a value for register 1
+	\item $\forall\alpha(D(\alpha)\to\forall\beta(R_2(\alpha,\beta)\to\false)\to\false)$\\every element that represents a configuration has a value for register 2
+	\item $\forall\alpha(\forall\beta(S(\alpha,\beta)\to\false)\to\false)$\\every element has a successor
+\end{itemize}
+We define $\conGM$ as $\bigcup_{Q\in\autStates\setminus\{Q_f\}}\Gamma_{Q,R(Q)}\cup\{\forall\alpha(Q_f(a)\to\false)\}\cup\Gamma_1$.
+Finally we can define $\Gamma_M$ as $\Gamma_{C_1}\cup\conGM$, where $C_1=\langle Q_0,0,0\rangle$ is the initial configuration.
 \begin{claim}\label{cla.17}
 	\begin{align*}
 		  & \text{$\Gamma_M\vdash\false$ holds in system P} &   & \implies & \text{$M$ terminates on input $(0,0)$} 
 	\end{align*}
 \end{claim}
 \begin{proof}
-	Assume $M$ does not terminate then there is an infinite chain $C_1\Rightarrow_M C_2\Rightarrow_M C_3\Rightarrow_M\dots$. ($C_i=\langle Q_i,m_i,n_i\rangle$) Now we construct a model of $\Gamma_M$ which interprets \false{} with $\bot$ this contradicts $\Gamma_M\vdash\false$.
+	Assume $M$ does not terminate then there is an infinite chain $C_1\Rightarrow_M C_2\Rightarrow_M C_3\Rightarrow_M\dots$ ($C_i=\langle Q_i,m_i,n_i\rangle$). Now we construct a model of $\Gamma_M$ which interprets \false{} with $\bot$ this contradicts $\Gamma_M\vdash\false$.
 	
 	To illustrate the idea we will use a graphical notation for an interpretation $I$.
 	By
@@ -107,7 +122,9 @@ $-(Q,1,Q_1,Q_2):$
 	\tikz[baseline=5pt]{
 		\node (1) {$d$};
 		\node[node distance = 0.6cm,above of=1,scale=0.8] {P};}
-	to say that $d\in P^I$ for unary predicate symbols. Now the idea for our model of $\Gamma_M$ looks like this:
+	to say that $(d,d)\in P^I$ for predicate symbols that are used as unary predicate symbols. 
+	As domain for our interpretation we will use the natural numbers. Every number will have two tasks: first it will represent itself as a possible value for register 1 or 2 and second every number $i$ greater than zero will also represent the $i$\textsuperscript{th} configuration of our infinite computation.
+	Now the idea for our model of $\Gamma_M$ looks like this:
 	
 	\begin{figure}[H]
 		\input{Figure.Model}
@@ -125,7 +142,7 @@ $-(Q,1,Q_1,Q_2):$
 	\end{align*}
 \end{proof}
 \begin{claim}\label{cla.18}
-	Let $C$ be a configuration of $M$. If a final state is reachable from $C$ then $\Gamma_C\cup\Gamma\vdash\false$.
+	Let $C$ be a configuration of $M$. If a final state is reachable from $C$ then $\Gamma_C\cup\conGM\vdash\false$.
 \end{claim}
 \begin{proof} By induction on the length of the computation.
 	For the tableau proofs we will abbreviate \false{} by \falses.\\
@@ -134,16 +151,16 @@ $-(Q,1,Q_1,Q_2):$
 	$C\Rightarrow_M^r D$\\
 	We need to make a case distinction on the rule $r$.\\
 	\underline{Case $r=+(Q,1,Q')$}\\
-	Basic idea:\\
+	Basic idea:\\ %TODO tiksify
 	\[
 		\cfrac
-		{\cfrac{IH}{\Gamma_C\cup\Gamma\cup\Gamma_D\vdash\falses}\hspace{0.6cm}
-			\cfrac{}{\Gamma_C\cup\Gamma\vdash\Gamma_D}}
-		{\Gamma_C\cup\Gamma\vdash\falses}
+		{\cfrac{IH}{\Gamma_C\cup\conGM\cup\Gamma_D\vdash\falses}\hspace{0.6cm}
+			\cfrac{}{\Gamma_C\cup\conGM\vdash\Gamma_D}}
+		{\Gamma_C\cup\conGM\vdash\falses}
 	\]
-	Since $I\models\false$ holds trivially if $I$ interprets \false{} with $\top$ we only need to consider models (note that there are none if $M$ terminates which is exactly what we want to proof) of $\Gamma_C\cup\Gamma$ that interpret \false{} with $\bot$ (so we can use our new deduction rule).\\
-	We will just drop $\Gamma_C\cup\Gamma$ and only write new formulas on the left side.\\
-	We first introduce the new variables needed for $\Gamma_D$ (let $b,d\in \VarP\setminus\text{FV}(\Gamma_C\cup\Gamma)$). Intuitively $b$ will represent the successor state and $d$ will be the anchor for register one.
+	Since $I\models\false$ holds trivially if $I$ interprets \false{} with $\top$ we only need to consider models (note that there are none if $M$ terminates which is exactly what we want to proof) of $\Gamma_C\cup\conGM$ that interpret \false{} with $\bot$ (so we can use our new deduction rule).\\
+	We will just drop $\Gamma_C\cup\conGM$ and only write new formulas on the left side.\\
+	We first introduce the new variables needed for $\Gamma_D$ (let $b,d\in \VarP\setminus\text{FV}(\Gamma_C\cup\conGM)$). Intuitively $b$ will represent the successor state and $d$ will be the anchor for register one.
 	
 	\begin{figure}[H]
 		\input{Figure.Tableau.1}
@@ -210,7 +227,7 @@ $-(Q,1,Q_1,Q_2):$
 	\end{align*}
 \end{lemma}
 \begin{proof}
-	The $\Leftarrow$ directions follows directly from Claim \ref{cla.17}. And the $\Rightarrow$ direction is a direct consequence of Claim \ref{cla.18} with $C=\langle q_0,0,0\rangle$.
+	The $\Leftarrow$ directions follows directly from Claim \ref{cla.17}. And the $\Rightarrow$ direction is a direct consequence of Claim \ref{cla.18} with $C=\langle Q_0,0,0\rangle$.
 \end{proof}
 
 \begin{theorem}
