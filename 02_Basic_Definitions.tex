@@ -81,7 +81,7 @@ In the following let $\mathcal{V}=\{x_0,x_1,\dots\}$ be a countable set (of vari
 		\item if $x\in\mathcal{V}$ and $\varphi\in\mathcal{L}$ then $\exists x\varphi$, $\forall x\varphi\in\mathcal{L}$. %TODO dots?
 	\end{itemize}
 \end{definition}
-We introduce an additional binary operation $\to$ on formulas, where for some $\varphi$, $\psi\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$ the formula $(\varphi\to\psi)$ is defined as $(\neg\varphi\vee\psi)$.
+We introduce an additional binary operation $\to$ on formulas, where for some $\varphi$, $\psi\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$ the formula $(\varphi\to\psi)$ is defined as $(\neg\varphi\vee\psi)$. For nullary relation symbols $P$ we will abbreviate $P()$ to $P$. 
 
 \begin{definition}
 	The \define{variables of a term $t\in\mathcal{T}_{(\mathcal{V},\mathcal{F})}$}, denoted by $\V(t)$, are defined by:
@@ -163,6 +163,7 @@ Let $I=(\Delta,\cdot^I,\omega)$ be an interpretation, $x\in\mathcal{V}$, and $d\
 		\end{cases}\]
 	The interpretation $I$ is a \define{model} of $\varphi$, denoted by $I\models\varphi$, if $\varphi^I=\top$.
 \end{definition}
+When we define an interpretation $I$ and we have a nullary predicate symbol $P$ we write $P^I=\top$ instead of $P^I=\{()\}$, since $P()^I=\top$ iff $()\in P^I$, and $P^I=\bot$ for $P^I=\emptyset$ respectively.
 \begin{definition} %TODO finite?
 	Let $\Gamma$ be a finite set of first-oder formulas.
 	\begin{description}
