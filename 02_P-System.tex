@@ -1,14 +1,17 @@
 \section{System P}
 \subsection{Definitions}
 %TODO mention the convention that a free and \alpha not or change the convention :D
-In the following let $\VarP=\{\alpha,a,\beta,b,\dots\}$ be a countably infinite set (of variables) and $\RelP=\{\false^{(0)},P^{(2)},Q^{(2)},\dots\}$ a ranked set (of predicate symbols) such that $\RelP^{(0)}=\{\false\}$, $\RelP^{(2)}=\{P,Q,\dots\}$ is a countably infinite set, and $\RelP^{(k)}=\emptyset$ for all $k\in\mathbb{N}\setminus\{0,2\}$.
-A first-order logic formula $\varphi$ over $(\VarP,\emptyset,\RelP)$ is an 
+In the following let $\VarP=\{\alpha,a,\beta,b,\dots\}$ be a countably infinite set (of variables). 
+Let $\RelP=\{P,Q,\dots\}$ be a set (of predicate symbols) and $\mathcal{P}$ a ranked set such that $\mathcal{P}^{(0)}=\{\false\}$, $\mathcal{P}^{(2)}=\RelP$, and $\mathcal{P}^{(k)}=\emptyset$ for all $k\in\mathbb{N}\setminus\{0,2\}$.
+A first-order logic formula $\varphi$ over $(\VarP,\emptyset,\mathcal{P})$ is an 
+%TODO \RelP not countybly infinite since Q is finite
+%todo later new \RelP so only bind it locally
 \begin{description} %TODO \overrightarrow{\alpha}
 	\item[atomic formula] if $\varphi=\false$ or $\varphi=P(a,b)$ for some $P\in\RelP$ and $a,b\in\VarP$.
 	\item[universal formula] if $\varphi=\forall\overrightarrow{\alpha}(A_1\to A_2 \to\dots\to A_n)$ where $A_i$ is an atomic formula for $i\in\left[n\right]$, $A_i\neq\false$ for $i\in\left[n-1\right]$ and for each $\alpha\in\FV(\varphi)\cap\FV(A_n)$ there exists an $i\in\left[n-1\right]$ such that $\alpha\in\FV(A_i)$.
 	\item[existential formula] if there exits $n\ge0$,  atomic formulas $A_i\neq\false$ for $i\in\left[n\right]$ such that $\varphi=\forall\overrightarrow{\alpha}(A_1\to A_2 \to\dots\to A_{n-1}\to\forall\beta(A_n\to\false)\to\false)$.
 \end{description}
-The set of formulas of System \SysP{} (= set of \SysP-formulas) over $(\VarP,\RelP)$ is the set of all first-order formulas over $(\VarP,\emptyset,\RelP)$ that are either an atomic, universal or existential formula.\\ 
+The set of formulas of System \SysP{} (= set of \SysP-formulas) over $(\VarP,\RelP)$ is the set of all first-order formulas over $(\VarP,\emptyset,\mathcal{P})$ that are either an atomic, universal or existential formula.\\ 
 Deduction Rules
 \begin{mdframed}
 	\begingroup%TODO maybe not A and B for terms?
@@ -55,13 +58,18 @@ If we interpret \false{} with the logical constant false ($\bot$) (denoted by $\
 	\end{center}
 \end{definition}
 \subsection{\PCons{} is undecidable}
-We will show that $\autHalt\leq\PCons$ then the undecidability of \PCons{} directly follows from the undecidability of \autHalt. For a given two-counter automaton $M$ we will effectively construct a set of \SysP-formulas $\Gamma_M$ such that 
-$\Gamma_C:$
+We will show that $\autHalt\leq\PCons$ then the undecidability of \PCons{} directly follows from the undecidability of \autHalt. For a given two-counter automaton $M$ we will effectively construct a set of \SysP-formulas $\Gamma_M$ such that
+\begin{align*}
+ & \text{$M$ terminates on input $(0,0)$} &   & \text{iff} & \text{$\Gamma_M\vdash\false$ holds in system P.} 
+\end{align*}
+Let $M=(\autStates,Q_0,Q_f,\autRules)$ be a two-counter automaton, w.l.o.g. $S,P,R_1,R_2,E,D\notin\autStates$. In the following we will consider \SysP-formulas over $(\VarP,\RelP)$, where $\RelP=\autStates\uplus\{S,P,R_1,R_2,E,D\}$. We will abbreviate $P(a,a)$ to $P(a)$, note that this way we can use binary predicate symbols as unary ones. Intuitively $Q(a)$ stands for ``$a$ is in state $Q$", $R_1(a,m)$ stands for ``in $a$ the value of register 1 is $m$", $S(a,b)$ states that ``$b$ is an successor of $a$", and $P(a,b)$ states that ``$b$ is an predecessor of $a$".
+
+For a configuration $C=\langle Q,m,n\rangle$ of $M$ we define a set of \SysP-formulas $\Gamma_C$. It contains the following formulas:
 \begin{itemize}
 	\item $Q(a)$
 	\item $R_1(a,a_0),P(a_{i-1},a_i)~\text{for}~i\in\{1,\dots,m\}$
 	\item $R_2(a,b_0),P(b_{i-1},b_i)~\text{for}~i\in\{1,\dots,n\}$
-	\item $D(a),D(a_i),D(b_j)~\text{for}~i\in\{1,\dots,m\}~\text{and}~j\in\{1,\dots,n\}$
+	\item $D(a),D(a_i),D(b_j)~\text{for}~i\in\{0,\dots,m-1\}~\text{and}~j\in\{0,\dots,n-1\}$
 	\item $E(a_m),E(b_n)$
 \end{itemize}
 

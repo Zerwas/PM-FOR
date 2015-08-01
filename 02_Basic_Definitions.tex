@@ -95,6 +95,7 @@ We introduce an additional binary operation $\to$ on formulas, where for some $\
 	\[\FV(\varphi)=
 		\begin{cases} %TODO for some?
 			\V(t_1)\cup \V(t_2)\cup\dots\cup \V(t_k) & \text{if $\varphi=P(t_1,t_2,\dots,t_k)$}                               \\
+			\FV(\psi)                                 & \text{if $\varphi=\neg\psi$}                               \\
 			\FV(\varphi_1)\cup\FV(\varphi_2)         & \text{if $\varphi=\varphi_1\circ\varphi_2$, $\circ\in\{\wedge,\vee\}$} \\
 			\FV(\psi)\setminus\{x\}                  & \text{if $\varphi=Q x\psi$, $Q\in\{\forall,\exists\}$}                 
 		\end{cases}\]
@@ -173,7 +174,7 @@ Let $I=(\Delta,\cdot^I,\omega)$ be an interpretation, $x\in\mathcal{V}$, and $d\
 
 \subsection{two-counter automaton} %TODO maby later in System P proof
 %TODO a two counter automaton has two registers in which natural numbers are stored
-We will use a version of two-counter automaton which only has two types of transitions. First it can increment a register and second it can try to decrement a register and jump of the register is already zero. Formally:
+We will use a version of two-counter automaton which only has two types of transitions. First it can increment a register and second it can try to decrement a register and jump if the register is already zero. Formally:
 \begin{definition}
 	A \define{deterministic two-counter automaton} is a 4-tuple $M=(\autStates,q_0,q_f,\autRules)$,
 	\begin{tabular}{llp{0.78\linewidth}}
