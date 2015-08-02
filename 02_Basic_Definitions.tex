@@ -163,7 +163,7 @@ Let $I=(\Delta,\cdot^I,\omega)$ be an interpretation, $x\in\mathcal{V}$, and $d\
 		\end{cases}\]
 	The interpretation $I$ is a \define{model} of $\varphi$, denoted by $I\models\varphi$, if $\varphi^I=\top$.
 \end{definition}
-When we define an interpretation $I$ and we have a nullary predicate symbol $P$ we write $P^I=\top$ instead of $P^I=\{()\}$, since $P()^I=\top$ iff $()\in P^I$, and $P^I=\bot$ for $P^I=\emptyset$ respectively.
+When we define an interpretation $I$ and we have a nullary predicate symbol $P$ we write $P^I=\top$ instead of $P^I=\{()\}$ and $P^I=\bot$ for $P^I=\emptyset$ (this works because $P()^I=\top$ iff $()\in P^I$).
 \begin{definition} %TODO finite?
 	Let $\Gamma$ be a finite set of first-oder formulas.
 	\begin{description}
@@ -177,31 +177,31 @@ When we define an interpretation $I$ and we have a nullary predicate symbol $P$ 
 %TODO a two counter automaton has two registers in which natural numbers are stored
 We will use a version of two-counter automaton which only has two types of transitions. First it can increment a register and second it can try to decrement a register and jump if the register is already zero. Formally:
 \begin{definition}
-	A \define{deterministic two-counter automaton} is a 4-tuple $M=(\autStates,q_0,q_f,\autRules)$,
+	A \define{deterministic two-counter automaton} is a 4-tuple $M=(\autStates,Q_0,Q_f,\autRules)$,
 	\begin{tabular}{llp{0.78\linewidth}}
 		where & $\autStates$ & is a finite set (of states),                                                                           \\
-& $q_0$        & is in $\autStates$ (the initial state),                                                                \\
-& $q_f$        & is in $\autStates$ (the final state), and                                                              \\
-& $\autRules$  & is a function from $\autStates\setminus\{q_f\}$ to $\mathcal{R}_\autStates$,                           \\
-&              & where $\mathcal{R}_\autStates=\{+(i,q')\mid i\in\{1,2\},q'\in\autStates\}$                             \\
-&              & ~ \hphantom{where $\mathcal{R}_\autStates$}$\cup\{-(i,q_1,q_2)\mid i\in\{1,2\},q_1,q_2\in\autStates\}$ 
+& $Q_0$        & is in $\autStates$ (the initial state),                                                                \\
+& $Q_f$        & is in $\autStates$ (the final state), and                                                              \\
+& $\autRules$  & is a function from $\autStates\setminus\{Q_f\}$ to $\mathcal{R}_\autStates$,                           \\
+&              & where $\mathcal{R}_\autStates=\{+(i,Q')\mid i\in\{1,2\},Q'\in\autStates\}$                             \\
+&              & ~ \hphantom{where $\mathcal{R}_\autStates$}$\cup\{-(i,Q_1,Q_2)\mid i\in\{1,2\},Q_1,Q_2\in\autStates\}$ 
 	\end{tabular}\\
-	A \define{configuration} $C$ of our automaton is a triple $\langle q,m,n\rangle$, where $q\in\autStates$ and $m,n\in\mathbb{N}$.
-	Let $r$ be in $\autRules(\autStates\setminus\{q_f\})$, then $\Rightarrow^r_M$ is a binary relation on the configurations of $M$ such that two configurations $\langle q,m,n\rangle$, $\langle q',m',n'\rangle$ of $M$ are in the in the relation if all of the following conditions hold:
+	A \define{configuration} $C$ of our automaton is a triple $\langle Q,m,n\rangle$, where $Q\in\autStates$ and $m,n\in\mathbb{N}$.
+	Let $r$ be in $\autRules(\autStates\setminus\{Q_f\})$, then $\Rightarrow^r_M$ is a binary relation on the configurations of $M$ such that two configurations $\langle Q,m,n\rangle$, $\langle Q',m',n'\rangle$ of $M$ are in the in the relation if all of the following conditions hold:
 	\begin{itemize}
-		\item $q\neq q_f$, $r=\autRules(q)$,
-		\item if $r=+(1,p)$ for some $p\in \autStates$ then $q'=p$, $m'=m+1$, and $n'=n$,
-		\item if $r=+(2,p)$ for some $p\in \autStates$ then $q'=p$, $m'=m$, and $n'=n+1$,
-		\item if $r=-(1,p_1,p_2)$ for some $p_1,p_2\in \autStates$ then
-\subitem if $m=0$ then $q'=p_2$, $m'=0$, and $n'=n$,
-\subitem if $m\geq1$ then $q'=p_1$, $m'=m-1$, and $n'=n$,
-		\item if $r=-(2,p_1,p_2)$ for some $p_1,p_2\in \autStates$ then
-\subitem if $n=0$ then $q'=p_2$, $m'=m$, and $n'=0$,
-\subitem if $n\geq1$ then $q'=p_1$, $m'=m$, and $n'=n-1$.
+		\item $Q\neq Q_f$, $r=\autRules(Q)$,
+		\item if $r=+(1,P)$ for some $P\in \autStates$ then $Q'=P$, $m'=m+1$, and $n'=n$,
+		\item if $r=+(2,P)$ for some $P\in \autStates$ then $Q'=P$, $m'=m$, and $n'=n+1$,
+		\item if $r=-(1,P_1,P_2)$ for some $P_1,P_2\in \autStates$ then
+\subitem if $m=0$ then $Q'=P_2$, $m'=0$, and $n'=n$,
+\subitem if $m\geq1$ then $Q'=P_1$, $m'=m-1$, and $n'=n$,
+		\item if $r=-(2,P_1,P_2)$ for some $P_1,P_2\in \autStates$ then
+\subitem if $n=0$ then $Q'=P_2$, $m'=m$, and $n'=0$,
+\subitem if $n\geq1$ then $Q'=P_1$, $m'=m$, and $n'=n-1$.
 	\end{itemize}
-	The \define{transition relation of $M$}, denoted by $\Rightarrow_M$, is defined as $\bigcup_{r\in\autRules(Q\setminus\{q_f\})}\Rightarrow^r_M$. We denote the transitive reflexive closure of $\Rightarrow_M$ by $\Rightarrow^*_M$
+	The \define{transition relation of $M$}, denoted by $\Rightarrow_M$, is defined as $\bigcup_{r\in\autRules(Q\setminus\{Q_f\})}\Rightarrow^r_M$. We denote the transitive reflexive closure of $\Rightarrow_M$ by $\Rightarrow^*_M$
 		
-	Let $m$, $n$ be in $\mathbb{N}$, we say that $M$ terminates on input $(m,n)$ if there exist $m',n'\in\mathbb{N}$ such that $\langle q_0,m,n\rangle\Rightarrow^*_M\langle q_f,m',n'\rangle$.
+	Let $m$, $n$ be in $\mathbb{N}$, we say that \define{$M$ terminates on input $(m,n)$} if there exist $m',n'\in\mathbb{N}$ such that $\langle Q_0,m,n\rangle\Rightarrow^*_M\langle Q_f,m',n'\rangle$.
 \end{definition}
 \begin{definition}
 	The halting problem for two-counter automaton, denoted by \autHalt{}, is defined as follows.
