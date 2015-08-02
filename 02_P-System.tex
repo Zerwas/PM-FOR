@@ -148,31 +148,29 @@ Finally we can define $\Gamma_M$ as $\Gamma_{C_1}\cup\conGM$, where $C_1=\langle
 	Since there are no free variables in $\Gamma_M$ we can just set $\omega(x)=0$ for every $x\in\VarP$. It is easy to see that $I$ is indeed a model of $\Gamma_M$.
 \end{proof}
 \begin{claim}\label{cla.18}
-	Let $C$ be a configuration of $M$. If a final configuration (i.e. a configuration $\langle Q_f,m,n\rangle$ for some $n,m\in\mathbb{N}$) is reachable from $C$ then $\Gamma_C\cup\conGM\vdash\false$.
+	Let $C=\langle Q,m,n\rangle$ be a configuration of $M$. If a final configuration (i.e. a configuration $\langle Q_f,m',n'\rangle$ for some $n',m'\in\mathbb{N}$) is reachable from $C$ then $\Gamma_C\cup\conGM\vdash\false$.
 \end{claim}
-\begin{proof} By induction on the length $n$ of the computation.
+\begin{proof} By induction on the length $i$ of the computation.
 	For the tableau proofs we will abbreviate \false{} by \falses.
 	
-	Induction Base: $n=0$\\
-	Hence, a final configuration is reachable in 0 steps, $C$ must be this final configuration. So $C=\langle Q_f,m,n\rangle$ for some $n,m\in\mathbb{N}$. Since $Q_f(a)$ is in $\Gamma_C$ for some $a\in\VarP$ and $\forall\alpha(Q_f(\alpha)\to\false)$ is in $\conGM$ we can easily deduce false.
+	Induction Base: $i=0$\\
+	Since a final configuration is reachable in 0 steps $C$ must be this final configuration. So $C=\langle Q_f,m,n\rangle$ for some $n,m\in\mathbb{N}$. Hence, $Q_f(a)$ is in $\Gamma_C$ for some $a\in\VarP$ and $\forall\alpha(Q_f(\alpha)\to\false)$ is in $\conGM$, we can easily deduce false.
 	\begin{figure}[H]
 		\centering
 		\input{Figure.Tableau.0}
 	\end{figure}
 	 
-	Induction Step: $n\to n+1$\\
-	$C\Rightarrow_M^r D$\\
-	We need to make a case distinction on the rule $r$.\\
-	\underline{Case $r=+(Q,1,Q')$}\\
+	Induction Step: $i= i'+1$\\
+	Since $I\models\false$ holds trivially if $I$ interprets \false{} with $\top$ we only need to consider models (note that there are none if $M$ terminates which is exactly what we want to proof) of $\Gamma_C\cup\conGM$ that interpret \false{} with $\bot$. As result of this observation we can use the $\exists$-Introduction rule.
 	
-	Basic idea:\\ %TODO tiksify
-	\[
-		\cfrac
-		{\cfrac{IH}{\Gamma_C\cup\conGM\cup\Gamma_D\vdash\falses}\hspace{0.6cm}
-			\cfrac{}{\Gamma_C\cup\conGM\vdash\Gamma_D}}
-		{\Gamma_C\cup\conGM\vdash\falses}
-	\]
-	Since $I\models\false$ holds trivially if $I$ interprets \false{} with $\top$ we only need to consider models (note that there are none if $M$ terminates which is exactly what we want to proof) of $\Gamma_C\cup\conGM$ that interpret \false{} with $\bot$ (so we can use our new deduction rule).\\
+	From the fact that a final configuration is reachable from $C$ in $i$ steps we can deduce that there exists a configuration $D=\langle P,m',n'\rangle$ such that $C\Rightarrow_M^r D$ for some $r\in\mathcal{R}_\autStates$ and a final configuration is reachable from $D$ in $i'$ steps. The basic idea is to deduce $\Gamma_D$ from $\Gamma_C\cup\conGM$ and then apply the induction hypothesis to $\Gamma_D\cup\conGM$.
+	\begin{figure}[H]
+		\centering
+		\input{Figure.Tableau}
+	\end{figure}
+	We need to make a case distinction on the rule $r$.\\
+	
+	\underline{Case $r=+(Q,1,Q')$}\\
 	We will just drop $\Gamma_C\cup\conGM$ and only write new formulas on the left side.\\
 	We first introduce the new variables needed for $\Gamma_D$ (let $b,d\in \VarP\setminus\text{FV}(\Gamma_C\cup\conGM)$). Intuitively $b$ will represent the successor state and $d$ will be the anchor for register one.
 	
