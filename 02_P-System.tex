@@ -151,7 +151,6 @@ Finally we can define $\Gamma_M$ as $\Gamma_{C_1}\cup\conGM$, where $C_1=\langle
 	Let $C=\langle Q,m,n\rangle$ be a configuration of $M$. If a final configuration (i.e. a configuration $\langle Q_f,m',n'\rangle$ for some $n',m'\in\mathbb{N}$) is reachable from $C$ then $\Gamma_C\cup\conGM\vdash\false$.
 \end{claim}
 \begin{proof} By induction on the length $i$ of the computation.
-	For the tableau proofs we will abbreviate \false{} by \falses.
 	
 	Induction Base: $i=0$\\
 	Since a final configuration is reachable in 0 steps $C$ must be this final configuration. So $C=\langle Q_f,m,n\rangle$ for some $n,m\in\mathbb{N}$. Hence, $Q_f(a)$ is in $\Gamma_C$ for some $a\in\VarP$ and $\forall\alpha(Q_f(\alpha)\to\false)$ is in $\conGM$, we can easily deduce false.
@@ -161,18 +160,20 @@ Finally we can define $\Gamma_M$ as $\Gamma_{C_1}\cup\conGM$, where $C_1=\langle
 	\end{figure}
 	 
 	Induction Step: $i= i'+1$\\
-	Since $I\models\false$ holds trivially if $I$ interprets \false{} with $\top$ we only need to consider models (note that there are none if $M$ terminates which is exactly what we want to proof) of $\Gamma_C\cup\conGM$ that interpret \false{} with $\bot$. As result of this observation we can use the $\exists$-Introduction rule.
+	Since $I\models\false$ holds trivially if $I$ interprets \false{} with $\top$ we only need to consider models of $\Gamma_C\cup\conGM$ that interpret \false{} with $\bot$ (note that there are none if $M$ terminates which is exactly what we want to proof). As result of this observation we can use the $\exists$-Introduction rule.
 	
-	From the fact that a final configuration is reachable from $C$ in $i$ steps we can deduce that there exists a configuration $D=\langle P,m',n'\rangle$ such that $C\Rightarrow_M^r D$ for some $r\in\mathcal{R}_\autStates$ and a final configuration is reachable from $D$ in $i'$ steps. The basic idea is to deduce $\Gamma_D$ from $\Gamma_C\cup\conGM$ and then apply the induction hypothesis to $\Gamma_D\cup\conGM$.
+	From the fact that a final configuration is reachable from $C$ in $i$ steps we can deduce that there exists a configuration $D=\langle P,m',n'\rangle$ such that $C\Rightarrow_M^r D$ for some $r\in\mathcal{R}_\autStates$ and a final configuration is reachable from $D$ in $i'$ steps. We also know that $C=\langle Q,m,n\rangle$ for some $Q\in\autStates\setminus\{Q_f\}$ and some $m,n\in\mathbb{N}$. The basic idea is to deduce $\Gamma_D$ from $\Gamma_C\cup\conGM$ and then apply the induction hypothesis to $\Gamma_D\cup\conGM$.
 	\begin{figure}[H]
 		\centering
 		\input{Figure.Tableau}
 	\end{figure}
-	We need to make a case distinction on the rule $r$.\\
 	
-	\underline{Case $r=+(Q,1,Q')$}\\
-	We will just drop $\Gamma_C\cup\conGM$ and only write new formulas on the left side.\\
-	We first introduce the new variables needed for $\Gamma_D$ (let $b,d\in \VarP\setminus\text{FV}(\Gamma_C\cup\conGM)$). Intuitively $b$ will represent the successor state and $d$ will be the anchor for register one.
+	There are four possible cases for the type of the rule $r$. We will only consider the cases $r=+(1,Q')$ and $r=-(1,Q_1,Q_2)$, the two cases $r=+(2,Q')$ and $r=-(2,Q_1,Q_2)$ follow by exchanging the roles of register 1 and register 2 in the first two cases.
+	In both cases we need a new free variable $b$ representing the configuration $D$ and the value in register 2 does not change.
+	
+	For the succeeding tableau proofs we will abbreviate \false{} by \falses and we will drop $\Gamma_C\cup\conGM$ and only write new formulas on the left side of $\vdashf$.
+	
+	We first introduce a new variables representing $D$ (let $b\in \VarP\setminus\text{FV}(\Gamma_C\cup\conGM)$).
 	
 	\begin{figure}[H]
 		\centering
