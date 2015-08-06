@@ -19,16 +19,17 @@ every child/.style={edge from parent/.style={opacity=0}}]
 \foreach \x in \nodes{
 \ifnodedefined{\x}{
 	\coordinate(c\x) at (\x);
+	\coordinate(3.\x) at (0,0);
 }{}
 }
 
 %draw lines for each node with 2 children (add parents with 2 children)
 \foreach \x in \nodes{
-\ifnodedefined{\x1}{
+\ifnodedefined{3.\x1}{
 	%calculate with of line
 	\getwidthofnode{\sright}{\x1}
 	%if there is a right child draw wide line
-	\ifnodedefined{\x2}{
+	\ifnodedefined{3.\x2}{
 		\getwidthofnode{\sleft}{\x2}
 		%draw line
 		\draw[shorten <=-\sright/2, shorten >=-\sleft/2] ([yshift=-0.25cm]c\x1) -- ([yshift=-0.25cm]c\x2);

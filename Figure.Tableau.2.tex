@@ -12,27 +12,23 @@ every child/.style={edge from parent/.style={opacity=0}}]
 			child {node(211) {R_1(b,d)\vdashf\falses}
 				child {node[label={[yshift=-0.3cm]above:\vdots}](2111) {}}}}};
 
-%tikz did not want to do this in the loop no idea why
-\coordinate(c211) at (211);
-\getwidthofnode{\sright}{211}
-\draw (c211)+(-\sright/2,+0.25) -- +(\sright/2,+0.25);
-
 %set of all positions in the tree
-\def\nodes{,1,2,11,12,121,21}
+\def\nodes{,1,2,11,12,121,21,211}
 %the yshift does not work on nodes so we create a coordinate for every node
 \foreach \x in \nodes{
 \ifnodedefined{\x}{
 	\coordinate(c\x) at (\x);
+	\coordinate(2.\x) at (0,0);
 }{}
 }
 
 %draw lines for each node with 2 children (add parents with 2 children)
 \foreach \x in \nodes{
-\ifnodedefined{\x1}{
+\ifnodedefined{2.\x1}{
 	%calculate with of line
 	\getwidthofnode{\sright}{\x1}
 	%if there is a right child draw wide line
-	\ifnodedefined{\x2}{
+	\ifnodedefined{2.\x2}{
 		\getwidthofnode{\sleft}{\x2}
 		%draw line
 		\draw[shorten <=-\sright/2, shorten >=-\sleft/2] ([yshift=-0.25cm]c\x1) -- ([yshift=-0.25cm]c\x2);

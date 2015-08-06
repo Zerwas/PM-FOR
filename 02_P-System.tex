@@ -162,57 +162,75 @@ Finally we can define $\Gamma_M$ as $\Gamma_{C_1}\cup\conGM$, where $C_1=\langle
 	Induction Step: $i= i'+1$\\
 	Since $I\models\false$ holds trivially if $I$ interprets \false{} with $\top$ we only need to consider models of $\Gamma_C\cup\conGM$ that interpret \false{} with $\bot$ (note that there are none if $M$ terminates which is exactly what we want to proof). As result of this observation we can use the $\exists$-Introduction rule.
 	
-	From the fact that a final configuration is reachable from $C$ in $i$ steps we can deduce that there exists a configuration $D=\langle P,m',n'\rangle$ such that $C\Rightarrow_M^r D$ for some $r\in\mathcal{R}_\autStates$ and a final configuration is reachable from $D$ in $i'$ steps. We also know that $C=\langle Q,m,n\rangle$ for some $Q\in\autStates\setminus\{Q_f\}$ and some $m,n\in\mathbb{N}$. The basic idea is to deduce $\Gamma_D$ from $\Gamma_C\cup\conGM$ and then apply the induction hypothesis to $\Gamma_D\cup\conGM$.
+	From the fact that a final configuration is reachable from $C$ in $i$ steps we can deduce that there exists a configuration $D=\langle \widehat{Q}, \widehat{m}, \widehat{n}\rangle$ such that $C\Rightarrow_M^r D$ for some $r\in\mathcal{R}_\autStates$ and a final configuration is reachable from $D$ in $i'$ steps. We also know that $C=\langle Q,m,n\rangle$ for some $Q\in\autStates\setminus\{Q_f\}$ and some $m,n\in\mathbb{N}$.
+	The set $\Gamma_C$ contains the formulas: 
+	\begin{enumerate}[label=]%TODO is this a good idea?
+		\item $R_1(a,a_0)$, $P(a_{i-1},a_i)$ and $D(a_{i-1})$ for $i\in\{1,\dots,n\}$,
+		\item $R_2(a,b_0)$, $P(b_{i-1},b_i)$ and $D(b_{i-1})$ for $i\in\{1,\dots,m\}$,
+		\item $Q(a)$, $D(a)$, $E(a_n)$ and $E(b_m)$.
+	\end{enumerate}
+	And $\Gamma_D$ contains the formulas:
+	\begin{enumerate}[label=]
+		\item $R_1(\widehat{a},\widehat{a}_0)$, $P(\widehat{a}_{i-1},\widehat{a}_i)$ and $D(\widehat{a}_{i-1})$ for $i\in\{1,\dots,\widehat{n}\}$,
+		\item $R_2(\widehat{a},\widehat{b}_0)$, $P(\widehat{b}_{i-1},\widehat{b}_i)$ and $D(\widehat{b}_{i-1})$ for $i\in\{1,\dots,\widehat{m}\}$,
+		\item $Q(\widehat{a})$, $D(\widehat{a})$, $E({\widehat{a}}_{\widehat{n}})$ and $E({\widehat{b}}_{\widehat{m}})$.
+	\end{enumerate}
+	The basic idea is to deduce $\Gamma_D$ from $\Gamma_C\cup\conGM$ and then apply the induction hypothesis to $\Gamma_D\cup\conGM$. 
 	\begin{figure}[H]
 		\centering
 		\input{Figure.Tableau}
 	\end{figure}
 	
-	There are four possible cases for the type of the rule $r$. We will only consider the cases $r=+(1,Q')$ and $r=-(1,Q_1,Q_2)$, the two cases $r=+(2,Q')$ and $r=-(2,Q_1,Q_2)$ follow by exchanging the roles of register 1 and register 2 in the first two cases.
-	In both cases we need a new free variable $b$ representing the configuration $D$ and the value in register 2 does not change.
+	We achieve this by looking at the four possible cases for the type of the rule $r$. We will only consider the cases $r=+(1,Q')$ and $r=-(1,Q_1,Q_2)$, the two remaining cases $r=+(2,Q')$ and $r=-(2,Q_1,Q_2)$ follow by exchanging the roles of register 1 and register 2 in the first two cases.
 	
-	For the succeeding tableau proofs we will abbreviate \false{} by \falses and we will drop $\Gamma_C\cup\conGM$ and only write new formulas on the left side of $\vdashf$.
+	First we need a new free variable representing the configuration $D$. Also the value in register 2 does not change, because in both cases we are only concerned with register 1.
+	For the succeeding tableau proofs we will abbreviate \false{} by \falses{} and we will drop $\Gamma_C\cup\conGM$ and only write new formulas on the left side of $\vdashf$.
 	
-	We first introduce a new variables representing $D$ (let $b\in \VarP\setminus\text{FV}(\Gamma_C\cup\conGM)$).
+	We first introduce a new variable representing $D$ (let $b\in \VarP\setminus\text{FV}(\Gamma_C\cup\conGM)$).
 	
 	\begin{figure}[H]
 		\centering
 		\input{Figure.Tableau.1}
 	\end{figure}
-	The formula $R_1(b,d)$ can be acquired in a similar way. Again we will just drop $S(a,b)$ and $D(b)$ on the left side for comprehensibility.
+	Since register 2 should not change we need $R_2(b,b_0)$. Again we will just drop $S(a,b)$ and $D(b)$ on the left side for comprehensibility.
+		
+	\begin{figure}[H]
+		\centering
+		\input{Figure.Tableau.6}
+	\end{figure}
+	
+	For the case that $\boldsymbol{r=+(1,Q')}$, we have that $\widehat{Q}=Q'$, $\widehat{n}=n+1$, and $\widehat{m}=m$. So we need to increment register 1 and ensure that the state of $b$ is $Q'$.
+	\begin{figure}[H]
+		\centering
+		\input{Figure.Tableau.3}
+	\end{figure}
+	
+	To increment register 1 we need a new free variable as anchor for register 1 (let $d\in\VarP\setminus\text{FV}(\Gamma_C\cup\conGM)$ and $d\neq b$).
 	
 	\begin{figure}[H]
 		\centering
 		\input{Figure.Tableau.2}
 	\end{figure}
-	Now we have all the new free variables we need and we continue by ensuring that these variables fulfill all the formulas in $\Gamma_D$.
 	
-	\begin{figure}[H]
-		\centering
-		\input{Figure.Tableau.3}
-	\end{figure}
-	Starting from $Q'(b)\vdashf\false$ we can connect $d$ and $a_0$.
+	Now we need to connect $d$ with $a_0$ (the anchor of $a$ for register 1).
 	
 	\begin{figure}[H]
 		\centering
 		\input{Figure.Tableau.4}
 	\end{figure}
-	For register one we still need $D(d)$.
+	
+	At last we have to make sure that we do not get an artificial zero by deducing $D(d)$.
 	
 	\begin{figure}[H]
 		\centering
 		\input{Figure.Tableau.5}
 	\end{figure}
-	Since register two should not change we only need $R_2(b,b_0)$.
 	
-	\begin{figure}[H]
-		\centering
-		\input{Figure.Tableau.6}
-	\end{figure}
-	%TODO
-	Now we have $\Gamma_C$ (Since $P(a_{i-1},a_i)$ is already in $\Gamma_D$) and can deduce \false{} by induction hypothesis.\\
-	\underline{Case $r=-(Q,1,Q_1,Q_2)$}
-	%TODO note that r2 does not change, same for all cases
+	Now we already have deduced $\Gamma_D$, to see why define $\widehat{a}:=b$, $\widehat{b}_i:=b_i$ for $i\in\{0,\dots,m\}$, $\widehat{a}_0:=d$, and $\widehat{a}_{i+1}:=a_i$ for $i\in\{0,\dots,n\}$.
+	Hence we can deduce \false{} by induction hypothesis.\\
+	
+	%TODO continue here
+	Case $\boldsymbol{r=-(Q,1,Q_1,Q_2)}$
 	\\\uline{$r_1=0$}
 	
 	\begin{figure}[H]
