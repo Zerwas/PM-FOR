@@ -127,7 +127,7 @@ Finally we can define $\Gamma_M$ as $\Gamma_{C_1}\cup\conGM$, where $C_1=\langle
 	to say that $(d,d)\in P^I$ for predicate symbols that are used as unary predicate symbols. 
 	As domain for our interpretation we will use the natural numbers. Every number will have two tasks: firstly it will represent itself as a possible value for register 1 or 2 and secondly every number $i$ greater than zero will also represent the $i$\textsuperscript{th} configuration of our infinite computation.
 	Now the idea for our model of $\Gamma_M$ looks like this:
-	%TODO is it really usefull that 0 does not represent a configuration? it dous not look like it
+	%TODO is it really usefull that 0 does not represent a configuration? it does not look like it
 	
 	\begin{figure}[H]
 		\centering
@@ -199,7 +199,7 @@ Finally we can define $\Gamma_M$ as $\Gamma_{C_1}\cup\conGM$, where $C_1=\langle
 		\input{Figure.Tableau.6}
 	\end{figure}
 	
-	For the case that $\boldsymbol{r=+(1,Q')}$, we have that $\widehat{Q}=Q'$, $\widehat{n}=n+1$, and $\widehat{m}=m$. So we need to increment register 1 and ensure that the state of $b$ is $Q'$.
+	For the case that $\boldsymbol{r=+(1,Q')}$, we have that $\widehat{Q}=Q'$, $\widehat{m}=m+1$, and $\widehat{n}=n$. So we need to increment register 1 and ensure that the state of $b$ is $Q'$.
 	\begin{figure}[H]
 		\centering
 		\input{Figure.Tableau.3}
@@ -229,37 +229,37 @@ Finally we can define $\Gamma_M$ as $\Gamma_{C_1}\cup\conGM$, where $C_1=\langle
 	Now we already have deduced $\Gamma_D$, to see why define $\widehat{a}:=b$, $\widehat{b}_i:=b_i$ for $i\in\{0,\dots,m\}$, $\widehat{a}_0:=d$, and $\widehat{a}_{i+1}:=a_i$ for $i\in\{0,\dots,n\}$.
 	Hence we can deduce \false{} by induction hypothesis.\\
 	
-	%TODO continue here
-	Case $\boldsymbol{r=-(Q,1,Q_1,Q_2)}$
-	\\\uline{$r_1=0$}
+	The other case, that $\boldsymbol{r=-(Q,1,Q_1,Q_2)}$, has to be split into two cases again. If $\boldsymbol{m=0}$ then $\widehat{Q}=Q_2$, $\widehat{m}=0$, and $\widehat{n}=n$. We only need to ensure that the successor state is $Q_2$ and that register 1 is still zero.
 	
 	\begin{figure}[H]
 		\centering
 		\input{Figure.Tableau.7}
 	\end{figure}
 	
-	$r_1$ stays zero
+	Register 1 stays zero.
 	
 	\begin{figure}[H]
 		\centering
 		\input{Figure.Tableau.8}
 	\end{figure}
-	\uline{$r_1\geq1$}
 	
-	new state $Q_1$
+	If we define $\widehat{a}:=b$, $\widehat{b}_i:=b_i$ for $i\in\{0,\dots,m\}$, and $\widehat{a}_0:=a_0$ then it is clear that we have deduced all formulas required for $\Gamma_D$. So we can use the induction hypothesis to deduce \false{}.
+	
+	In the last case $\boldsymbol{m>0}$, so $\widehat{Q}=Q_1$, $\widehat{m}=m-1$, and $\widehat{n}=n$. First we ensure that $b$ is in state $Q_1$.
 	
 	\begin{figure}[H]
 		\centering
 		\input{Figure.Tableau.9}
 	\end{figure}
 	
-	decrement $r_1$
+	Now we decrement register 1 by taking $a_1$ (the predecessor of $a_0$) as anchor of $b$ for register 1.
 	
 	\begin{figure}[H]
 		\centering
 		\input{Figure.Tableau.10}
 	\end{figure}
 	
+	Again it is obvious that we have deduced $\Gamma_D$ ($\widehat{a}:=b$, $\widehat{b}_i:=b_i$ for $i\in\{0,\dots,m\}$, and $\widehat{a}_{i-1}:=a_i$ for $i\in\{1,\dots,n\}$). Hence, by induction hypothesis, we can deduce \false{}.
 \end{proof}
 
 \begin{lemma}\label{lem.19}
