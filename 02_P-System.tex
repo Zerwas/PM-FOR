@@ -1,7 +1,7 @@
 \section{System P}
 \subsection{Definitions}
 %TODO mention the convention that a free and \alpha not or change the convention :D
-In the following let $\VarP=\{\alpha,a,\beta,b,\dots\}$ be a countably infinite set (of variables). 
+In the following let $\VarP=\{\alpha,a,\beta,b,\dots\}$ be a countably infinite subset of \lambdaTypVar{} (of variables). 
 Let $\RelP=\{P,Q,\dots\}$ be a set (of predicate symbols) and $\mathcal{P}$ a ranked set such that $\mathcal{P}^{(0)}=\{\false\}$, $\mathcal{P}^{(2)}=\RelP$, and $\mathcal{P}^{(k)}=\emptyset$ for all $k\in\mathbb{N}\setminus\{0,2\}$.
 A first-order logic formula $\varphi$ over $(\VarP,\emptyset,\mathcal{P})$ is an 
 %TODO \RelP not countybly infinite since Q is finite
@@ -54,7 +54,7 @@ If we interpret \false{} with the logical constant false ($\bot$) (denoted by $\
 	The problem to decide whether a given set of \SysP-formulas is consistent, denoted by \PCons, is defined as follows.
 	Given a set of \SysP-formulas $\Gamma$. 
 	\begin{center}
-		Does $\Gamma\vdash\false$ not hold.
+		Does $\Gamma\vdash\false$ not hold?
 	\end{center}
 \end{definition}
 \subsection{\PCons{} is undecidable}
@@ -160,7 +160,7 @@ Finally we can define $\Gamma_M$ as $\Gamma_{C_1}\cup\conGM$, where $C_1=\langle
 	\end{figure}
 	 
 	Induction Step: $i= i'+1$\\
-	Since $I\models\false$ holds trivially if $I$ interprets \false{} with $\top$ we only need to consider models of $\Gamma_C\cup\conGM$ that interpret \false{} with $\bot$ (note that there are none if $M$ terminates which is exactly what we want to proof). As result of this observation we can use the $\exists$-Introduction rule.
+	Since $I\models\false$ holds trivially if $I$ interprets \false{} with $\top$ we only need to consider models of $\Gamma_C\cup\conGM$ that interpret \false{} with $\bot$ (note that there are no such models if $M$ terminates which is exactly what we want to proof). As result of this observation we can use the $\exists$-Introduction rule.
 	
 	From the fact that a final configuration is reachable from $C$ in $i$ steps we can deduce that there exists a configuration $D=\langle \widehat{Q}, \widehat{m}, \widehat{n}\rangle$ such that $C\Rightarrow_M^r D$ for some $r\in\mathcal{R}_\autStates$ and a final configuration is reachable from $D$ in $i'$ steps. We also know that $C=\langle Q,m,n\rangle$ for some $Q\in\autStates\setminus\{Q_f\}$ and some $m,n\in\mathbb{N}$.
 	The set $\Gamma_C$ contains the formulas: 
