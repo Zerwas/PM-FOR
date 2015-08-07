@@ -268,12 +268,12 @@ Finally we can define $\Gamma_M$ as $\Gamma_{C_1}\cup\conGM$, where $C_1=\langle
 	\end{align*}
 \end{lemma}
 \begin{proof}
-	The $\Leftarrow$ directions follows directly from Claim \ref{cla.17}. And the $\Rightarrow$ direction is a direct consequence of Claim \ref{cla.18} with $C=\langle Q_0,0,0\rangle$.
+	The $\Leftarrow$ directions is proven in Claim \ref{cla.17}. And the $\Rightarrow$ direction is a direct consequence of Claim \ref{cla.18} with $C=\langle Q_0,0,0\rangle$.
 \end{proof}
 
 \begin{theorem}
 	\PCons{} is undecidable.
 \end{theorem}
 \begin{proof}
-	Since by Lemma \ref{lem.19} for a given two-counter automaton $M$ we can effectively construct a set of \SysP-formulas $\Gamma_M$ such that $M$ terminates on input $(0,0)$ iff $\Gamma_M$ is not consistent. It follows that $\autHalt\leq\PCons$. Hence, since \autHalt{} is undecidable, we have shown that \PCons{} is undecidable too.
+	Since by Lemma \ref{lem.19} for a given two-counter automaton $M$ we can effectively construct a set of \SysP-formulas $\Gamma_M$ such that $M$ terminates on input $(0,0)$ iff $\Gamma_M$ is not consistent. It follows that $\autHalt\leq\PCons$. Since \autHalt{} is undecidable we have shown that \PCons{} is undecidable too.
 \end{proof}
