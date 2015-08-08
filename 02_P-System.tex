@@ -16,7 +16,7 @@ A finite set of \SysP-formulas $\Gamma$ is called \SysP-basis, or basis if it is
 \end{definition}
 
 \begin{definition}
-Let $A$ be a \SysP-formula, and $\Gamma$ be a \SysP-basis. The formula $A$ is \define{derivable} from $\Gamma$, denoted by $\Gamma\PModels A$, if $A$ can be produced using the following deduction rules.
+Let $A$ be a \SysP-formula, and $\Gamma$ be a \SysP-basis. The formula $A$ is a semantic consequence of $\Gamma$ if $A$ can be produced using the following deduction rules.
 \begin{mdframed}
 	\begingroup%TODO maybe not A and B for terms?
 	\addtolength{\jot}{0.3cm}
@@ -32,15 +32,21 @@ Let $A$ be a \SysP-formula, and $\Gamma$ be a \SysP-basis. The formula $A$ is \d
 \end{mdframed}
 \end{definition}
 
-An Interpretation $I$ of a P formula is a tuple $I=(\Delta,\cdot^I)$ where $\Delta$ is a set (called domain), $P^I\subseteq\Delta^k$ and $\alpha^I\in\Delta$.\dots\\
-If we interpret \false{} with the logical constant false ($\bot$) (denoted by $\PModelsf$) we can add a new deduction rule.
+We define a general consequence relation in which we demand that \false{} is interpreted with $\bot$. In this relation existential formulas will behave like the name suggests. Formally:
+\begin{definition}
+Let $\Gamma$ be a basis. The \SysP-formula $A$ is a \define{sematic consequence with falsity}, denoted by $\Gamma\PModelsf A$, if for every interpretation $I$
+\[I\models\Gamma \text{ and } \false^I=\bot\text{ implies }I\models A.\]
+
+This allows us to add the following deduction rule.
 \begin{mdframed}
 	\begin{align*}
 		  & (\exists\text{-Introduction}) &   & \frac 
 		{\Gamma,A\left[\alpha:=a\right]\PModelsf B}
 		{\Gamma,\forall\alpha(A\to\false)\to\false\PModelsf B} && a\notin\emph{FV}(\Gamma,A,B)
+		%TODO existential elimination is not needed still write the rule down for consistency?
 	\end{align*}
 \end{mdframed}
+\end{definition}
 \begin{proof}
 	Let $I=(\Delta,\cdot^I,\omega)$ be a model of $\Gamma,\forall\alpha(A\to\false)\to\false$ with $\false^I=\bot$ and $a\in\VarP$ a variable such that $a\notin\emph{FV}(\Gamma,A,B)$.
 	\begin{align*}
