@@ -3,17 +3,17 @@ execute at begin node=$, execute at end node=$,
 every node/.style={opacity=1},
 every child/.style={edge from parent/.style={opacity=0}}]
 \def\dist{0.4cm}
-\node(e) {\vdashf \falses} [sibling distance=2*\dist+4cm] 
-	child {node(1) {\vdashf D(d)} [sibling distance=\dist+2.8cm]
-		child[xshift=2cm] {node(11) {\vdashf R_1(b,d)}}
-		child[xshift=2cm] {node(12) {\vdashf R_1(b,d)\to D(d)} [sibling distance=\dist+3.5cm]
-			child[xshift=2cm] {node(121) {\vdashf S(a,b)}}
-			child[xshift=2cm] {node(122) {\vdashf S(a,b)\to R_1(b,d)\to D(d)} [sibling distance=\dist+4.1cm]
-				child[xshift=2cm] {node(1221) {\vdashf Q(a)}}
-				child[xshift=2cm] {node(1222) {\vdashf Q(a)\to S(a,b)\to R_1(b,d)\to D(d)}
-					child {node(12221) {\vdashf\forall\alpha\beta\delta(Q(\alpha)\to S(\alpha,\beta)\to R_1(\beta,\delta)\to D(\delta))}}}}}}
-	child {node(2) {\vdashf D(d)\to\falses}
-		child {node(21) {D(d)\vdashf\falses}
+\node(e) {\PModelsf \falses} [sibling distance=2*\dist+4cm] 
+	child {node(1) {\PModelsf D(d)} [sibling distance=\dist+2.8cm]
+		child[xshift=2cm] {node(11) {\PModelsf R_1(b,d)}}
+		child[xshift=2cm] {node(12) {\PModelsf R_1(b,d)\to D(d)} [sibling distance=\dist+3.5cm]
+			child[xshift=2cm] {node(121) {\PModelsf S(a,b)}}
+			child[xshift=2cm] {node(122) {\PModelsf S(a,b)\to R_1(b,d)\to D(d)} [sibling distance=\dist+4.1cm]
+				child[xshift=2cm] {node(1221) {\PModelsf Q(a)}}
+				child[xshift=2cm] {node(1222) {\PModelsf Q(a)\to S(a,b)\to R_1(b,d)\to D(d)}
+					child {node(12221) {\PModelsf\forall\alpha\beta\delta(Q(\alpha)\to S(\alpha,\beta)\to R_1(\beta,\delta)\to D(\delta))}}}}}}
+	child {node(2) {\PModelsf D(d)\to\falses}
+		child {node(21) {D(d)\PModelsf\falses}
 			child {node[label={[yshift=-0.3cm]above:\vdots}](211) {}}}};
 
 

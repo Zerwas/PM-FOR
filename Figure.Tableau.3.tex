@@ -2,15 +2,15 @@
 execute at begin node=$, execute at end node=$,
 every node/.style={opacity=1},
 every child/.style={edge from parent/.style={opacity=0}}]
-\node(e) {\vdashf \falses} [sibling distance=12.4cm] 
-	child [sibling distance=4cm] {node(1) {\vdashf Q'(b)} 
-		child {node(11) {\vdashf S(a,b)} }
-		child [sibling distance=3.7cm] {node(12) {\vdashf S(a,b)\to Q'(b)} 
-			child {node(121) {\vdashf Q(a)} }
-			child {node(122) {\vdashf Q(a)\to S(a,b)\to Q'(b)} 
-				child {node(1221) {\vdashf\forall\alpha\beta(Q(\alpha)\to S(\alpha,\beta)\to Q'(\beta))} }}}}
-	child {node(2) {\vdashf Q'(b)\to\falses} 
-		child {node(21) {Q'(b)\vdashf\falses} 
+\node(e) {\PModelsf \falses} [sibling distance=12.4cm] 
+	child [sibling distance=4cm] {node(1) {\PModelsf Q'(b)} 
+		child {node(11) {\PModelsf S(a,b)} }
+		child [sibling distance=3.7cm] {node(12) {\PModelsf S(a,b)\to Q'(b)} 
+			child {node(121) {\PModelsf Q(a)} }
+			child {node(122) {\PModelsf Q(a)\to S(a,b)\to Q'(b)} 
+				child {node(1221) {\PModelsf\forall\alpha\beta(Q(\alpha)\to S(\alpha,\beta)\to Q'(\beta))} }}}}
+	child {node(2) {\PModelsf Q'(b)\to\falses} 
+		child {node(21) {Q'(b)\PModelsf\falses} 
 			child {node[label={[yshift=-0.3cm]above:\vdots}](211) {}}}};
 
 %set of all positions in the tree

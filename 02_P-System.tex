@@ -3,36 +3,42 @@
 %TODO mention the convention that a free and \alpha not or change the convention :D
 In the following let $\VarP=\{\alpha,a,\beta,b,\dots\}$ be a countably infinite subset of \lambdaTypVar{} (of variables). 
 Let $\RelP=\{P,Q,\dots\}$ be a set (of predicate symbols) and $\mathcal{P}$ a ranked set such that $\mathcal{P}^{(0)}=\{\false\}$, $\mathcal{P}^{(2)}=\RelP$, and $\mathcal{P}^{(k)}=\emptyset$ for all $k\in\mathbb{N}\setminus\{0,2\}$.
-A first-order logic formula $\varphi$ over $(\VarP,\emptyset,\mathcal{P})$ is an 
-%TODO \RelP not countybly infinite since Q is finite
-%todo later new \RelP so only bind it locally
+A first-order logic formula $\varphi$ over $(\VarP,\emptyset,\mathcal{P})$ is an
 \begin{description} %TODO \overrightarrow{\alpha}
 	\item[atomic formula] if $\varphi=\false$ or $\varphi=P(a,b)$ for some $P\in\RelP$ and $a,b\in\VarP$.
 	\item[universal formula] if $\varphi=\forall\overrightarrow{\alpha}(A_1\to A_2 \to\dots\to A_n)$ where $A_i$ is an atomic formula for $i\in\left[n\right]$, $A_i\neq\false$ for $i\in\left[n-1\right]$ and for each $\alpha\in\FV(\varphi)\cap\FV(A_n)$ there exists an $i\in\left[n-1\right]$ such that $\alpha\in\FV(A_i)$.
 	\item[existential formula] if there exits $n\ge0$,  atomic formulas $A_i\neq\false$ for $i\in\left[n\right]$ such that $\varphi=\forall\overrightarrow{\alpha}(A_1\to A_2 \to\dots\to A_{n-1}\to\forall\beta(A_n\to\false)\to\false)$.
 \end{description}
-The set of formulas of System \SysP{} (= set of \SysP-formulas) over $(\VarP,\RelP)$ is the set of all first-order formulas over $(\VarP,\emptyset,\mathcal{P})$ that are either an atomic, universal or existential formula.\\ 
-Deduction Rules
+The set of formulas of System \SysP{} (= set of \SysP-formulas) over $(\VarP,\RelP)$ is the set of all first-order formulas over $(\VarP,\emptyset,\mathcal{P})$ that are either an atomic, universal or existential formula.
+
+\begin{definition}
+A finite set of \SysP-formulas $\Gamma$ is called \SysP-basis, or basis if it is clear whether a \SysP-basis or a \lambdaTwo-basis is meant.
+\end{definition}
+
+\begin{definition}
+Let $A$ be a \SysP-formula, and $\Gamma$ be a \SysP-basis. The formula $A$ is \define{derivable} from $\Gamma$, denoted by $\Gamma\PModels A$, if $A$ can be produced using the following deduction rules.
 \begin{mdframed}
 	\begingroup%TODO maybe not A and B for terms?
 	\addtolength{\jot}{0.3cm}
 	\begin{align*}
-		&(\text{Axiom}) &&\Gamma,A\vdash A\vphantom{\frac{\Gamma}{\Gamma}}\\
-		&(\rightarrow\text{-Introduction}) &&\frac{\Gamma,A\vdash B}{\Gamma\vdash A\to B}\\
-		&(\rightarrow\text{-Elimination}) &&\frac{\Gamma\vdash A\to B \hspace{0.4cm}\Gamma\vdash A}{\Gamma\vdash B}\\
-		  & (\forall\text{-Introduction}) &   & \frac{\Gamma\vdash B}{\Gamma\vdash \forall\alpha B} &   & \alpha\notin\FV(\Gamma) \\
-		&(\forall\text{-Elimination}) &&\frac{\Gamma\vdash \forall\alpha B }{\Gamma\vdash B\left[ \alpha:=b\right] }
+		&(\text{Axiom}) &&\Gamma,A\PModels A\vphantom{\frac{\Gamma}{\Gamma}}\\
+		&(\rightarrow\text{-Introduction}) &&\frac{\Gamma,A\PModels B}{\Gamma\PModels A\to B}\\
+		&(\rightarrow\text{-Elimination}) &&\frac{\Gamma\PModels A\to B \hspace{0.4cm}\Gamma\PModels A}{\Gamma\PModels B}\\
+		  & (\forall\text{-Introduction}) &   & \frac{\Gamma\PModels B}{\Gamma\PModels \forall\alpha B} &   & \alpha\notin\FV(\Gamma) \\
+		&(\forall\text{-Elimination}) &&\frac{\Gamma\PModels \forall\alpha B }{\Gamma\PModels B\left[ \alpha:=b\right] }
 		&& b\in\VarP %TODO dot after \alpha?, b\in\VarP necessary?
 	\end{align*}
 	\endgroup
 \end{mdframed}
+\end{definition}
+
 An Interpretation $I$ of a P formula is a tuple $I=(\Delta,\cdot^I)$ where $\Delta$ is a set (called domain), $P^I\subseteq\Delta^k$ and $\alpha^I\in\Delta$.\dots\\
-If we interpret \false{} with the logical constant false ($\bot$) (denoted by $\vdash_f$) we can add a new deduction rule.
+If we interpret \false{} with the logical constant false ($\bot$) (denoted by $\PModelsf$) we can add a new deduction rule.
 \begin{mdframed}
 	\begin{align*}
 		  & (\exists\text{-Introduction}) &   & \frac 
-		{\Gamma,A\left[\alpha:=a\right]\vdashf B}
-		{\Gamma,\forall\alpha(A\to\false)\to\false\vdashf B} && a\notin\emph{FV}(\Gamma,A,B)
+		{\Gamma,A\left[\alpha:=a\right]\PModelsf B}
+		{\Gamma,\forall\alpha(A\to\false)\to\false\PModelsf B} && a\notin\emph{FV}(\Gamma,A,B)
 	\end{align*}
 \end{mdframed}
 \begin{proof}
@@ -42,11 +48,11 @@ If we interpret \false{} with the logical constant false ($\bot$) (denoted by $\
         & \Rightarrow (\forall\alpha(A\to\false))^I\to\false^I                                                            \\
         & \Rightarrow (\forall\alpha(A\to\false))^I\to\bot                                                                \\
         & \Rightarrow \neg(\forall\alpha(A\to\false))^I                                                                   \\
-        & \Rightarrow \neg(\forall d\in\Delta:(A\to\false)^{I\left[\alpha\mapsto d\right]})                               \\
-        & \Rightarrow \exists d\in\Delta:\neg(A^{I\left[\alpha\mapsto d\right]}\to\false^{I\left[\alpha\mapsto d\right]}) \\
-        & \Rightarrow \exists d\in\Delta:\neg(A^{I\left[\alpha\mapsto d\right]}\to\bot)                                   \\
-        & \Rightarrow \exists d\in\Delta:\neg(\neg A^{I\left[\alpha\mapsto d\right]})                                     \\
-        & \Rightarrow \exists d\in\Delta:A^{I\left[\alpha\mapsto d\right]}
+        & \Rightarrow \neg(\forall d\in\Delta\colon(A\to\false)^{I\left[\alpha\mapsto d\right]})                               \\
+        & \Rightarrow \exists d\in\Delta\colon\neg(A^{I\left[\alpha\mapsto d\right]}\to\false^{I\left[\alpha\mapsto d\right]}) \\
+        & \Rightarrow \exists d\in\Delta\colon\neg(A^{I\left[\alpha\mapsto d\right]}\to\bot)                                   \\
+        & \Rightarrow \exists d\in\Delta\colon\neg(\neg A^{I\left[\alpha\mapsto d\right]})                                     \\
+        & \Rightarrow \exists d\in\Delta\colon A^{I\left[\alpha\mapsto d\right]}
 	\end{align*}
 	Together with $a\notin\emph{FV}(\Gamma,A)$, it follows that $I\left[a\mapsto d\right]$ is a model of $\Gamma,A\left[\alpha:=a\right]$. Which implies $I\left[a\mapsto d\right]\models B$.	Since $a$ is not free in $B$ we conclude that $I$ is also a model of $B$.
 \end{proof}
@@ -54,13 +60,13 @@ If we interpret \false{} with the logical constant false ($\bot$) (denoted by $\
 	The problem to decide whether a given set of \SysP-formulas is consistent, denoted by \PCons, is defined as follows.
 	Given a set of \SysP-formulas $\Gamma$. 
 	\begin{center}
-		Does $\Gamma\vdash\false$ not hold?
+		Does $\Gamma\PModels\false$ not hold?
 	\end{center}
 \end{definition}
 \subsection{\PCons{} is undecidable}
-We will show that $\autHalt\leq\PCons$ then the undecidability of \PCons{} directly follows from the undecidability of \autHalt. For a given two-counter automaton $M$ we will effectively construct a set of \SysP-formulas $\Gamma_M$ such that
+We will show that $\autHalt\leq\PCons$ then the undecidability of \PCons{} directly follows from the undecidability of \autHalt. For a given two-counter automaton $M$ we will effectively construct a \SysP-basis $\Gamma_M$ such that
 \begin{align*}
- & \text{$M$ terminates on input $(0,0)$} &   & \text{iff} & \text{$\Gamma_M\vdash\false$ holds in system P.} 
+ & \text{$M$ terminates on input $(0,0)$} &   & \text{iff} & \text{$\Gamma_M\PModels\false$ holds in system P.} 
 \end{align*}
 Let $M=(\autStates,Q_0,Q_f,\autRules)$ be a two-counter automaton, w.l.o.g. $S,P,R_1,R_2,E,D\notin\autStates$. In the following we will consider \SysP-formulas over $(\VarP,\RelP)$, where $\RelP=\autStates\uplus\{S,P,R_1,R_2,E,D\}$. We will abbreviate $P(a,a)$ to $P(a)$, note that this way we can use binary predicate symbols as unary ones.
 
@@ -108,11 +114,11 @@ We define $\conGM$ as $\bigcup_{Q\in\autStates\setminus\{Q_f\}}\Gamma_{Q,R(Q)}\c
 Finally we can define $\Gamma_M$ as $\Gamma_{C_1}\cup\conGM$, where $C_1=\langle Q_0,0,0\rangle$ is the initial configuration.
 \begin{claim}\label{cla.17}
 	\begin{align*}
-		  & \text{$\Gamma_M\vdash\false$ holds in system P} &   & \implies & \text{$M$ terminates on input $(0,0)$} 
+		  & \text{$\Gamma_M\PModels\false$ holds in system P} &   & \implies & \text{$M$ terminates on input $(0,0)$} 
 	\end{align*}
 \end{claim}
 \begin{proof}
-	Assume $M$ does not terminate then there is an infinite chain $C_1\Rightarrow_M C_2\Rightarrow_M C_3\Rightarrow_M\dots$ ($C_i=\langle Q_i,m_i,n_i\rangle$ for $i\in\mathbb{N}^+$). Now we construct a model of $\Gamma_M$ which interprets \false{} with $\bot$ this contradicts $\Gamma_M\vdash\false$.
+	Assume $M$ does not terminate then there is an infinite chain $C_1\Rightarrow_M C_2\Rightarrow_M C_3\Rightarrow_M\dots$ ($C_i=\langle Q_i,m_i,n_i\rangle$ for $i\in\mathbb{N}^+$). Now we construct a model of $\Gamma_M$ which interprets \false{} with $\bot$ this contradicts $\Gamma_M\PModels\false$.
 	
 	To illustrate the idea we will use a graphical notation for an interpretation $I$.
 	By
@@ -148,7 +154,7 @@ Finally we can define $\Gamma_M$ as $\Gamma_{C_1}\cup\conGM$, where $C_1=\langle
 	Since there are no free variables in $\Gamma_M$ we can just set $\omega(x)=0$ for every $x\in\VarP$. It is easy to see that $I$ is indeed a model of $\Gamma_M$.
 \end{proof}
 \begin{claim}\label{cla.18}
-	Let $C=\langle Q,m,n\rangle$ be a configuration of $M$. If a final configuration (i.e. a configuration $\langle Q_f,m',n'\rangle$ for some $n',m'\in\mathbb{N}$) is reachable from $C$ then $\Gamma_C\cup\conGM\vdash\false$.
+	Let $C=\langle Q,m,n\rangle$ be a configuration of $M$. If a final configuration (i.e. a configuration $\langle Q_f,m',n'\rangle$ for some $n',m'\in\mathbb{N}$) is reachable from $C$ then $\Gamma_C\cup\conGM\PModels\false$.
 \end{claim}
 \begin{proof} By induction on the length $i$ of the computation.
 	
@@ -184,7 +190,7 @@ Finally we can define $\Gamma_M$ as $\Gamma_{C_1}\cup\conGM$, where $C_1=\langle
 	We achieve this by looking at the four possible cases for the type of the rule $r$. We will only consider the cases $r=+(1,Q')$ and $r=-(1,Q_1,Q_2)$, the two remaining cases $r=+(2,Q')$ and $r=-(2,Q_1,Q_2)$ follow by exchanging the roles of register 1 and register 2 in the first two cases.
 	
 	First we need a new free variable representing the configuration $D$. Also the value in register 2 does not change, because in both cases we are only concerned with register 1.
-	For the succeeding tableau proofs we will abbreviate \false{} by \falses{} and we will drop $\Gamma_C\cup\conGM$ and only write new formulas on the left side of $\vdashf$.
+	For the succeeding tableau proofs we will abbreviate \false{} by \falses{} and we will drop $\Gamma_C\cup\conGM$ and only write new formulas on the left side of $\PModelsf$.
 	
 	We first introduce a new variable representing $D$ (let $b\in \VarP\setminus\text{FV}(\Gamma_C\cup\conGM)$).
 	
@@ -264,7 +270,7 @@ Finally we can define $\Gamma_M$ as $\Gamma_{C_1}\cup\conGM$, where $C_1=\langle
 
 \begin{lemma}\label{lem.19}
 	\begin{align*} %TODO for any M one can effectively construct? or is M the M from the construction
-		  & \text{$M$ terminates on input $(0,0)$} &   & \text{iff} & \text{$\Gamma_M\vdash\false$ holds in system P.} 
+		  & \text{$M$ terminates on input $(0,0)$} &   & \text{iff} & \text{$\Gamma_M\PModels\false$ holds in system P.} 
 	\end{align*}
 \end{lemma}
 \begin{proof}

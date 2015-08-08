@@ -3,19 +3,19 @@ execute at begin node=$, execute at end node=$,
 every node/.style={opacity=1},
 every child/.style={edge from parent/.style={opacity=0}}]
 \def\dist{0.4cm}
-\node(e) {\vdashf \falses} [sibling distance=6cm] 
-	child {node(1) {\vdashf Q_2(b)} [sibling distance=\dist+2.7cm]
-		child[xshift=1.7cm] {node(11) {\vdashf E(a_0)}}
-		child[xshift=1.7cm] {node(12) {\vdashf E(a_0)\to Q_2(b)} [sibling distance=\dist+3.8cm]
-			child[xshift=2cm] {node(121) {\vdashf R_1(a,a_0)}}
-			child[xshift=2cm] {node(122) {\vdashf R_1(a,a_0)\to E(a_0)\to Q_2(b)} [sibling distance=\dist+4.5cm]
-				child[xshift=2cm] {node(1221) {\vdashf S(a,b)}}
-				child[xshift=2cm] {node(1222) {\vdashf S(a,b)\to R_1(a,a_0)\to E(a_0)\to Q_2(b)} [sibling distance=\dist+5cm]
-					child[xshift=2cm] {node(12221) {\vdashf Q(a)}}
-					child[xshift=2cm] {node(12222) {\vdashf Q(a)\to S(a,b)\to R_1(a,a_0)\to E(a_0)\to Q_2(b)}
-						child {node(122221) {\vdashf\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to R_1(\alpha,\gamma)\to E(\gamma)\to Q_2(\beta))}}}}}}}
-	child {node(2) {\vdashf Q_2(b)\to\falses}
-		child {node(21) {Q_2(b)\vdashf\falses}
+\node(e) {\PModelsf \falses} [sibling distance=6cm] 
+	child {node(1) {\PModelsf Q_2(b)} [sibling distance=\dist+2.7cm]
+		child[xshift=1.7cm] {node(11) {\PModelsf E(a_0)}}
+		child[xshift=1.7cm] {node(12) {\PModelsf E(a_0)\to Q_2(b)} [sibling distance=\dist+3.8cm]
+			child[xshift=2cm] {node(121) {\PModelsf R_1(a,a_0)}}
+			child[xshift=2cm] {node(122) {\PModelsf R_1(a,a_0)\to E(a_0)\to Q_2(b)} [sibling distance=\dist+4.5cm]
+				child[xshift=2cm] {node(1221) {\PModelsf S(a,b)}}
+				child[xshift=2cm] {node(1222) {\PModelsf S(a,b)\to R_1(a,a_0)\to E(a_0)\to Q_2(b)} [sibling distance=\dist+5cm]
+					child[xshift=2cm] {node(12221) {\PModelsf Q(a)}}
+					child[xshift=2cm] {node(12222) {\PModelsf Q(a)\to S(a,b)\to R_1(a,a_0)\to E(a_0)\to Q_2(b)}
+						child {node(122221) {\PModelsf\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to R_1(\alpha,\gamma)\to E(\gamma)\to Q_2(\beta))}}}}}}}
+	child {node(2) {\PModelsf Q_2(b)\to\falses}
+		child {node(21) {Q_2(b)\PModelsf\falses}
 			child {node[label={[yshift=-0.3cm]above:\vdots}](211) {}}}};
 
 
