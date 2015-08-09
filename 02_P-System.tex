@@ -2,12 +2,12 @@
 \subsection{Definitions}
 %TODO mention the convention that a free and \alpha not or change the convention :D
 In the following let $\VarP=\{\alpha,a,\beta,b,\dots\}$ be a countably infinite subset of \lambdaTypVar{} (of variables). 
-Let $\RelP=\{P,Q,\dots\}$ be a set (of predicate symbols) and $\mathcal{P}$ a ranked set such that $\mathcal{P}^{(0)}=\{\false\}$, $\mathcal{P}^{(2)}=\RelP$, and $\mathcal{P}^{(k)}=\emptyset$ for all $k\in\mathbb{N}\setminus\{0,2\}$.
+Let $\RelP=\{P,Q,\dots\}$ be a set (of predicate symbols) and $\mathcal{P}$ a ranked set such that $\mathcal{P}^{(0)}=\{\false\}$, $\mathcal{P}^{(2)}=\RelP$, and $\mathcal{P}^{(k)}=\emptyset$ for all $k\in\N\setminus\{0,2\}$.
 A first-order logic formula $\varphi$ over $(\VarP,\emptyset,\mathcal{P})$ is an
-\begin{description} %TODO \overrightarrow{\alpha}
+\begin{description} %TODO quantify \vec{a}
 	\item[atomic formula] if $\varphi=\false$ or $\varphi=P(a,b)$ for some $P\in\RelP$ and $a,b\in\VarP$.
-	\item[universal formula] if $\varphi=\forall\overrightarrow{\alpha}(A_1\to A_2 \to\dots\to A_n)$ where $A_i$ is an atomic formula for $i\in\left[n\right]$, $A_i\neq\false$ for $i\in\left[n-1\right]$ and for each $\alpha\in\FV(\varphi)\cap\FV(A_n)$ there exists an $i\in\left[n-1\right]$ such that $\alpha\in\FV(A_i)$.
-	\item[existential formula] if there exits $n\ge0$,  atomic formulas $A_i\neq\false$ for $i\in\left[n\right]$ such that $\varphi=\forall\overrightarrow{\alpha}(A_1\to A_2 \to\dots\to A_{n-1}\to\forall\beta(A_n\to\false)\to\false)$.
+	\item[universal formula] if $\varphi=\forall\vec{\alpha}(A_1\to A_2 \to\dots\to A_n)$ for some $n\in\N$ and where $A_i$ is an atomic formula for $i\in\{1,\dots,n\}$, $A_i\neq\false$ for $i\in\{1,\dots,n-1\}$ and for each $\alpha\in\FV(\varphi)\cap\FV(A_n)$ there exists an $i\in\{1,\dots,n-1\}$ such that $\alpha\in\FV(A_i)$.
+	\item[existential formula] if there exits $n\in\N$, atomic formulas $A_i\neq\false$ for $i\in\{1,\dots,n\}$ such that $\varphi=\forall\vec{\alpha}(A_1\to A_2 \to\dots\to A_{n-1}\to\forall\beta(A_n\to\false)\to\false)$.
 \end{description}
 The set of formulas of System \SysP{} (= set of \SysP-formulas) over $(\VarP,\RelP)$ is the set of all first-order formulas over $(\VarP,\emptyset,\mathcal{P})$ that are either an atomic, universal or existential formula.
 
@@ -124,7 +124,7 @@ Finally we can define $\Gamma_M$ as $\Gamma_{C_1}\cup\conGM$, where $C_1=\langle
 	\end{align*}
 \end{claim}
 \begin{proof}
-	Assume $M$ does not terminate then there is an infinite chain $C_1\Rightarrow_M C_2\Rightarrow_M C_3\Rightarrow_M\dots$ ($C_i=\langle Q_i,m_i,n_i\rangle$ for $i\in\mathbb{N}^+$). Now we construct a model of $\Gamma_M$ which interprets \false{} with $\bot$ this contradicts $\Gamma_M\PModels\false$.
+	Assume $M$ does not terminate then there is an infinite chain $C_1\Rightarrow_M C_2\Rightarrow_M C_3\Rightarrow_M\dots$ ($C_i=\langle Q_i,m_i,n_i\rangle$ for $i\in\N^+$). Now we construct a model of $\Gamma_M$ which interprets \false{} with $\bot$ this contradicts $\Gamma_M\PModels\false$.
 	
 	To illustrate the idea we will use a graphical notation for an interpretation $I$.
 	By
@@ -147,12 +147,12 @@ Finally we can define $\Gamma_M$ as $\Gamma_{C_1}\cup\conGM$, where $C_1=\langle
 	\end{figure}
 	We have $0\in E^I$ and all other numbers are in $D^I$.
 	
-	Here is the more formal definition of our model $I=(\mathbb{N},\cdot^I,\omega)$.
+	Here is the more formal definition of our model $I=(\N,\cdot^I,\omega)$.
 	\begin{align*}
-		  P^I&=\{(i+1,i)\mid i\in\mathbb{N}\}              & R_1^I&=\{(i,m_i)\mid i\in\mathbb{N}\} & R_2^I&=\{(i,n_i)\mid i\in\mathbb{N}\} \\
-		  %Q^I&=\{ i\in\mathbb{N}\setminus\{0\}\mid Q=Q_i\} &  D^I&=\mathbb{N}\setminus\{0\}         & E^I&=\{0\}                            \\
-		  Q^I&=\{(i,i)\mid i\in\mathbb{N}^+, Q=Q_i\} &  D^I&=\{(i,i)\mid i\in\mathbb{N}^+\}         & E^I&=\{(0,0)\}                            \\
-		  S^I&=\{(i,i+1)\mid i\in\mathbb{N}\} & \false^I&=\bot
+		  P^I&=\{(i+1,i)\mid i\in\N\}              & R_1^I&=\{(i,m_i)\mid i\in\N\} & R_2^I&=\{(i,n_i)\mid i\in\N\} \\
+		  %Q^I&=\{ i\in\N\setminus\{0\}\mid Q=Q_i\} &  D^I&=\N\setminus\{0\}         & E^I&=\{0\}                            \\
+		  Q^I&=\{(i,i)\mid i\in\N^+, Q=Q_i\} &  D^I&=\{(i,i)\mid i\in\N^+\}         & E^I&=\{(0,0)\}                            \\
+		  S^I&=\{(i,i+1)\mid i\in\N\} & \false^I&=\bot
 	\end{align*}
 	\begin{align*}
 		  & a^I=1 &   & a_0^I=0 &   & b_0^I=0 
@@ -162,12 +162,12 @@ Finally we can define $\Gamma_M$ as $\Gamma_{C_1}\cup\conGM$, where $C_1=\langle
 
 We proof the other direction by induction on the length of the computation. But to be able to use the induction hypothesis we need a slightly more general statement.
 \begin{claim}\label{cla.18}
-	Let $C=\langle Q,m,n\rangle$ be a configuration of $M$. If a final configuration (i.e. a configuration $\langle Q_f,\widehat{m},\widehat{n}\rangle$ for some $\widehat{n},\widehat{m}\in\mathbb{N}$) is reachable from $C$ then $\Gamma_C\cup\conGM\PModels\false$.
+	Let $C=\langle Q,m,n\rangle$ be a configuration of $M$. If a final configuration (i.e. a configuration $\langle Q_f,\widehat{m},\widehat{n}\rangle$ for some $\widehat{n},\widehat{m}\in\N$) is reachable from $C$ then $\Gamma_C\cup\conGM\PModels\false$.
 \end{claim}
 \begin{proof} By induction on the length $i$ of the computation.
 	
 	Induction Base: $i=0$\\
-	Since a final configuration is reachable in 0 steps $C$ must be this final configuration. So $C=\langle Q_f,m,n\rangle$ for some $n,m\in\mathbb{N}$. Hence, $Q_f(a)$ is in $\Gamma_C$ for some $a\in\VarP$ and $\forall\alpha(Q_f(\alpha)\to\false)$ is in $\conGM$, we can easily deduce false.
+	Since a final configuration is reachable in 0 steps $C$ must be this final configuration. So $C=\langle Q_f,m,n\rangle$ for some $n,m\in\N$. Hence, $Q_f(a)$ is in $\Gamma_C$ for some $a\in\VarP$ and $\forall\alpha(Q_f(\alpha)\to\false)$ is in $\conGM$, we can easily deduce false.
 	\begin{figure}[H]
 		\centering
 		\input{Figure.Tableau.0}
@@ -176,7 +176,7 @@ We proof the other direction by induction on the length of the computation. But 
 	Induction Step: $i= i'+1$\\
 	Since $I\models\false$ holds trivially if $I$ interprets \false{} with $\top$ we only need to consider models of $\Gamma_C\cup\conGM$ that interpret \false{} with $\bot$ (note that there are no such models if $M$ terminates which is exactly what we want to proof). As result of this observation we can use the $\exists$-Introduction rule.
 	
-	From the fact that a final configuration is reachable from $C$ in $i$ steps we can deduce that there exists a configuration $D=\langle \widehat{Q}, \widehat{m}, \widehat{n}\rangle$ such that $C\Rightarrow_M^r D$ for some $r\in\mathcal{R}_\autStates$ and a final configuration is reachable from $D$ in $i'$ steps. We also know that $C=\langle Q,m,n\rangle$ for some $Q\in\autStates\setminus\{Q_f\}$ and some $m,n\in\mathbb{N}$.
+	From the fact that a final configuration is reachable from $C$ in $i$ steps we can deduce that there exists a configuration $D=\langle \widehat{Q}, \widehat{m}, \widehat{n}\rangle$ such that $C\Rightarrow_M^r D$ for some $r\in\mathcal{R}_\autStates$ and a final configuration is reachable from $D$ in $i'$ steps. We also know that $C=\langle Q,m,n\rangle$ for some $Q\in\autStates\setminus\{Q_f\}$ and some $m,n\in\N$.
 	The set $\Gamma_C$ contains the formulas: 
 	\begin{enumerate}[label=]%TODO is this a good idea?
 		\item $R_1(a,a_0)$, $P(a_{i-1},a_i)$ and $D(a_{i-1})$ for $i\in\{1,\dots,n\}$,
