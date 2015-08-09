@@ -159,8 +159,10 @@ Finally we can define $\Gamma_M$ as $\Gamma_{C_1}\cup\conGM$, where $C_1=\langle
 	\end{align*}
 	Since there are no free variables in $\Gamma_M$ we can just set $\omega(x)=0$ for every $x\in\VarP$. It is easy to see that $I$ is indeed a model of $\Gamma_M$.
 \end{proof}
+
+We proof the other direction by induction on the length of the computation. But to be able to use the induction hypothesis we need a slightly more general statement.
 \begin{claim}\label{cla.18}
-	Let $C=\langle Q,m,n\rangle$ be a configuration of $M$. If a final configuration (i.e. a configuration $\langle Q_f,m',n'\rangle$ for some $n',m'\in\mathbb{N}$) is reachable from $C$ then $\Gamma_C\cup\conGM\PModels\false$.
+	Let $C=\langle Q,m,n\rangle$ be a configuration of $M$. If a final configuration (i.e. a configuration $\langle Q_f,\widehat{m},\widehat{n}\rangle$ for some $\widehat{n},\widehat{m}\in\mathbb{N}$) is reachable from $C$ then $\Gamma_C\cup\conGM\PModels\false$.
 \end{claim}
 \begin{proof} By induction on the length $i$ of the computation.
 	
@@ -231,7 +233,7 @@ Finally we can define $\Gamma_M$ as $\Gamma_{C_1}\cup\conGM$, where $C_1=\langle
 		\input{Figure.Tableau.4}
 	\end{figure}
 	
-	At last we have to make sure that we do not get an artificial zero by deducing $D(d)$.
+	At last we have to make sure that we do not get an artificial zero. We achieve this by deducing $D(d)$.
 	
 	\begin{figure}[H]
 		\centering

@@ -211,7 +211,7 @@ We will use a version of two-counter automaton which only has two types of trans
 	\end{itemize}
 	The \define{transition relation of $M$}, denoted by $\Rightarrow_M$, is defined as $\bigcup_{r\in\autRules(Q\setminus\{Q_f\})}\Rightarrow^r_M$. We denote the transitive reflexive closure of $\Rightarrow_M$ by $\Rightarrow^*_M$
 		
-	Let $m$, $n$ be in $\mathbb{N}$, we say that \define{$M$ terminates on input $(m,n)$} if there exist $\widehat{m},\widehat{n}\in\mathbb{N}$ such that $\langle Q_0,m,n\rangle\Rightarrow^*_M\langle Q_f,\widehat{m},\widehat{n}\rangle$.
+	Let $m$, $n$ be in $\mathbb{N}$, we say that \define{$M$ terminates on input $(m,n)$} if there exist $\widehat{m},\widehat{n}\in\mathbb{N}$ such that $\langle Q_0,m,n\rangle\Rightarrow^*_M\langle Q_f,\widehat{m},\widehat{n}\rangle$ (It follows that there exists an $i\in\mathbb{N}$ and configurations $D_1,\dots,D_i$ of $M$ such that $\langle Q_0,m,n\rangle= D_1\Rightarrow_M\dots\Rightarrow_M D_i=\langle Q_f,\widehat{m},\widehat{n}\rangle$, we call this chain a computation with length $i$).
 \end{definition}
 \begin{definition}
 	The halting problem for two-counter automaton, denoted by \autHalt{}, is defined as follows.
