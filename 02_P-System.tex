@@ -7,16 +7,18 @@ A first-order logic formula $\varphi$ over $(\VarP,\emptyset,\mathcal{P})$ is an
 \begin{description} %TODO quantify \vec{a}
 	\item[atomic formula] if $\varphi=\false$ or $\varphi=P(a,b)$ for some $P\in\RelP$ and $a,b\in\VarP$.
 	\item[universal formula] if $\varphi=\forall\vec{\alpha}(A_1\to A_2 \to\dots\to A_n)$ for some $n\in\N$ and where $A_i$ is an atomic formula for $i\in\{1,\dots,n\}$, $A_i\neq\false$ for $i\in\{1,\dots,n-1\}$ and for each $\alpha\in\FV(\varphi)\cap\FV(A_n)$ there exists an $i\in\{1,\dots,n-1\}$ such that $\alpha\in\FV(A_i)$.
-	\item[existential formula] if there exits $n\in\N$, atomic formulas $A_i\neq\false$ for $i\in\{1,\dots,n\}$ such that $\varphi=\forall\vec{\alpha}(A_1\to A_2 \to\dots\to A_{n-1}\to\forall\beta(A_n\to\false)\to\false)$.
+	\item[existential formula] if there exits an $n\in\N$, atomic formulas $A_i\neq\false$ for $i\in\{1,\dots,n\}$ such that $\varphi=\forall\vec{\alpha}(A_1\to A_2 \to\dots\to A_{n-1}\to\forall\beta(A_n\to\false)\to\false)$.
 \end{description}
 The set of formulas of System \SysP{} (= set of \SysP-formulas) over $(\VarP,\RelP)$ is the set of all first-order formulas over $(\VarP,\emptyset,\mathcal{P})$ that are either an atomic, universal or existential formula.
 
 \begin{definition}
-A finite set of \SysP-formulas $\Gamma$ is called \SysP-basis, or basis if it is clear whether a \SysP-basis or a \lambdaTwo-basis is meant.
+A finite set of \SysP-formulas $\Gamma$ is called \SysP-basis, or basis if it is clear from the context whether a \SysP-basis or a \lambdaTwo-basis is meant.
 \end{definition}
 
+For a \SysP-basis $\Gamma$ and a \SysP-formula $A$ we will abbreviate $\Gamma\cup\{A\}$ to $\Gamma,A$ (c.f. \lambdaTwo-basis).
+
 \begin{definition}
-Let $A$ be a \SysP-formula, and $\Gamma$ be a \SysP-basis. The formula $A$ is a semantic consequence of $\Gamma$ if $A$ can be produced using the following deduction rules.
+Let $A$ be a \SysP-formula, and $\Gamma$ be a basis. The formula $A$ is a semantic consequence of $\Gamma$ if $A$ can be produced using the following deduction rules.
 \begin{mdframed}
 	\begingroup%TODO maybe not A and B for terms?
 	\addtolength{\jot}{0.3cm}
@@ -32,9 +34,9 @@ Let $A$ be a \SysP-formula, and $\Gamma$ be a \SysP-basis. The formula $A$ is a 
 \end{mdframed}
 \end{definition}
 
-We define a general consequence relation in which we demand that \false{} is interpreted with $\bot$. In this relation existential formulas will behave like the name suggests. Formally:
+We define a more general consequence relation in which we demand that \false{} is interpreted with $\bot$. In this relation existential formulas will behave like the name suggests. Formally:
 \begin{definition}
-Let $\Gamma$ be a basis. The \SysP-formula $A$ is a \define{sematic consequence with falsity}, denoted by $\Gamma\PModelsf A$, if for every interpretation $I$
+Let $\Gamma$ be a basis. The \SysP-formula $A$ is a \define{sematic consequence with falsity} of $\Gamma$, denoted by $\Gamma\PModelsf A$, if for every interpretation $I$
 \[I\models\Gamma \text{ and } \false^I=\bot\text{ implies }I\models A.\]
 
 This allows us to add the following deduction rule.
@@ -43,7 +45,7 @@ This allows us to add the following deduction rule.
 		  & (\exists\text{-Introduction}) &   & \frac 
 		{\Gamma,A\left[\alpha:=a\right]\PModelsf B}
 		{\Gamma,\forall\alpha(A\to\false)\to\false\PModelsf B} && a\notin\emph{FV}(\Gamma,A,B)
-		%TODO existential elimination is not needed still write the rule down for consistency?
+		%TODO note that existential elimination does not hold since we have a new free variable?
 	\end{align*}
 \end{mdframed}
 \end{definition}

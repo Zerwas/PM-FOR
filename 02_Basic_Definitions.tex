@@ -45,6 +45,8 @@ Or is this definition better?
 The \define{free variables of a basis} $\Gamma$, denoted by $\FV(\Gamma)$, are $\bigcup\{\FV(t)\mid(x:t)\in\Gamma\}$.
 \end{definition}
 
+For a basis $\Gamma$, $x\in\lambdaValVar\setminus\dom(\Gamma)$, and $t\in\lambdaTypes$ we will abbreviate $\Gamma\cup\{(x:t)\}$ to $\Gamma,x:t$.
+
 \begin{definition}
 Let $e$ be in \lambdaTerms{}, $t$ in \lambdaTypes, and $\Gamma$ be a basis. A statement $e:t$ is \define{derivable} from $\Gamma$, denoted by $\Gamma\lambdaModels e:t$, if $e:t$ can be produced using the following rules.
 \begin{mdframed} 
