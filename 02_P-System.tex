@@ -9,7 +9,7 @@ A first-order logic formula $\varphi$ over $(\VarP,\emptyset,\mathcal{P})$ is an
 	\item[universal formula] if $\varphi=\forall\vec{\alpha}(A_1\to A_2 \to\dots\to A_n)$ for some $n\in\N$ and where $A_i$ is an atomic formula for $i\in\{1,\dots,n\}$, $A_i\neq\false$ for $i\in\{1,\dots,n-1\}$ and for each $\alpha\in\FV(\varphi)\cap\FV(A_n)$ there exists an $i\in\{1,\dots,n-1\}$ such that $\alpha\in\FV(A_i)$.
 	\item[existential formula] if there exits an $n\in\N$, atomic formulas $A_i\neq\false$ for $i\in\{1,\dots,n\}$ such that $\varphi=\forall\vec{\alpha}(A_1\to A_2 \to\dots\to A_{n-1}\to\forall\beta(A_n\to\false)\to\false)$.
 \end{description}
-The set of formulas of System \SysP{} (= set of \SysP-formulas) over $(\VarP,\RelP)$ is the set of all first-order formulas over $(\VarP,\emptyset,\mathcal{P})$ that are either an atomic, universal or existential formula.
+The set of formulas of System \SysP{} (= set of \SysP-formulas) over $\VarP$ and $\RelP$ is the set of all first-order formulas in $\mathcal{L}_{(\VarP,\emptyset,\mathcal{P})}$ that are either an atomic, universal or existential formula.
 
 \begin{definition}
 A finite set of \SysP-formulas $\Gamma$ is called \SysP-basis, or basis if it is clear from the context whether a \SysP-basis or a \lambdaTwo-basis is meant.
@@ -44,13 +44,13 @@ This allows us to add the following deduction rule.
 	\begin{align*}
 		  & (\exists\text{-Introduction}) &   & \frac 
 		{\Gamma,A\left[\alpha:=a\right]\PModelsf B}
-		{\Gamma,\forall\alpha(A\to\false)\to\false\PModelsf B} && a\notin\emph{FV}(\Gamma,A,B)
+		{\Gamma,A':=\forall\alpha(A\to\false)\to\false\PModelsf B} && a\notin\emph{FV}(\Gamma,A',B) %A' because a could also be \alpha
 		%TODO note that existential elimination does not hold since we have a new free variable?
 	\end{align*}
 \end{mdframed}
 \end{definition}
 \begin{proof}
-	Let $I=(\Delta,\cdot^I,\omega)$ be a model of $\Gamma,\forall\alpha(A\to\false)\to\false$ with $\false^I=\bot$ and $a\in\VarP$ a variable such that $a\notin\emph{FV}(\Gamma,A,B)$.
+	Let $I=(\Delta,\cdot^I,\omega)$ be a model of $\Gamma,\forall\alpha(A\to\false)\to\false$ with $\false^I=\bot$ and $a\in\VarP$ a variable such that $a\notin\emph{FV}(\Gamma,A',B)$.
 	\begin{align*}
 		I\models\Gamma,\forall\alpha(A\to\false)\to\false & \Rightarrow I\models\forall\alpha(A\to\false)\to\false                                                          \\
         & \Rightarrow (\forall\alpha(A\to\false))^I\to\false^I                                                            \\
@@ -62,7 +62,7 @@ This allows us to add the following deduction rule.
         & \Rightarrow \exists d\in\Delta\colon\neg(\neg A^{I\left[\alpha\mapsto d\right]})                                     \\
         & \Rightarrow \exists d\in\Delta\colon A^{I\left[\alpha\mapsto d\right]}
 	\end{align*}
-	Together with $a\notin\emph{FV}(\Gamma,A)$, it follows that $I\left[a\mapsto d\right]$ is a model of $\Gamma,A\left[\alpha:=a\right]$. Which implies $I\left[a\mapsto d\right]\models B$.	Since $a$ is not free in $B$ we conclude that $I$ is also a model of $B$.
+	Together with $a\notin\emph{FV}(\Gamma,A')$, it follows that $I\left[a\mapsto d\right]$ is a model of $\Gamma,A\left[\alpha:=a\right]$. Which implies $I\left[a\mapsto d\right]\models B$.	Since $a$ is not free in $B$ we conclude that $I$ is also a model of $B$.
 \end{proof}
 \begin{definition}
 	The problem to decide whether a given set of \SysP-formulas is consistent, denoted by \PCons, is defined as follows.
@@ -74,9 +74,9 @@ This allows us to add the following deduction rule.
 \subsection{\PCons{} is undecidable}
 We will show that $\autHalt\leq\PCons$ then the undecidability of \PCons{} directly follows from the undecidability of \autHalt. For a given two-counter automaton $M$ we will effectively construct a \SysP-basis $\Gamma_M$ such that
 \begin{align*}
- & \text{$M$ terminates on input $(0,0)$} &   & \text{iff} & \text{$\Gamma_M\PModels\false$ holds in system P.} 
+ & \text{$M$ terminates on input $(0,0)$} &   & \text{iff} & \text{$\Gamma_M\PModels\false$ holds in System \SysP.} 
 \end{align*}
-Let $M=(\autStates,Q_0,Q_f,\autRules)$ be a two-counter automaton, w.l.o.g. $S,P,R_1,R_2,E,D\notin\autStates$. In the following we will consider \SysP-formulas over $(\VarP,\RelP)$, where $\RelP=\autStates\uplus\{S,P,R_1,R_2,E,D\}$. We will abbreviate $P(a,a)$ to $P(a)$, note that this way we can use binary predicate symbols as unary ones.
+Let $M=(\autStates,Q_0,Q_f,\autRules)$ be a two-counter automaton, w.l.o.g. $S,P,R_1,R_2,E,D\notin\autStates$. In the following we will consider \SysP-formulas over $\VarP$ and $\RelP$, where $\RelP=\autStates\uplus\{S,P,R_1,R_2,E,D\}$. We will abbreviate $P(a,a)$ to $P(a)$, note that this way we can use binary predicate symbols as unary ones.
 
 Intuitively $Q(a)$ stands for ``$a$ is in state $Q$", $R_i(a,m)$ stands for ``in $a$ the value of register i is $m$" for $i\in\{1,2\}$, $S(a,b)$ states that ``$b$ is a successor of $a$", $P(a,b)$ states that ``$b$ is a predecessor of $a$", $E(a)$ marks ``$a$ as the end of chain", and $D(a)$ states that ``$a$ is not the end of a chain".
 

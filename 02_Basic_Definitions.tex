@@ -119,11 +119,11 @@ We introduce an additional binary operation $\to$ on formulas, where for some $\
 		\begin{cases}
 			t'                                                   & \text{if $t=y$}                \\ 
 			z                                                    & \text{if $t=z$ and $z\neq y$}  \\%TODO for some
-			f(t_1\left[x:=t'\right],\dots,t_k\left[x:=t'\right]) & \text{if $t=f(t_1,\dots,t_k)$} 
+			f(t_1\left[y:=t'\right],\dots,t_k\left[y:=t'\right]) & \text{if $t=f(t_1,\dots,t_k)$} 
 		\end{cases}\]
 	
 	Now we can lift this definition to formulas, let $\varphi$ be in $\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$. The \define{substitution of $y$ by $t'$ in $\varphi$}, denoted by $\varphi\left[y:=t'\right]$, is defined as follows:
-	\[\varphi\left[x:=t'\right]=
+	\[\varphi\left[y:=t'\right]=
 		\begin{cases}
 			%TODO quantify k?
 			P(t_1\left[y:=t'\right],\dots,t_k\left[y:=t'\right])        & \text{if $\varphi=P(t_1,\dots,t_k)$}                                     \\
@@ -136,7 +136,7 @@ We introduce an additional binary operation $\to$ on formulas, where for some $\
 \end{definition}
 Now we come to the semantics of first-order formulas.
 \begin{definition}
-	An \define{interpretation $I$ over $(\mathcal{V},\mathcal{F},\mathcal{P})$} is a triple $(\Delta,\cdot^I,\omega)$
+	An \define{interpretation $I$ over $\mathcal{V}$, $\mathcal{F}$, and $\mathcal{P}$} is a triple $(\Delta,\cdot^I,\omega)$,
 	\begin{tabular}{llp{0.78\linewidth}}
 		where & $\Delta$  & is a nonempty set (which we call  domain),                                                     \\
 & $\cdot^I$ & is a function such that                                                                        \\
@@ -145,17 +145,17 @@ Now we come to the semantics of first-order formulas.
 & $\omega$  & is a function from $\mathcal{V}$ to $\Delta$.                                                  
 	\end{tabular}
 \end{definition}
-Let $I=(\Delta,\cdot^I,\omega)$ be an interpretation, $x\in\mathcal{V}$, and $d\in\Delta$ the interpretation $I\left[x\mapsto d\right]$ is defined as $(\Delta,\cdot^I,\omega\left[x\mapsto d\right])$ where
-\[(\omega\left[x\mapsto d\right])(y)=
+Let $I=(\Delta,\cdot^I,\omega)$ be an interpretation, $y\in\mathcal{V}$, and $d\in\Delta$ the interpretation $I\left[y\mapsto d\right]$ is defined as $(\Delta,\cdot^I,\omega\left[y\mapsto d\right])$ where
+\[(\omega\left[y\mapsto d\right])(z)=
 	\begin{cases}
-		d         & \text{if $y=x$}   \\
+		d         & \text{if $z=y$}   \\
 		\omega(y) & \text{otherwise.} 
 	\end{cases}\]
 \begin{definition}
 	Let $I=(\Delta,\cdot^I,\omega)$ be an interpretation and $t$ a term. The \define{interpretation of $t$ under $I$}, denoted by $t^I$, is defined as follows:
 	\[t^I=
 		\begin{cases}
-			\omega(x)              & \text{if $t=x$}                \\
+			\omega(y)              & \text{if $t=y$}                \\
 			f^I(t^I_1,\dots,t^I_k) & \text{if $t=f(t_1,\dots,t_k)$} 
 		\end{cases}\]
 		
@@ -169,8 +169,8 @@ Let $I=(\Delta,\cdot^I,\omega)$ be an interpretation, $x\in\mathcal{V}$, and $d\
 			\varphi^I_1~\text{and}~\varphi^I_2                     & \text{if $\varphi=(\varphi_1\wedge\varphi_2)$}                           \\
 			\varphi^I_1~\text{or}~\varphi^I_2                      & \text{if $\varphi=(\varphi_1\vee\varphi_2)$}                             \\
 			%TODO how to handle implies?
-			\text{exists $d\in\Delta$}~\psi^{I\left[x\mapsto d\right]} & \text{if $\varphi=\exists x.\psi$}                                        \\
-			\text{forall $d\in\Delta$}~\psi^{I\left[x\mapsto d\right]} & \text{if $\varphi=\forall x.\psi$}                                        \\
+			\text{exists $d\in\Delta$}~\psi^{I\left[y\mapsto d\right]} & \text{if $\varphi=\exists y.\psi$}                                        \\
+			\text{forall $d\in\Delta$}~\psi^{I\left[y\mapsto d\right]} & \text{if $\varphi=\forall y.\psi$}                                        \\
 		\end{cases}\]
 	The interpretation $I$ is a \define{model} of $\varphi$, denoted by $I\models\varphi$, if $\varphi^I=\top$.
 \end{definition}
