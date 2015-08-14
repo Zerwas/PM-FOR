@@ -33,11 +33,11 @@ Or is this definition better?
 \begin{definition}
 	Let $e\in\lambdaTerms$. The \define{free variables of $e$}, denoted by $\FV(e)$, are defined inductively as follows:
 	\begin{align*}
-		\FV(y)                & =\{x\}                 \\
+		\FV(x)                & =\{x\}                 \\
 		\FV(e_1e_2)           & =\FV(e_1)\cup\FV(e_2)  \\
-		\FV(\lambda x:t.e')   & =\FV(e')\setminus\{x\} \\
-		\FV(\Lambda\alpha.e') & =\FV(e')               \\
-		\FV(e'\,t)            & =\FV(e')               \\
+		\FV(\lambda x:t.e)   & =\FV(e)\setminus\{x\} \\
+		\FV(\Lambda\alpha.e) & =\FV(e)               \\
+		\FV(e\,t)            & =\FV(e)               \\
 	\end{align*}
 \end{definition}
 \begin{definition} Let $\mathcal{V}=\{x_1,\dots,x_n\}$ be a finite subset of \lambdaTypVar{} and $t_1,\dots,t_n\in\lambdaTerms$.	A \define{\lambdaTwo-basis} $\Gamma=\{(x_1:t_1),\dots,(x_n:t_n)\}$ is a mapping from $\mathcal{V}$ to \lambdaTypes{}. If the kind of basis is clear from the context we abbreviate \lambdaTwo-basis to basis. 
