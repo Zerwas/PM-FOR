@@ -2,7 +2,7 @@
 \subsection{$\lambda$-calculus \lambdaTwo}
 In the following let $\lambdaTypVar=\{\alpha,a,\beta,b,\dots\}$ be a countable set (of type-variables) and $\lambdaValVar=\{x_1,x_2,\dots\}$ be a countable set (of value-variables).
 \begin{definition}
-	The \define{set of all $\lambda2$ types over \lambdaTypVar}, denoted by \lambdaTypes{}, is the smallest set T satisfying the following conditions: %TODO meybe put \lambdaTypVar in \lambdaTypes
+	The \define{set of all $\lambda2$ types over \lambdaTypVar}, denoted by \lambdaTypes{}, is the smallest set T satisfying the following conditions: %TODO maybe put \lambdaTypVar in \lambdaTypes
 	\begin{itemize}
 		\item $\lambdaTypVar\subseteq\text{T}$,
 		\item if $t_1,t_2\in\text{T}$ then $(t_1\to t_2)\in\text{T}$, and
@@ -33,8 +33,8 @@ Or is this definition better?
 \begin{definition}
 	Let $e\in\lambdaTerms$. The \define{free variables of $e$}, denoted by $\FV(e)$, are defined inductively as follows:
 	\begin{align*}
-		\FV(x)                & =\{x\}                 \\
-		\FV(e_1e_2)           & =\FV(e_1)\cup\FV(e_2)  \\
+		\FV(x)               & =\{x\}                 \\
+		\FV(e_1e_2)          & =\FV(e_1)\cup\FV(e_2)  \\
 		\FV(\lambda x:t.e)   & =\FV(e)\setminus\{x\} \\
 		\FV(\Lambda\alpha.e) & =\FV(e)               \\
 		\FV(e\,t)            & =\FV(e)               \\
@@ -78,6 +78,7 @@ Obviously the second version is a special case of the first one. For the other d
 If the function \rank{} is understood we will just write $\Sigma$ instead of $(\Sigma,\rank)$. The set of all elements in $\Sigma$ with a certain rank $k$, denoted by $\Sigma^{(k)}$, is defined as $\Sigma^{(k)}:=rk^{-1}(k)$. 
 %In the following we will write $\Sigma=\{P^{(0)},Q^{(3)}\}$ to say that $\Sigma=\{P,Q\}$, $\rank(P)=0$, and $\rank(Q)=3$.
 %TODO do we use this convention?
+
 
 For the remainder of this subsection let $\mathcal{V}=\{y_1,y_2,\dots\}$ be a countable set (of variables), $\mathcal{F}$ a ranked set (of function symbols), and $\mathcal{P}$ a ranked set (of predicate symbols).
 \begin{definition}
@@ -141,7 +142,7 @@ Now we come to the semantics of first-order formulas.
 		where & $\Delta$  & is a nonempty set (which we call  domain),                                                     \\
 & $\cdot^I$ & is a function such that                                                                        \\
 &           & $f^I\colon\Delta^k\to\Delta$  is a function for every $k\in\N$, $f\in\mathcal{F}^{(k)}$ and \\
-&           & $P^I\subseteq\Delta^k$ is a relation for every $k\in\N$, $f\in\mathcal{P}^{(k)}$       \\
+&           & $P^I\subseteq\Delta^k$ is a relation for every $k\in\N$, $P\in\mathcal{P}^{(k)}$       \\
 & $\omega$  & is a function from $\mathcal{V}$ to $\Delta$.                                                  
 	\end{tabular}
 \end{definition}
