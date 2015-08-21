@@ -18,6 +18,7 @@ In the following let $\lambdaTypVar=\{\alpha,a,\beta,b,\dots\}$ be a countable s
 		\item if $e\in\Lambda_\text{T}$ and $t\in\lambdaTypes$ then $e\,t\in\Lambda_\text{T}$.
 	\end{itemize}
 \end{definition}
+If we have a type of the form $(t_1\to(t_2\to(\dots \to(t_{n-1}\to t_n)\cdots)))$ we will often omit the brackets and just write $(t_1\to t_2\to\dots\to t_{n-1}\to t_n)$ or $t_1\to t_2\to\dots \to t_{n-1}\to t_n$ instead.
 \begin{definition}
 	Let $e\in\lambdaTerms$. The \define{free variables of $e$}, denoted by $\FV(e)$, are defined inductively as follows:
 	\[\FV(e)=
@@ -29,18 +30,7 @@ In the following let $\lambdaTypVar=\{\alpha,a,\beta,b,\dots\}$ be a countable s
 			\FV(e')               & \text{if $e=e'\,t$}            \\
 		\end{cases}\]
 \end{definition}
-Or is this definition better?
-\begin{definition}
-	Let $e\in\lambdaTerms$. The \define{free variables of $e$}, denoted by $\FV(e)$, are defined inductively as follows:
-	\begin{align*}
-		\FV(x)               & =\{x\}                 \\
-		\FV(e_1e_2)          & =\FV(e_1)\cup\FV(e_2)  \\
-		\FV(\lambda x:t.e)   & =\FV(e)\setminus\{x\} \\
-		\FV(\Lambda\alpha.e) & =\FV(e)               \\
-		\FV(e\,t)            & =\FV(e)               \\
-	\end{align*}
-\end{definition}
-\begin{definition} Let $\mathcal{V}=\{x_1,\dots,x_n\}$ be a finite subset of \lambdaTypVar{} and $t_1,\dots,t_n\in\lambdaTerms$.	A \define{\lambdaTwo-basis} $\Gamma=\{(x_1:t_1),\dots,(x_n:t_n)\}$ is a mapping from $\mathcal{V}$ to \lambdaTypes{}. If the kind of basis is clear from the context we abbreviate \lambdaTwo-basis to basis. 
+\begin{definition} Let $\mathcal{V}=\{x_1,\dots,x_n\}$ be a finite subset of \lambdaValVar{} and $t_1,\dots,t_n\in\lambdaTerms$.	A \define{\lambdaTwo-basis} $\Gamma=\{(x_1:t_1),\dots,(x_n:t_n)\}$ is a mapping from $\mathcal{V}$ to \lambdaTypes{}. If the kind of basis is clear from the context we abbreviate \lambdaTwo-basis to basis. 
 
 The \define{free variables of a basis} $\Gamma$, denoted by $\FV(\Gamma)$, are $\bigcup\{\FV(t)\mid(x:t)\in\Gamma\}$.
 \end{definition}
@@ -57,7 +47,7 @@ Let $e$ be in \lambdaTerms{}, $t$ in \lambdaTypes, and $\Gamma$ be a basis. A st
 		&(\lambda\text{-Introduction}) &&\frac{\Gamma,x:t_1\lambdaModels e:t_2}{\Gamma\lambdaModels \lambda x:t_1.e:t_1\to t_2}\\
 		&(\lambda\text{-Elimination}) &&\frac{\Gamma\lambdaModels e_1:t_1\to t_2 \hspace{0.4cm}\Gamma\lambdaModels e_2:t_1}{\Gamma\lambdaModels e_1e_2:t_2}\\
 & (\forall\text{-Introduction}) &   & \frac{\Gamma\lambdaModels e:t}{\Gamma\lambdaModels \Lambda\alpha.e:\forall\alpha.t}                 &   & \alpha\notin\FV(\Gamma) \\
-& (\forall\text{-Elimination})  &   & \frac{\Gamma\lambdaModels e:\forall\alpha.t }{\Gamma\lambdaModels e\,t':t\left[ \alpha:=t'\right] } &   & t'\in\lambdaTypes %TODO  t'\in\lambdaTypes necessary?   
+& (\forall\text{-Elimination})  &   & \frac{\Gamma\lambdaModels e:\forall\alpha.t }{\Gamma\lambdaModels e\,t':t\left[ \alpha:=t'\right] } 
 	\end{align*}
 	\endgroup
 \end{mdframed}
@@ -85,18 +75,19 @@ For the remainder of this subsection let $\mathcal{V}=\{y_1,y_2,\dots\}$ be a co
 	The set of \define{terms over $\mathcal{V}$ and $\mathcal{F}$}, denoted by $\mathcal{T}_{(\mathcal{V},\mathcal{F})}$, is the smallest set $\mathcal{T}$ satisfying the following conditions:
 	\begin{itemize}
 		\item $\mathcal{V} \subseteq \mathcal{T}$, and
-		\item for every $k\in\N$ if $f\in\mathcal{F}^{(k)}$ and $t_1,t_2,\dots,t_k\in\mathcal{T}$ then $f(t_1,t_2,\dots,t_k)\in\mathcal{T}$.
+		\item for every $k\in\N$, if $f\in\mathcal{F}^{(k)}$ and $t_1,t_2,\dots,t_k\in\mathcal{T}$ then $f(t_1,t_2,\dots,t_k)\in\mathcal{T}$.
 	\end{itemize}
 	The set of \define{first-order formulas over $\mathcal{V}$, $\mathcal{F}$, and $\mathcal{P}$}, denoted by $\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$, is the smallest set $\mathcal{L}$ satisfying the following conditions:
 	\begin{itemize}
-		\item for every $k\in\N$ if $P\in\mathcal{P}^{(k)}$ and $t_1,t_2,\dots,t_k\in\mathcal{T}_{(\mathcal{V},\mathcal{F})}$ then $P(t_1,t_2,\dots,t_k)\in\mathcal{L}$.
+		\item for every $k\in\N$, if $P\in\mathcal{P}^{(k)}$ and $t_1,t_2,\dots,t_k\in\mathcal{T}_{(\mathcal{V},\mathcal{F})}$ then $P(t_1,t_2,\dots,t_k)\in\mathcal{L}$.
 		\item If $\varphi,\psi\in\mathcal{L}$ then $(\varphi\wedge\psi)$, $(\varphi\vee\psi)$, $\neg \varphi\in\mathcal{L}$, and
 		\item if $y\in\mathcal{V}$ and $\varphi\in\mathcal{L}$ then $\exists y.\varphi$, $\forall y.\varphi\in\mathcal{L}$.
 	\end{itemize}
 \end{definition}
-We introduce an additional binary operation $\to$ on formulas, where for some $\varphi$, $\psi\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$ the formula $(\varphi\to\psi)$ is defined as $(\neg\varphi\vee\psi)$, if we have a formula of the form $((\dots(\varphi_1\to\varphi_2)\to\dots)\to\varphi_n)$ we will often omit the brackets and just write $(\varphi_1\to\varphi_2\to\dots\to\varphi_n)$ or $\varphi_1\to\varphi_2\to\dots\to\varphi_n$ instead. 
+We introduce an additional binary operation $\to$ on formulas, where for some $\varphi$, $\psi\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$ the formula $(\varphi\to\psi)$ is defined as $(\neg\varphi\vee\psi)$, if we have a formula of the form $(\varphi_1\to(\varphi_2\to(\dots \to(\varphi_{n-1}\to \varphi_n)\cdots)))$ we will often omit the brackets and just write $(\varphi_1\to \varphi_2\to\dots\to \varphi_{n-1}\to \varphi_n)$ or $\varphi_1\to \varphi_2\to\dots \to \varphi_{n-1}\to \varphi_n$ instead. 
 
-For nullary relation symbols $P$ we will abbreviate $P()$ to $P$. If a formula $\varphi$ is of the form $Qx.(\psi)$ (where $Q\in\{\exists,\forall\}$, $x\in\mathcal{V}$, and $(\psi)\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$) we often drop the dot and write $Qx(\psi)$ instead. If a formula $\varphi$ has multiple variables binded by the same quantifier (i.e. $\varphi=Qx_1.Qx_2.\dots Qx_n.\psi$ for $Q\in\{\exists,\forall\}$, some $n\in\N$, $x_1,x_2,\dots,x_n\in\mathcal{V}$, and $\psi\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$) we abbreviate $\varphi$ to $Qx_1x_2\dots x_n.\psi$ or to $Q\vec{x}.\psi$ where $\vec{x}=(x_1,x_2,\dots,x_n)^\top$. %TODO do we need to transpose the vector?
+For nullary relation symbols $P$ we will abbreviate $P()$ to $P$. If a formula $\varphi$ is of the form $Qx.(\psi)$ (where $Q\in\{\exists,\forall\}$, $x\in\mathcal{V}$, and $(\psi)\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$) we often drop the dot and write $Qx(\psi)$ instead. %TODO why brackets around varphi? maybe so that you cannot use this for a negated formula or smth like that
+If a formula $\varphi$ has multiple variables bound by the same quantifier (i.e. $\varphi=Qx_1.Qx_2.\dots Qx_n.\psi$ for $Q\in\{\exists,\forall\}$, some $n\in\N$, $x_1,x_2,\dots,x_n\in\mathcal{V}$, and $\psi\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$) we abbreviate $\varphi$ to $Qx_1x_2\dots x_n.\psi$ or to $Q\vec{x}.\psi$ where $\vec{x}=(x_1,x_2,\dots,x_n)^\top$. %TODO do we need to transpose the vector?
 
 \begin{definition}
 	The \define{variables of a term $t\in\mathcal{T}_{(\mathcal{V},\mathcal{F})}$}, denoted by $\V(t)$, are defined by:
