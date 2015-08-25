@@ -197,7 +197,7 @@ We proof the other direction by induction on the length of the computation. But 
 		\input{Figure.Tableau}
 	\end{figure}
 	
-	We achieve this by looking at the four possible cases for the type of the rule $r$. We will only consider the cases $r=+(1,Q')$ and $r=-(1,Q_1,Q_2)$, the two remaining cases $r=+(2,Q')$ and $r=-(2,Q_1,Q_2)$ follow by exchanging the roles of register 1 and register 2 in the first two cases.
+	We achieve this by looking at the four possible cases for the type of the rule $r$. We will only consider the cases $r=+(1,Q')$ and $r=-(1,Q_1,Q_2)$, because the two remaining cases $r=+(2,Q')$ and $r=-(2,Q_1,Q_2)$ follow by exchanging the roles of register 1 and register 2 in the first two cases.
 	
 	First we need a new free variable representing the configuration $D$. Also the value in register 2 does not change, because in both cases we are only concerned with register 1.
 	For the succeeding tableau proofs we will abbreviate \false{} by \falses{} and we will drop $\Gamma_C\cup\conGM$ and only write new formulas on the left side of $\PModelsf$.

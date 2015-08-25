@@ -35,7 +35,7 @@ If we have a type of the form $(t_1\to(t_2\to(\dots \to(t_{n-1}\to t_n)\cdots)))
 The \define{free variables of a basis} $\Gamma$, denoted by $\FV(\Gamma)$, are $\bigcup\{\FV(t)\mid(x:t)\in\Gamma\}$.
 \end{definition}
 
-For a basis $\Gamma$, $x\in\lambdaValVar\setminus\dom(\Gamma)$, and $t\in\lambdaTypes$ we will abbreviate $\Gamma\cup\{(x:t)\}$ to $\Gamma,x:t$.
+For a basis $\Gamma$ and another basis $\Sigma$, $x\in\lambdaValVar\setminus\dom(\Gamma)$, and $t\in\lambdaTypes$ we will abbreviate $\Gamma\cup\{(x:t)\}$ to $\Gamma,x:t$ and $\Gamma\cup\Sigma$ to $\Gamma,\Sigma$. %TODO is the second convention use?
 
 \begin{definition}
 Let $e$ be in \lambdaTerms{}, $t$ in \lambdaTypes, and $\Gamma$ be a basis. A statement $e:t$ is \define{derivable} from $\Gamma$, denoted by $\Gamma\lambdaModels e:t$, if $e:t$ can be produced using the following rules.
