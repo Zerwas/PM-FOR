@@ -7,17 +7,11 @@ every child/.style={edge from parent/.style={opacity=0}}]
 		child {node(11) {\PModelsf\forall\alpha(\forall\beta(S(\alpha,\beta)\to\falses)\to\falses)}}}
 	child {node(2) {\PModelsf(\forall\beta(S(a,\beta)\to\falses)\to\falses)\to\falses}
 		child {node(21) {\forall\beta(S(a,\beta)\to\falses)\to\falses\PModelsf\falses}
-			child[xshift=1cm,sibling distance=8.8cm] {node(211) {S(a,b)\PModelsf\falses}
-				child[xshift=1cm,sibling distance=3.6cm] {node(2111) {S(a,b)\PModelsf D(b)}
-					child {node(21111) {S(a,b)\PModelsf S(a,b)}}
-					child {node(21112) {S(a,b)\PModelsf S(a,b)\to D(b)}
-						child {node(211121) {S(a,b)\PModelsf \forall\alpha\beta(S(\alpha,\beta)\to D(\beta))}}}}
-				child[xshift=0.7cm] {node(2112) {S(a,b)\PModelsf D(b)\to\falses}
-					child {node(21121) {S(a,b), D(b)\PModelsf\falses}
-						child {node[label={[yshift=-0.3cm]above:\vdots}](211211) {}}}}}}};
+			child {node(211) {S(a,b)\PModelsf\falses}
+				child {node[label={[yshift=-0.3cm]above:\vdots}](2111) {}}}}};
 
 %set of all positions in the tree
-\def\nodes{,1,2,11,21,211,2111,21111,21112,211121,2112,21121,211211}
+\def\nodes{,1,2,11,21,211,2111}
 %the yshift does not work on nodes so we create a coordinate for every node
 \foreach \x in \nodes{
 \ifnodedefined{\x}{

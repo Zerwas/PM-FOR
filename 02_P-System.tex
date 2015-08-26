@@ -78,14 +78,22 @@ We will show that $\autHalt\leq\PCons$ then the undecidability of \PCons{} direc
 \end{align*}
 Let $M=(\autStates,Q_0,Q_f,\autRules)$ be a two-counter automaton, w.l.o.g. $S,P,R_1,R_2,E,D\notin\autStates$. In the following we will consider \SysP-formulas over $\VarP$ and $\RelP$, where $\RelP=\autStates\uplus\{S,P,R_1,R_2,E,D\}$. We will abbreviate $P(a,a)$ to $P(a)$, note that this way we can use binary predicate symbols as unary ones.
 
-Intuitively $Q(a)$ stands for ``$a$ is in state $Q$", $R_i(a,m)$ stands for ``in $a$ the value of register i is $m$" for $i\in\{1,2\}$, $S(a,b)$ states that ``$b$ is a successor of $a$", $P(a,b)$ states that ``$b$ is a predecessor of $a$", $E(a)$ marks ``$a$ as the end of chain", and $D(a)$ states that ``$a$ is not the end of a chain".
-
+%TODO better readable explenation of new predicate symbols
+The intended informal meaning for these new relation symbols is the following:
+\begin{itemize}
+	\item The meaning of $Q(a)$ is ``$a$ represents a configuration and $Q$ is the state of this configuration".
+	\item  For $i\in\{1,2\}$, $R_i(a,m)$ denotes that ``the value of register $i$ in the configuration represented by $a$ is represented by $m$" (we call $m$ anchor of $a$ for register $i$).
+	\item With $S(a,b)$ we state that ``$b$ is a successor of $a$".
+	\item The meaning of $P(a,b)$ is ``$b$ is a predecessor of $a$".
+	\item And $E(a)$ marks ``$a$ as the end of chain".
+	\item Finally $D(a)$ states that ``$a$ is not the end of a chain".
+\end{itemize}
 For a configuration $C=\langle Q,m,n\rangle$ of $M$ we define a set of \SysP-formulas $\Gamma_C$. It contains the following formulas:
 \begin{itemize}
 	\item $Q(a)$
 	\item $R_1(a,a_0),P(a_{i-1},a_i)~\text{for}~i\in\{1,\dots,m\}$
 	\item $R_2(a,b_0),P(b_{i-1},b_i)~\text{for}~i\in\{1,\dots,n\}$
-	\item $D(a),D(a_i),D(b_j)~\text{for}~i\in\{0,\dots,m-1\}~\text{and}~j\in\{0,\dots,n-1\}$
+	\item $D(a_i),D(b_j)~\text{for}~i\in\{0,\dots,m-1\}~\text{and}~j\in\{0,\dots,n-1\}$
 	\item $E(a_m),E(b_n)$
 \end{itemize}
 Next we need sets of \SysP-formulas for all possible transitions.
@@ -111,23 +119,23 @@ For $r=+(2,Q')$ for some $Q'\in\autStates$ or $r=-(2,Q_1,Q_2)$ for some $Q_1,Q_2
 
 We also need a set $\Gamma_1$ to ensure that our representation works correctly. The following formula are in $\Gamma_1$:
 \begin{itemize}
-	\item $\forall\alpha\beta(S(\alpha,\beta)\to D(\beta))$\\no successor is the end of a chain
+	%\item $\forall\alpha\beta(S(\alpha,\beta)\to D(\beta))$\\no successor is the end of a chain
 	%\item $\forall\alpha(D(\alpha)\to\forall\beta(P(\alpha,\beta)\to\false)\to\false)$\\every %element that is not the end of a chain has a predecessor
 	%TODO necessary?
-	\item $\forall\alpha(D(\alpha)\to\forall\beta(R_1(\alpha,\beta)\to\false)\to\false)$\\every element that represents a configuration has a value for register 1
-	\item $\forall\alpha(D(\alpha)\to\forall\beta(R_2(\alpha,\beta)\to\false)\to\false)$\\every element that represents a configuration has a value for register 2
+	\item $\forall\alpha(\forall\beta(R_1(\alpha,\beta)\to\false)\to\false)$\\every element represents a configuration so it has a value for register 1
+	\item $\forall\alpha(\forall\beta(R_2(\alpha,\beta)\to\false)\to\false)$\\every element represents a configuration so it has a value for register 2
 	\item $\forall\alpha(\forall\beta(S(\alpha,\beta)\to\false)\to\false)$\\every element has a successor
 \end{itemize}
 We define $\conGM$ as $\bigcup_{Q\in\autStates\setminus\{Q_f\}}\Gamma_{Q,R(Q)}\cup\{\forall\alpha(Q_f(\alpha)\to\false)\}\cup\Gamma_1$.
-Finally we can define $\Gamma_M$ as $\Gamma_{C_1}\cup\conGM$, where $C_1=\langle Q_0,0,0\rangle$ is the initial configuration.
+Finally we can define $\Gamma_M$ as $\Gamma_{C_0}\cup\conGM$, where $C_0=\langle Q_0,0,0\rangle$ is the initial configuration.
 \begin{claim}\label{cla.17}
 	\begin{align*}
 		  & \text{$\Gamma_M\PModels\false$ holds in system P} &   & \implies & \text{$M$ terminates on input $(0,0)$} 
 	\end{align*}
 \end{claim}
 \begin{proof}
-	Assume $M$ does not terminate then there is an infinite chain $C_1\Rightarrow_M C_2\Rightarrow_M C_3\Rightarrow_M\cdots$ ($C_i=\langle Q_i,m_i,n_i\rangle$ for $i\in\N^+$). Now we construct a model of $\Gamma_M$ which interprets \false{} with $\bot$ this contradicts $\Gamma_M\PModels\false$.
-	
+	Assume $M$ does not terminate then there is an infinite chain $C_0\Rightarrow_M C_1\Rightarrow_M C_2\Rightarrow_M\cdots$ ($C_i=\langle Q_i,m_i,n_i\rangle$ for $i\in\N$). Now we construct a model of $\Gamma_M$ which interprets \false{} with $\bot$ this contradicts $\Gamma_M\PModels\false$.
+
 	To illustrate the idea we will use a graphical notation for an interpretation $I$.
 	By
 	\tikz[baseline=-3pt]{
@@ -139,9 +147,8 @@ Finally we can define $\Gamma_M$ as $\Gamma_{C_1}\cup\conGM$, where $C_1=\langle
 		\node (1) {$d$};
 		\node[node distance = 0.6cm,above of=1,scale=0.8] {P};}
 	to say that $(d,d)\in P^I$ for predicate symbols that are used as unary predicate symbols. 
-	As domain for our interpretation we will use the natural numbers. Every number will have two tasks: firstly it will represent itself as a possible value for register 1 or 2 and secondly every number $i$ greater than zero will also represent the $i$\textsuperscript{th} configuration of our infinite computation.
+	As domain for our interpretation we will use the natural numbers. Every number will have two tasks: firstly it will represent itself as a possible value for register 1 or 2 and secondly every number $i$ will also represent the $i$\textsuperscript{th} configuration of our infinite computation.
 	Now the idea for our model of $\Gamma_M$ looks like this:
-	%TODO is it really usefull that 0 does not represent a configuration? it does not look like it
 	
 	\begin{figure}[H]
 		\centering
@@ -154,10 +161,10 @@ Finally we can define $\Gamma_M$ as $\Gamma_{C_1}\cup\conGM$, where $C_1=\langle
 		  P^I&=\{(i+1,i)\mid i\in\N\}              & R_1^I&=\{(i,m_i)\mid i\in\N\} & R_2^I&=\{(i,n_i)\mid i\in\N\} \\
 		  %Q^I&=\{ i\in\N\setminus\{0\}\mid Q=Q_i\} &  D^I&=\N\setminus\{0\}         & E^I&=\{0\}                            \\
 		  S^I&=\{(i,i+1)\mid i\in\N\} &  D^I&=\{(i,i)\mid i\in\N^+\}         & E^I&=\{(0,0)\}                            \\
-		  Q^I&=\{(i,i)\mid i\in\N^+, Q=Q_i\} \makebox[1mm]{\hspace{3cm}\text{for every $Q\in\autStates$}}& && \false^I&=\bot 
+		  Q^I&=\{(i,i)\mid i\in\N, Q=Q_i\} \makebox[1mm]{\hspace{3cm}\text{for every $Q\in\autStates$}}& && \false^I&=\bot 
 	\end{align*}
 	\begin{align*}
-		  & a^I=1 &   & a_0^I=0 &   & b_0^I=0 
+		  & a^I=0 &   & a_0^I=0 &   & b_0^I=0 
 	\end{align*}
 	Since there are no free variables in $\Gamma_M$ we can just set $\omega(x)=0$ for every $x\in\VarP$. It is easy to see that $I$ is indeed a model of $\Gamma_M$.
 \end{proof}
@@ -183,13 +190,13 @@ We proof the other direction by induction on the length of the computation. But 
 	\begin{enumerate}[label=]%TODO is this a good idea?
 		\item $R_1(a,a_0)$, $P(a_{i-1},a_i)$ and $D(a_{i-1})$ for $i\in\{1,\dots,n\}$,
 		\item $R_2(a,b_0)$, $P(b_{i-1},b_i)$ and $D(b_{i-1})$ for $i\in\{1,\dots,m\}$,
-		\item $Q(a)$, $D(a)$, $E(a_n)$ and $E(b_m)$.
+		\item $Q(a)$, $E(a_n)$ and $E(b_m)$.
 	\end{enumerate}
 	And $\Gamma_D$ contains the formulas:
 	\begin{enumerate}[label=]
 		\item $R_1(\widehat{a},\widehat{a}_0)$, $P(\widehat{a}_{i-1},\widehat{a}_i)$ and $D(\widehat{a}_{i-1})$ for $i\in\{1,\dots,\widehat{n}\}$,
 		\item $R_2(\widehat{a},\widehat{b}_0)$, $P(\widehat{b}_{i-1},\widehat{b}_i)$ and $D(\widehat{b}_{i-1})$ for $i\in\{1,\dots,\widehat{m}\}$,
-		\item $\widehat{Q}(\widehat{a})$, $D(\widehat{a})$, $E({\widehat{a}}_{\widehat{n}})$ and $E({\widehat{b}}_{\widehat{m}})$.
+		\item $\widehat{Q}(\widehat{a})$, $E({\widehat{a}}_{\widehat{n}})$ and $E({\widehat{b}}_{\widehat{m}})$.
 	\end{enumerate}
 	The basic idea is to deduce $\Gamma_D$ from $\Gamma_C\cup\conGM$ and then apply the induction hypothesis to $\Gamma_D\cup\conGM$. 
 	\begin{figure}[H]
@@ -202,13 +209,13 @@ We proof the other direction by induction on the length of the computation. But 
 	First we need a new free variable representing the configuration $D$. Also the value in register 2 does not change, because in both cases we are only concerned with register 1.
 	For the succeeding tableau proofs we will abbreviate \false{} by \falses{} and we will drop $\Gamma_C\cup\conGM$ and only write new formulas on the left side of $\PModelsf$.
 	
-	We first introduce a new variable representing $D$ (let $b\in \VarP\setminus\text{FV}(\Gamma_C\cup\conGM)$).
+	We first introduce a new variable representing the new configuration $D$ (let $b\in \VarP\setminus\text{FV}(\Gamma_C)$, note that $\FV(\conGM)=\emptyset$).
 	
 	\begin{figure}[H]
 		\centering
 		\input{Figure.Tableau.1}
 	\end{figure}
-	Since register 2 should not change we need $R_2(b,b_0)$. Again we will just drop $S(a,b)$ and $D(b)$ on the left side for comprehensibility.
+	Since register 2 should not change we need $R_2(b,b_0)$. Again we will just drop $S(a,b)$ on the left side for comprehensibility.
 		
 	\begin{figure}[H]
 		\centering
@@ -221,7 +228,7 @@ We proof the other direction by induction on the length of the computation. But 
 		\input{Figure.Tableau.3}
 	\end{figure}
 	
-	To increment register 1 we need a new free variable as anchor for register 1 (let $d\in\VarP\setminus\text{FV}(\Gamma_C\cup\conGM)$ and $d\neq b$).
+	To increment register 1 we need a new free variable as anchor for register 1 (let $d\in\VarP\setminus\text{FV}(\Gamma_C)$ and $d\neq b$).
 	
 	\begin{figure}[H]
 		\centering
