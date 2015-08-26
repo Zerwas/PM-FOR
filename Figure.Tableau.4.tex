@@ -6,13 +6,13 @@ every child/.style={edge from parent/.style={opacity=0}}]
 \node(e) {\PModelsf \falses} [sibling distance=2*\dist+8cm] 
 	child [sibling distance=\dist+3cm] {node(1) {\PModelsf P(d,a_0)} 
 		child {node(11) {\PModelsf R_1(b,d)} }
-		child [sibling distance=\dist+3.9cm] {node(12) {\PModelsf R_1(b,d)\to Q'(b)} 
+		child [sibling distance=\dist+3.9cm] {node(12) {\PModelsf R_1(b,d)\to P(d,a_0)} 
 			child {node(121) {\PModelsf R_1(a,a_0)} }
-			child [sibling distance=\dist+4.5cm] {node(122) {\PModelsf R_1(a,a_0)\to R_1(b,d)\to Q'(b)} 
+			child [sibling distance=\dist+4.5cm] {node(122) {\PModelsf R_1(a,a_0)\to R_1(b,d)\to P(d,a_0)} 
 				child {node(1221) {\PModelsf S(a,b)} }
-				child [sibling distance=\dist+5cm] {node(1222) {\PModelsf S(a,b)\to R_1(a,a_0)\to R_1(b,d)\to Q'(b)}
+				child [sibling distance=\dist+5cm] {node(1222) {\PModelsf S(a,b)\to R_1(a,a_0)\to R_1(b,d)\to P(d,a_0)}
 					child {node(12221) {\PModelsf Q(a)} }
-					child {node(12222) {\PModelsf Q(a)\to S(a,b)\to R_1(a,a_0)\to R_1(b,d)\to Q'(b)}
+					child {node(12222) {\PModelsf Q(a)\to S(a,b)\to R_1(a,a_0)\to R_1(b,d)\to P(d,a_0)}
 						child {node(122221) {\PModelsf \forall\alpha\beta\gamma\delta(Q(\alpha)\to S(\alpha,\beta)\to R_1(\alpha,\gamma)\to R_1(\beta,\delta)\to P(\delta,\gamma))}}}
 					child {}}
 				child {}}

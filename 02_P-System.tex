@@ -6,7 +6,7 @@ Let $\RelP=\{P,Q,\dots\}$ be a set (of predicate symbols) and $\mathcal{P}$ a ra
 A first-order logic formula $\varphi$ over $\VarP$, $\emptyset$, and $\mathcal{P}$ is an
 \begin{description} %TODO quantify \vec{a}
 	\item[atomic formula] if $\varphi=\false$ or $\varphi=P(a,b)$ for some $P\in\RelP$ and $a,b\in\VarP$.
-	\item[universal formula] if $\varphi=\forall\vec{\alpha}(A_1\to A_2 \to\dots\to A_n)$ for some $n\in\N$ and where $A_i$ is an atomic formula for $i\in\{1,\dots,n\}$, $A_i\neq\false$ for $i\in\{1,\dots,n-1\}$ and for each $\alpha\in\FV(\varphi)\cap\FV(A_n)$ there exists an $i\in\{1,\dots,n-1\}$ such that $\alpha\in\FV(A_i)$.
+	\item[universal formula] if $\varphi=\forall\vec{\alpha}(A_1\to A_2 \to\dots\to A_n)$ for some $n\in\N$ and where $A_i$ is an atomic formula for $i\in\{1,\dots,n\}$, $A_i\neq\false$ for $i\in\{1,\dots,n-1\}$ and for each $\alpha\in\FV(A_n)$ there exists an $i\in\{1,\dots,n-1\}$ such that $\alpha\in\FV(A_i)$.
 	\item[existential formula] if there exits an $n\in\N$, atomic formulas $A_i\neq\false$ for $i\in\{1,\dots,n\}$ such that $\varphi=\forall\vec{\alpha}(A_1\to A_2 \to\dots\to A_{n-1}\to\forall\beta(A_n\to\false)\to\false)$.
 \end{description}
 The set of formulas of System \SysP{} (= set of \SysP-formulas) over $\VarP$ and $\RelP$ is the set of all first-order formulas in $\mathcal{L}_{(\VarP,\emptyset,\mathcal{P})}$ that are either an atomic, universal or existential formula.
@@ -15,7 +15,7 @@ The set of formulas of System \SysP{} (= set of \SysP-formulas) over $\VarP$ and
 A finite set of \SysP-formulas $\Gamma$ is called \SysP-basis, or basis if it is clear from the context whether a \SysP-basis or a \lambdaTwo-basis is meant.
 \end{definition}
 
-For a \SysP-basis $\Gamma$ and a \SysP-formula $A$ we will abbreviate $\Gamma\cup\{A\}$ to $\Gamma,A$ (c.f. \lambdaTwo-basis).
+For a \SysP-basis $\Gamma$, another \SysP-basis $\Sigma$, and a \SysP-formula $A$ we will abbreviate $\Gamma\cup\{A\}$ to $\Gamma,A$ and $\Gamma\cup\Sigma$ to $\Gamma,\Sigma$ (c.f. \lambdaTwo-basis).
 
 \begin{definition}
 Let $A$ be a \SysP-formula, and $\Gamma$ be a basis. The formula $A$ is a \define{semantic consequence} of $\Gamma$, denoted by $\Gamma\PModels A$, if $A$ can be produced using the following deduction rules.
@@ -111,7 +111,7 @@ If $r=-(1,Q_1,Q_2)$ for some $Q_1,Q_2\in\autStates$ then $\Gamma_{Q,-(1,Q_1,Q_2)
 	\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to R_1(\alpha,\gamma)\to E(\gamma)\to Q_2(\beta))$\\jump to $Q_2$ if register 1 is zero
 	\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to R_1(\alpha,\gamma)\to E(\gamma)\to R_1(\beta,\gamma))$\\if register 1 is zero it stays zero
 	\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to R_1(\alpha,\gamma)\to D(\gamma)\to Q_1(\beta))$\\change state to $Q_1$ if register 1 is greater zero
-	\item $\forall\alpha\beta\gamma\delta(Q(\alpha)\to S(\alpha,\beta)\to R_1(\alpha,\gamma)\to D(\gamma) \to P(\gamma,\delta)\to R_1(\beta,\delta))$\\decrement register 1
+	\item $\forall\alpha\beta\gamma\delta(Q(\alpha)\to S(\alpha,\beta)\to R_1(\alpha,\gamma)\to D(\gamma) \to P(\gamma,\delta)\to R_1(\beta,\delta))$\\decrement register 1 if possible
 	\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to R_2(\alpha,\gamma)\to R_2(\beta,\gamma))$\\do not change register 2 in both cases
 \end{itemize}
 
@@ -126,7 +126,7 @@ We also need a set $\Gamma_1$ to ensure that our representation works correctly.
 	\item $\forall\alpha(\forall\beta(R_2(\alpha,\beta)\to\false)\to\false)$\\every element represents a configuration so it has a value for register 2
 	\item $\forall\alpha(\forall\beta(S(\alpha,\beta)\to\false)\to\false)$\\every element has a successor
 \end{itemize}
-We define $\conGM$ as $\bigcup_{Q\in\autStates\setminus\{Q_f\}}\Gamma_{Q,R(Q)}\cup\{\forall\alpha(Q_f(\alpha)\to\false)\}\cup\Gamma_1$.
+We define $\conGM$ as $\bigcup_{Q\in\autStates\setminus\{Q_f\}}\Gamma_{Q,R(Q)}\cup\{\forall\alpha(Q_f(\alpha)\to\false)\}\cup\Gamma_1$. We have added the formula $\forall\alpha(Q_f(\alpha)\to\false)$ to be able to deduce \false{} if our automaton terminates.
 Finally we can define $\Gamma_M$ as $\Gamma_{C_0}\cup\conGM$, where $C_0=\langle Q_0,0,0\rangle$ is the initial configuration.
 \begin{claim}\label{cla.17}
 	\begin{align*}
@@ -169,14 +169,14 @@ Finally we can define $\Gamma_M$ as $\Gamma_{C_0}\cup\conGM$, where $C_0=\langle
 	Since there are no free variables in $\Gamma_M$ we can just set $\omega(x)=0$ for every $x\in\VarP$. It is easy to see that $I$ is indeed a model of $\Gamma_M$.
 \end{proof}
 
-We proof the other direction by induction on the length of the computation. But to be able to use the induction hypothesis we need a slightly more general statement.
+We proof the other direction by induction on the length of the computation. But to be able to use the induction hypothesis we need a slightly more general statement (this is why we defined $\conGM$ and not just $\Gamma_M$ right away).
 \begin{claim}\label{cla.18}
-	Let $C=\langle Q,m,n\rangle$ be a configuration of $M$. If a final configuration (i.e. a configuration $\langle Q_f,\widehat{m},\widehat{n}\rangle$ for some $\widehat{n},\widehat{m}\in\N$) is reachable from $C$ then $\Gamma_C\cup\conGM\PModels\false$.
+	Let $C=\langle Q,m,n\rangle$ be a configuration of $M$. If a final configuration (i.e. a configuration $\langle Q_f,\widehat{m},\widehat{n}\rangle$ for some $\widehat{m},\widehat{n}\in\N$) is reachable from $C$ then $\Gamma_C\cup\conGM\PModels\false$.
 \end{claim}
 \begin{proof} By induction on the length $i$ of the computation.
 	
 	Induction Base: $i=0$\\
-	Since a final configuration is reachable in 0 steps $C$ must be this final configuration. So $C=\langle Q_f,m,n\rangle$ for some $n,m\in\N$. Hence, $Q_f(a)$ is in $\Gamma_C$ for some $a\in\VarP$ and $\forall\alpha(Q_f(\alpha)\to\false)$ is in $\conGM$, we can easily deduce false.
+	Since a final configuration is reachable in 0 steps $C$ must be this final configuration. So $C=\langle Q_f,m,n\rangle$ for some $m,n\in\N$. Hence, $Q_f(a)$ is in $\Gamma_C$ for some $a\in\VarP$ and $\forall\alpha(Q_f(\alpha)\to\false)$ is in $\conGM$, we can easily deduce false.
 	\begin{figure}[H]
 		\centering
 		\input{Figure.Tableau.0}
@@ -188,15 +188,15 @@ We proof the other direction by induction on the length of the computation. But 
 	From the fact that a final configuration is reachable from $C$ in $i$ steps we can deduce that there exists a configuration $D=\langle \widehat{Q}, \widehat{m}, \widehat{n}\rangle$ such that $C\Rightarrow_M^r D$ for some $r\in\mathcal{R}_\autStates$ and a final configuration is reachable from $D$ in $i'$ steps. We also know that $C=\langle Q,m,n\rangle$ for some $Q\in\autStates\setminus\{Q_f\}$ and some $m,n\in\N$.
 	The set $\Gamma_C$ contains the formulas: 
 	\begin{enumerate}[label=]%TODO is this a good idea?
-		\item $R_1(a,a_0)$, $P(a_{i-1},a_i)$ and $D(a_{i-1})$ for $i\in\{1,\dots,n\}$,
-		\item $R_2(a,b_0)$, $P(b_{i-1},b_i)$ and $D(b_{i-1})$ for $i\in\{1,\dots,m\}$,
-		\item $Q(a)$, $E(a_n)$ and $E(b_m)$.
+		\item $R_1(a,a_0)$, $P(a_{i-1},a_i)$ and $D(a_{i-1})$ for $i\in\{1,\dots,m\}$,
+		\item $R_2(a,b_0)$, $P(b_{i-1},b_i)$ and $D(b_{i-1})$ for $i\in\{1,\dots,n\}$,
+		\item $Q(a)$, $E(a_m)$ and $E(b_n)$.
 	\end{enumerate}
 	And $\Gamma_D$ contains the formulas:
 	\begin{enumerate}[label=]
-		\item $R_1(\widehat{a},\widehat{a}_0)$, $P(\widehat{a}_{i-1},\widehat{a}_i)$ and $D(\widehat{a}_{i-1})$ for $i\in\{1,\dots,\widehat{n}\}$,
-		\item $R_2(\widehat{a},\widehat{b}_0)$, $P(\widehat{b}_{i-1},\widehat{b}_i)$ and $D(\widehat{b}_{i-1})$ for $i\in\{1,\dots,\widehat{m}\}$,
-		\item $\widehat{Q}(\widehat{a})$, $E({\widehat{a}}_{\widehat{n}})$ and $E({\widehat{b}}_{\widehat{m}})$.
+		\item $R_1(\widehat{a},\widehat{a}_0)$, $P(\widehat{a}_{i-1},\widehat{a}_i)$ and $D(\widehat{a}_{i-1})$ for $i\in\{1,\dots,\widehat{m}\}$,
+		\item $R_2(\widehat{a},\widehat{b}_0)$, $P(\widehat{b}_{i-1},\widehat{b}_i)$ and $D(\widehat{b}_{i-1})$ for $i\in\{1,\dots,\widehat{n}\}$,
+		\item $\widehat{Q}(\widehat{a})$, $E({\widehat{a}}_{\widehat{m}})$ and $E({\widehat{b}}_{\widehat{n}})$.
 	\end{enumerate}
 	The basic idea is to deduce $\Gamma_D$ from $\Gamma_C\cup\conGM$ and then apply the induction hypothesis to $\Gamma_D\cup\conGM$. 
 	\begin{figure}[H]
@@ -249,7 +249,7 @@ We proof the other direction by induction on the length of the computation. But 
 		\input{Figure.Tableau.5}
 	\end{figure}
 	
-	Now we already have deduced $\Gamma_D$, to see why define $\widehat{a}:=b$, $\widehat{b}_i:=b_i$ for $i\in\{0,\dots,m\}$, $\widehat{a}_0:=d$, and $\widehat{a}_{i+1}:=a_i$ for $i\in\{0,\dots,n\}$.
+	Now we already have deduced $\Gamma_D$, to see why define $\widehat{a}:=b$, $\widehat{b}_i:=b_i$ for $i\in\{0,\dots,n\}$, $\widehat{a}_0:=d$, and $\widehat{a}_{i+1}:=a_i$ for $i\in\{0,\dots,m\}$.
 	Hence we can deduce \false{} by induction hypothesis.\\
 	
 	The other case, that $\boldsymbol{r=-(Q,1,Q_1,Q_2)}$, has to be split into two cases again. If $\boldsymbol{m=0}$ then $\widehat{Q}=Q_2$, $\widehat{m}=0$, and $\widehat{n}=n$. We only need to ensure that the successor state is $Q_2$ and that register 1 is still zero.
@@ -266,7 +266,7 @@ We proof the other direction by induction on the length of the computation. But 
 		\input{Figure.Tableau.8}
 	\end{figure}
 	
-	If we define $\widehat{a}:=b$, $\widehat{b}_i:=b_i$ for $i\in\{0,\dots,m\}$, and $\widehat{a}_0:=a_0$ then it is clear that we have deduced all formulas required for $\Gamma_D$. So we can use the induction hypothesis to deduce \false{}.
+	If we define $\widehat{a}:=b$, $\widehat{b}_i:=b_i$ for $i\in\{0,\dots,n\}$, and $\widehat{a}_0:=a_0$ then it is clear that we have deduced all formulas required for $\Gamma_D$. So we can use the induction hypothesis to deduce \false{}.
 	
 	In the last case $\boldsymbol{m>0}$, so $\widehat{Q}=Q_1$, $\widehat{m}=m-1$, and $\widehat{n}=n$. First we ensure that $b$ is in state $Q_1$.
 	
@@ -282,7 +282,7 @@ We proof the other direction by induction on the length of the computation. But 
 		\input{Figure.Tableau.10}
 	\end{figure}
 	
-	Again it is obvious that we have deduced $\Gamma_D$ ($\widehat{a}:=b$, $\widehat{b}_i:=b_i$ for $i\in\{0,\dots,m\}$, and $\widehat{a}_{i-1}:=a_i$ for $i\in\{1,\dots,n\}$). Hence, by induction hypothesis, we can deduce \false{}.
+	Again it is obvious that we have deduced $\Gamma_D$ ($\widehat{a}:=b$, $\widehat{b}_i:=b_i$ for $i\in\{0,\dots,n\}$, and $\widehat{a}_{i-1}:=a_i$ for $i\in\{1,\dots,m\}$). Hence, by induction hypothesis, we can deduce \false{}.
 \end{proof}
 
 \begin{lemma}\label{lem.19}

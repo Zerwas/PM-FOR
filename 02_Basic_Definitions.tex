@@ -1,6 +1,6 @@
 \section{Basic Definitions}
 \subsection{$\lambda$-calculus \lambdaTwo}
-In the following let $\lambdaTypVar=\{\alpha,a,\beta,b,\dots\}$ be a countable set (of type-variables) and $\lambdaValVar=\{x_1,x_2,\dots\}$ be a countable set (of value-variables).
+In the following let $\lambdaTypVar=\{\alpha,a,\beta,b,\dots\}$ be a countably infinite set (of type-variables) and $\lambdaValVar=\{x,x_1,x_2,\dots\}$ be a countably infinite set (of value-variables).
 \begin{definition}
 	The \define{set of all $\lambda2$ types over \lambdaTypVar}, denoted by \lambdaTypes{}, is the smallest set T satisfying the following conditions: %TODO maybe put \lambdaTypVar in \lambdaTypes
 	\begin{itemize}
@@ -70,7 +70,7 @@ If the function \rank{} is understood we will just write $\Sigma$ instead of $(\
 %TODO do we use this convention?
 
 
-For the remainder of this subsection let $\mathcal{V}=\{y_1,y_2,\dots\}$ be a countable set (of variables), $\mathcal{F}$ a ranked set (of function symbols), and $\mathcal{P}$ a ranked set (of predicate symbols).
+For the remainder of this subsection let $\mathcal{V}=\{y,y_1,y_2,\dots\}$ be a countable set (of variables), $\mathcal{F}$ a ranked set (of function symbols), and $\mathcal{P}$ a ranked set (of predicate symbols).
 \begin{definition}
 	The set of \define{terms over $\mathcal{V}$ and $\mathcal{F}$}, denoted by $\mathcal{T}_{(\mathcal{V},\mathcal{F})}$, is the smallest set $\mathcal{T}$ satisfying the following conditions:
 	\begin{itemize}
@@ -86,8 +86,8 @@ For the remainder of this subsection let $\mathcal{V}=\{y_1,y_2,\dots\}$ be a co
 \end{definition}
 We introduce an additional binary operation $\to$ on formulas, where for some $\varphi$, $\psi\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$ the formula $(\varphi\to\psi)$ is defined as $(\neg\varphi\vee\psi)$, if we have a formula of the form $(\varphi_1\to(\varphi_2\to(\dots \to(\varphi_{n-1}\to \varphi_n)\cdots)))$ we will often omit the brackets and just write $(\varphi_1\to \varphi_2\to\dots\to \varphi_{n-1}\to \varphi_n)$ or $\varphi_1\to \varphi_2\to\dots \to \varphi_{n-1}\to \varphi_n$ instead. 
 
-For nullary relation symbols $P$ we will abbreviate $P()$ to $P$. If a formula $\varphi$ is of the form $Qx.(\psi)$ (where $Q\in\{\exists,\forall\}$, $x\in\mathcal{V}$, and $(\psi)\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$) we often drop the dot and write $Qx(\psi)$ instead. %TODO why brackets around varphi? maybe so that you cannot use this for a negated formula or smth like that
-If a formula $\varphi$ has multiple variables bound by the same quantifier (i.e. $\varphi=Qx_1.Qx_2.\dots Qx_n.\psi$ for $Q\in\{\exists,\forall\}$, some $n\in\N$, $x_1,x_2,\dots,x_n\in\mathcal{V}$, and $\psi\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$) we abbreviate $\varphi$ to $Qx_1x_2\dots x_n.\psi$ or to $Q\vec{x}.\psi$ where $\vec{x}=(x_1,x_2,\dots,x_n)^\top$. %TODO do we need to transpose the vector?
+For nullary relation symbols $P$ we will abbreviate $P()$ to $P$. If a formula $\varphi$ is of the form $Qy.(\psi)$ (where $Q\in\{\exists,\forall\}$, $y\in\mathcal{V}$, and $(\psi)\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$) we often drop the dot and write $Qy(\psi)$ instead. %TODO why brackets around varphi? maybe so that you cannot use this for a negated formula or smth like that
+If a formula $\varphi$ has multiple variables bound by the same quantifier (i.e. $\varphi=Qy_1.Qy_2.\dots Qy_n.\psi$ for $Q\in\{\exists,\forall\}$, some $n\in\N$, $y_1,y_2,\dots,y_n\in\mathcal{V}$, and $\psi\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$) we abbreviate $\varphi$ to $Qy_1y_2\dots y_n.\psi$ or to $Q\vec{y}.\psi$ where $\vec{y}=(y_1,y_2,\dots,y_n)^\top$. %TODO do we need to transpose the vector?
 
 \begin{definition}
 	The \define{variables of a term $t\in\mathcal{T}_{(\mathcal{V},\mathcal{F})}$}, denoted by $\V(t)$, are defined by:
