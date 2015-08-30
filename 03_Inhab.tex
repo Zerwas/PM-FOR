@@ -1,0 +1,39 @@
+\section{\lambdaInhab{} is undecidable}
+Now we can show that the inhabitation problem in $\lambda2$ %explicit?
+is undecidable by reducing \PCons{} to \lambdaInhab{}. Given a \SysP-basis $\Gamma$ we construct a \lambdaTwo-basis $\trans{\Gamma}$ such that 
+\begin{align*}
+\Gamma\PModels\false&&\text{iff}&&\trans{\Gamma}\lambdaModels\false
+\end{align*}
+where \false{} 
+
+\begin{definition}
+For a \SysP-basis $\Gamma$ and a $\lambda2$ type $t$ we define a set $\relativizer{t}$, it contains the ???? \[(x_t:t\to\eta_2)\] and for every $P$ in $Predicateysymbols~of~\Gamma$, $i\in\{1,2\}$ the ??? \[(x_{t,p_i}:(t\to p_i)\to\eta_1).\]
+\end{definition}
+
+\begin{definition}
+We define a function ...
+
+For a \SysP-formula $A$, if $A$ is an atomic formula then
+\[
+\trans{A}=
+\begin{cases}
+\false &\text{if $A=\false$}\\
+(\alpha\to p_1)\to(\beta\to p_2)\to p &\text{if $A=P(\alpha,\beta)$} %TODO convention with variables greek or latin?
+\end{cases}
+\]
+if $A$ is an universal formula, it follows that there is an $n\in\N$ and atomic formulas $A_1,A_2,\dots,A_n$ such that $A=\forall\vec{\alpha}(A_1\to A_2 \to\dots\to A_n)$, then %TODO quantify varibales
+\[\trans{A}=\forall\vec{\alpha}(\relativizer{\vec{\alpha}}\to \trans{A_1}\to \trans{A_2} \to\dots\to\trans{ A_n})\]
+if $A$ is an existential formula, it follows that for some $n\in\N^+$ and some atomic formulas $A_1,\dots,A_n$ it holds that $A=\forall\vec{\alpha}(A_1 \to\dots\to A_{n-1}\to \forall\beta((A_n)\to\false)\to\false)$, then %TODO quantify \beta \alpha
+\[\trans{A}=\forall\vec{\alpha}(\relativizer{\vec{\alpha}}\to \trans{A_1}\to\dots\to\forall\beta(\relativizer{\beta}\to\trans{ A_n}\to\false)\to\false)\]
+For a \SysP-basis $\Gamma$ we define $\trans{\Gamma}$ as $\{\trans{A}\mid A\in\Gamma\}\cup\{\relativizer{a}\mid a\in\FV(\Gamma)\}$. %TODO a\in\V()\Gamma)?
+
+\end{definition}
+
+\begin{claim}
+Let $\alpha$, $\beta$ be type-variables, $x$ a value-variable, and $\Gamma$ a %TODO ordinary?
+basis such that $\beta$ is not a target in $\Gamma$. %TODO define target
+Furthermore assume that $\Gamma,(x:\alpha\to\beta)\lambdaModels e:\beta$ for some term $e$. It follows that there exists a $\Gamma'$ such that $\Gamma\subseteq\Gamma'$, $\Gamma,(x:\alpha\to\beta)\lambdaModels t$ for each $t\in\{t\mid (x:t)\in\Gamma'\}$, and $\Gamma',(x:\alpha\to\beta)\lambdaModels e':\alpha$ for some term $e'$. %TODO convention G\models e:t -> G\models t
+\end{claim}
+\begin{proof}
+By induction on the size of the term $e$. %TODO define size of a term
+\end{proof}
