@@ -30,10 +30,23 @@ For a \SysP-basis $\Gamma$ we define $\trans{\Gamma}$ as $\{\trans{A}\mid A\in\G
 \end{definition}
 
 \begin{claim}
+%TODO new claim
 Let $\alpha$, $\beta$ be type-variables, $x$ a value-variable, and $\Gamma$ a %TODO ordinary?
 basis such that $\beta$ is not a target in $\Gamma$. %TODO define target
 Furthermore assume that $\Gamma,(x:\alpha\to\beta)\lambdaModels e:\beta$ for some term $e$. It follows that there exists a $\Gamma'$ such that $\Gamma\subseteq\Gamma'$, $\Gamma,(x:\alpha\to\beta)\lambdaModels t$ for each $t\in\{t\mid (x:t)\in\Gamma'\}$, and $\Gamma',(x:\alpha\to\beta)\lambdaModels e':\alpha$ for some term $e'$. %TODO convention G\models e:t -> G\models t
 \end{claim}
 \begin{proof}
-By induction on the size of the term $e$. %TODO define size of a term
+By structural induction on the term $e$.
+\begin{itemize}
+	\item[] \underline{$e=y$} for some $y\in\lambdaValVar$.\\
+		asd
+	\item[] \underline{$e=e_1e_2$} for some $e_1,e_2\in\lambdaTerms$.\\
+		asd
+	\item[] \underline{$e=\lambda y:t_1.e'$} and $t=t_1\to t_2$, for some $e'\in\lambdaTerms$, some $y\in\lambdaValVar$, and $t_1,t_2\in\lambdaTypes$.\\
+		asd
+	\item[] \underline{$e=\Lambda\gamma.e'$} and $t=\forall\gamma.t'$ for some $e'\in\lambdaTerms$, some $\gamma\in\lambdaTypVar$, and $t'\in\lambdaTypes$.\\
+		asd
+	\item[] \underline{$e=e'\,t$} for some $e'\in\lambdaTerms$ and some $t'\in\lambdaTypes$.\\
+		asd
+\end{itemize}
 \end{proof}

@@ -12,33 +12,6 @@ every child/.style={edge from parent/.style={opacity=0}}]
 
 %set of all positions in the tree
 \def\nodes{,1,2,11,21,211,2111}
-%the yshift does not work on nodes so we create a coordinate for every node
-\foreach \x in \nodes{
-\ifnodedefined{\x}{
-	\coordinate(c\x) at (\x);
-	\coordinate(2.\x) at (0,0);
-}{}
-}
-
-%draw lines for each node with 2 children (add parents with 2 children)
-\foreach \x in \nodes{
-\ifnodedefined{2.\x1}{
-	%calculate with of line
-	\getwidthofnode{\sright}{\x1}
-	%if there is a right child draw wide line
-	\ifnodedefined{2.\x2}{
-		\getwidthofnode{\sleft}{\x2}
-		%draw line
-		\draw[shorten <=-\sright/2, shorten >=-\sleft/2] ([yshift=-0.25cm]c\x1) -- ([yshift=-0.25cm]c\x2);
-	} %else only one child
-	{
-		\getwidthofnode{\sleft}{\x}
-		%get widht corresponding to the widht of the bigger node
-		\pgfmathsetlength{\sright}{max(\sright,\sleft)}
-		%draw line
-		\draw (c\x)+(-\sright/2,+0.25) -- +(\sright/2,+0.25);
-	}
-}{}
-}
-
+\def\identifier{2}
+\input{Draw.Tableau}
 \end{tikzpicture}
