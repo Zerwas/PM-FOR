@@ -4,6 +4,7 @@
 	\coordinate(\identifier.\x) at (0,0);
 }{}
 }
+\coordinate(c) at (e);
 
 %draw lines for each node with 2 children (add parents with 2 children)
 \foreach \x in \nodes{
@@ -17,7 +18,9 @@
 		\draw[shorten <=-\sright/2, shorten >=-\sleft/2] ([yshift=-0.25cm]c\x1) -- ([yshift=-0.25cm]c\x2);
 	} %else only one child
 	{
-		\getwidthofnode{\sleft}{\x}
+		\ifnodedefined{\x}
+			{\getwidthofnode{\sleft}{\x}}
+			{\getwidthofnode{\sleft}{e}}
 		%get widht corresponding to the widht of the bigger node
 		\pgfmathsetlength{\sright}{max(\sright,\sleft)}
 		%draw line

@@ -41,12 +41,30 @@ By structural induction on the term $e$.
 	\item[] \underline{$e=y$} for some $y\in\lambdaValVar$.\\
 		asd
 	\item[] \underline{$e=e_1e_2$} for some $e_1,e_2\in\lambdaTerms$.\\
-		asd
-	\item[] \underline{$e=\lambda y:t_1.e'$} and $t=t_1\to t_2$, for some $e'\in\lambdaTerms$, some $y\in\lambdaValVar$, and $t_1,t_2\in\lambdaTypes$.\\
-		asd
-	\item[] \underline{$e=\Lambda\gamma.e'$} and $t=\forall\gamma.t'$ for some $e'\in\lambdaTerms$, some $\gamma\in\lambdaTypVar$, and $t'\in\lambdaTypes$.\\
-		asd
-	\item[] \underline{$e=e'\,t$} for some $e'\in\lambdaTerms$ and some $t'\in\lambdaTypes$.\\
-		asd
+		
+		\begin{figure}[H]
+			\centering
+			\input{Figure.C1.2}
+		\end{figure}
+	\item[] \underline{$e=\lambda y:t_1.e'$} for some $e'\in\lambdaTerms$, some $y\in\lambdaValVar\setminus\dom(\Gamma)$, $y\neq x$, and $t_1\in\lambdaTypes$.\\
+		It follows that $t=t_1\to t_2$ for some $t_2\in\lambdaTypes$.
+		
+		\begin{figure}[H]
+			\centering
+			\input{Figure.C1.3}
+		\end{figure}
+	\item[] \underline{$e=\Lambda\gamma.e'$} for some $e'\in\lambdaTerms$, $\gamma\in\lambdaTypVar\setminus\FV(\Gamma)$,$\gamma\neq\beta$, and $\gamma\neq\alpha$.\\
+		It follows that $t=\forall\gamma.t'$ for some $t'\in\lambdaTypes$.
+		
+		\begin{figure}[H]
+			\centering
+			\input{Figure.C1.4}
+		\end{figure}
+	\item[] \underline{$e=e'\,t'$} for some $e'\in\lambdaTerms$ and some $t'\in\lambdaTypes$.\\
+		
+		\begin{figure}[H]
+			\centering
+			\input{Figure.C1.5}
+		\end{figure}
 \end{itemize}
 \end{proof}
