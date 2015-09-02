@@ -2,16 +2,18 @@
 execute at begin node=$, execute at end node=$,
 every node/.style={opacity=1},
 every child/.style={edge from parent/.style={opacity=0}}]
-\node(e) {\PModelsf \falses} [sibling distance=8cm] 
+\node(e) {\PModelsf \falses} [sibling distance=12cm] 
 	child [sibling distance=4cm] {node(1) {\PModelsf\forall\beta(S(a,\beta)\to\falses)\to\falses} 
-		child {node(11) {\PModelsf\forall\alpha(\forall\beta(S(\alpha,\beta)\to\falses)\to\falses)}}}
+		child {node(11) {\PModelsf G(a)}}
+		child {node(12) {\PModelsf G(a)\to(\forall\beta(S(a,\beta)\to\falses)\to\falses)}
+			child {node(121) {\PModelsf\forall\alpha(G(\alpha)\to\forall\beta(S(\alpha,\beta)\to\falses)\to\falses)}}}}
 	child {node(2) {\PModelsf(\forall\beta(S(a,\beta)\to\falses)\to\falses)\to\falses}
 		child {node(21) {\forall\beta(S(a,\beta)\to\falses)\to\falses\PModelsf\falses}
 			child {node(211) {S(a,b)\PModelsf\falses}
 				child {node[label={[yshift=-0.3cm]above:\vdots}](2111) {}}}}};
 
 %set of all positions in the tree
-\def\nodes{,1,2,11,21,211,2111}
+\def\nodes{,1,2,11,12,121,21,211,2111}
 \def\identifier{1}
 \input{Draw.Tableau}
 \end{tikzpicture}

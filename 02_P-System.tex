@@ -77,7 +77,7 @@ We will show that $\autHalt\leq\PCons$ then the undecidability of \PCons{} direc
 \begin{align*}
  & \text{$M$ terminates on input $(0,0)$} &   & \text{iff} & \text{$\Gamma_M\PModels\false$ holds in System \SysP.} 
 \end{align*}
-Let $M=(\autStates,Q_0,Q_f,\autRules)$ be a two-counter automaton, w.l.o.g. $S,P,R_1,R_2,E,D\notin\autStates$. In the following we will consider \SysP-formulas over $\VarP$ and $\RelP$, where $\RelP=\autStates\uplus\{S,P,R_1,R_2,E,D\}$. We will abbreviate $P(a,a)$ to $P(a)$, note that this way we can use binary predicate symbols as unary ones.
+Let $M=(\autStates,Q_0,Q_f,\autRules)$ be a two-counter automaton, w.l.o.g. $S,P,R_1,R_2,E,D,G\notin\autStates$. In the following we will consider \SysP-formulas over $\VarP$ and $\RelP$, where $\RelP=\autStates\uplus\{S,P,R_1,R_2,E,D,G\}$. We will abbreviate $P(a,a)$ to $P(a)$, note that this way we can use binary predicate symbols as unary ones.
 
 %TODO better readable explenation of new predicate symbols
 The intended informal meaning for these new relation symbols is the following:
@@ -87,15 +87,16 @@ The intended informal meaning for these new relation symbols is the following:
 	\item With $S(a,b)$ we state that ``$b$ is a successor of $a$".
 	\item The meaning of $P(a,b)$ is ``$b$ is a predecessor of $a$".
 	\item And $E(a)$ marks ``$a$ as the end of chain".
-	\item Finally $D(a)$ states that ``$a$ is not the end of a chain".
+	\item With $D(a)$ we state that ``$a$ is not the end of a chain".
+	\item Finally $G(a)$ has no actual meaning we just need it for the existential formulas. %TODO rephrase?
 \end{itemize}
 For a configuration $C=\langle Q,m,n\rangle$ of $M$ we define a set of \SysP-formulas $\Gamma_C$. It contains the following formulas:
 \begin{itemize}
-	\item $Q(a)$
+	\item $Q(a),G(a)$
 	\item $R_1(a,a_0),P(a_{i-1},a_i)~\text{for}~i\in\{1,\dots,m\}$
 	\item $R_2(a,b_0),P(b_{i-1},b_i)~\text{for}~i\in\{1,\dots,n\}$
-	\item $D(a_i),D(b_j)~\text{for}~i\in\{0,\dots,m-1\}~\text{and}~j\in\{0,\dots,n-1\}$
-	\item $E(a_m),E(b_n)$
+	\item $D(a_i),G(a_i),D(b_j),G(b_j)~\text{for}~i\in\{0,\dots,m-1\}~\text{and}~j\in\{0,\dots,n-1\}$
+	\item $E(a_m),G(a_m),E(b_n),G(b_n)$
 \end{itemize}
 Next we need sets of \SysP-formulas for all possible transitions.
 For every $Q\in\autStates\setminus\{Q_f\}$ and $r\in\mathcal{R}_\autStates$ we define $\Gamma_{Q,r}$.
@@ -120,12 +121,13 @@ For $r=+(2,Q')$ for some $Q'\in\autStates$ or $r=-(2,Q_1,Q_2)$ for some $Q_1,Q_2
 
 We also need a set $\Gamma_1$ to ensure that our representation works correctly. The following formula are in $\Gamma_1$:
 \begin{itemize}
-	%\item $\forall\alpha\beta(S(\alpha,\beta)\to D(\beta))$\\no successor is the end of a chain
+	\item $\forall\alpha\beta(S(\alpha,\beta)\to G(\beta))$
+	\item $\forall\alpha(D(\alpha)\to G(\alpha))$	
 	%\item $\forall\alpha(D(\alpha)\to\forall\beta(P(\alpha,\beta)\to\false)\to\false)$\\every %element that is not the end of a chain has a predecessor
 	%TODO necessary?
-	\item $\forall\alpha(\forall\beta(R_1(\alpha,\beta)\to\false)\to\false)$\\every element represents a configuration so it has a value for register 1
-	\item $\forall\alpha(\forall\beta(R_2(\alpha,\beta)\to\false)\to\false)$\\every element represents a configuration so it has a value for register 2
-	\item $\forall\alpha(\forall\beta(S(\alpha,\beta)\to\false)\to\false)$\\every element has a successor
+	\item $\forall\alpha(G(\alpha)\to\forall\beta(R_1(\alpha,\beta)\to\false)\to\false)$\\every element represents a configuration so it has a value for register 1
+	\item $\forall\alpha(G(\alpha)\to\forall\beta(R_2(\alpha,\beta)\to\false)\to\false)$\\every element represents a configuration so it has a value for register 2
+	\item $\forall\alpha(G(\alpha)\to\forall\beta(S(\alpha,\beta)\to\false)\to\false)$\\every element has a successor
 \end{itemize}
 We define $\conGM$ as $\bigcup_{Q\in\autStates\setminus\{Q_f\}}\Gamma_{Q,R(Q)}\cup\{\forall\alpha(Q_f(\alpha)\to\false)\}\cup\Gamma_1$. We have added the formula $\forall\alpha(Q_f(\alpha)\to\false)$ to be able to deduce \false{} if our automaton terminates.
 Finally we can define $\Gamma_M$ as $\Gamma_{C_0}\cup\conGM$, where $C_0=\langle Q_0,0,0\rangle$ is the initial configuration.
@@ -155,14 +157,15 @@ Finally we can define $\Gamma_M$ as $\Gamma_{C_0}\cup\conGM$, where $C_0=\langle
 		\centering
 		\input{Figure.Model}
 	\end{figure}
-	We have $0\in E^I$ and all other numbers are in $D^I$.
+	We have $0\in E^I$, all other numbers are in $D^I$, and all numbers are in $G^I$.
 	
 	Here is the more formal definition of our model $I=(\N,\cdot^I,\omega)$.
 	\begin{align*}
 		  P^I&=\{(i+1,i)\mid i\in\N\}              & R_1^I&=\{(i,m_i)\mid i\in\N\} & R_2^I&=\{(i,n_i)\mid i\in\N\} \\
 		  %Q^I&=\{ i\in\N\setminus\{0\}\mid Q=Q_i\} &  D^I&=\N\setminus\{0\}         & E^I&=\{0\}                            \\
 		  S^I&=\{(i,i+1)\mid i\in\N\} &  D^I&=\{(i,i)\mid i\in\N^+\}         & E^I&=\{(0,0)\}                            \\
-		  Q^I&=\{(i,i)\mid i\in\N, Q=Q_i\} \makebox[1mm]{\hspace{3cm}\text{for every $Q\in\autStates$}}& && \false^I&=\bot 
+		  Q^I&=\{(i,i)\mid i\in\N, Q=Q_i\} \makebox[1mm]{\hspace{3cm}\text{for every $Q\in\autStates$}}& && \false^I&=\bot \\
+		  G^I&=\N
 	\end{align*}
 	\begin{align*}
 		  & a^I=0 &   & a_0^I=0 &   & b_0^I=0 
@@ -189,17 +192,18 @@ We proof the other direction by induction on the length of the computation. But 
 	From the fact that a final configuration is reachable from $C$ in $i$ steps we can deduce that there exists a configuration $D=\langle \widehat{Q}, \widehat{m}, \widehat{n}\rangle$ such that $C\Rightarrow_M^r D$ for some $r\in\mathcal{R}_\autStates$ and a final configuration is reachable from $D$ in $i'$ steps. We also know that $C=\langle Q,m,n\rangle$ for some $Q\in\autStates\setminus\{Q_f\}$ and some $m,n\in\N$.
 	The set $\Gamma_C$ contains the formulas: 
 	\begin{enumerate}[label=]%TODO is this a good idea?
-		\item $R_1(a,a_0)$, $P(a_{i-1},a_i)$ and $D(a_{i-1})$ for $i\in\{1,\dots,m\}$,
-		\item $R_2(a,b_0)$, $P(b_{i-1},b_i)$ and $D(b_{i-1})$ for $i\in\{1,\dots,n\}$,
-		\item $Q(a)$, $E(a_m)$ and $E(b_n)$.
+		\item $R_1(a,a_0)$, $P(a_{i-1},a_i)$, $G(a_{i-1})$, and $D(a_{i-1})$ for $i\in\{1,\dots,m\}$,
+		\item $R_2(a,b_0)$, $P(b_{i-1},b_i)$, $G(b_{i-1})$, and $D(b_{i-1})$ for $i\in\{1,\dots,n\}$,
+		\item $Q(a)$, $E(a_m)$, $E(b_n)$, $G(a)$, $G(a_m)$, and $G(b_n)$.
 	\end{enumerate}
 	And $\Gamma_D$ contains the formulas:
 	\begin{enumerate}[label=]
-		\item $R_1(\widehat{a},\widehat{a}_0)$, $P(\widehat{a}_{i-1},\widehat{a}_i)$ and $D(\widehat{a}_{i-1})$ for $i\in\{1,\dots,\widehat{m}\}$,
-		\item $R_2(\widehat{a},\widehat{b}_0)$, $P(\widehat{b}_{i-1},\widehat{b}_i)$ and $D(\widehat{b}_{i-1})$ for $i\in\{1,\dots,\widehat{n}\}$,
-		\item $\widehat{Q}(\widehat{a})$, $E({\widehat{a}}_{\widehat{m}})$ and $E({\widehat{b}}_{\widehat{n}})$.
+		\item $R_1(\widehat{a},\widehat{a}_0)$, $P(\widehat{a}_{i-1},\widehat{a}_i)$, $G(\widehat{a}_{i-1})$, and $D(\widehat{a}_{i-1})$ for $i\in\{1,\dots,\widehat{m}\}$,
+		\item $R_2(\widehat{a},\widehat{b}_0)$, $P(\widehat{b}_{i-1},\widehat{b}_i)$, $G(\widehat{b}_{i-1})$, and $D(\widehat{b}_{i-1})$ for $i\in\{1,\dots,\widehat{n}\}$,
+		\item $\widehat{Q}(\widehat{a})$, $E({\widehat{a}}_{\widehat{m}})$, $E({\widehat{b}}_{\widehat{n}})$, $G(\widehat{a})$, $G({\widehat{a}}_{\widehat{m}})$, and $G({\widehat{b}}_{\widehat{n}})$.
 	\end{enumerate}
 	The basic idea is to deduce $\Gamma_D$ from $\Gamma_C\cup\conGM$ and then apply the induction hypothesis to $\Gamma_D\cup\conGM$. 
+	
 	\begin{figure}[H]
 		\centering
 		\input{Figure.Tableau}
@@ -216,6 +220,14 @@ We proof the other direction by induction on the length of the computation. But 
 		\centering
 		\input{Figure.Tableau.1}
 	\end{figure}
+	
+	For the new variable $b$ we have to deduce $G(b)$.
+	
+	\begin{figure}[H]
+		\centering
+		\input{Figure.Tableau.11}
+	\end{figure}
+	
 	Since register 2 should not change we need $R_2(b,b_0)$. Again we will just drop $S(a,b)$ on the left side for comprehensibility.
 		
 	\begin{figure}[H]
@@ -243,11 +255,18 @@ We proof the other direction by induction on the length of the computation. But 
 		\input{Figure.Tableau.4}
 	\end{figure}
 	
-	At last we have to make sure that we do not get an artificial zero. We achieve this by deducing $D(d)$.
+	We have to make sure that we do not get an artificial zero. We achieve this by deducing $D(d)$.
 	
 	\begin{figure}[H]
 		\centering
 		\input{Figure.Tableau.5}
+	\end{figure}
+	
+	Now we can easily deduce $G(d)$.
+	
+	\begin{figure}[H]
+		\centering
+		\input{Figure.Tableau.12}
 	\end{figure}
 	
 	Now we already have deduced $\Gamma_D$, to see why define $\widehat{a}:=b$, $\widehat{b}_i:=b_i$ for $i\in\{0,\dots,n\}$, $\widehat{a}_0:=d$, and $\widehat{a}_{i+1}:=a_i$ for $i\in\{0,\dots,m\}$.

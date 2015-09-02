@@ -1,0 +1,22 @@
+\begin{tikzpicture}[grow=up,
+execute at begin node=$, execute at end node=$,
+every node/.style={opacity=1},
+every child/.style={edge from parent/.style={opacity=0}}]
+\def\dist{0.7cm}
+\node(e) {\PModelsf \falses} [sibling distance=2*\dist+4.4cm] 
+	child {node(1) {\PModelsf G(b)} [sibling distance=\dist+2.9cm]
+		child {node(11) {\PModelsf S(a,b)}}
+		child {node(12) {\PModelsf S(a,b)\to G(b)}
+			child {node(121) {\PModelsf \forall\alpha\beta(S(\alpha,\beta)\to G(\beta))}}}
+	}
+	child {node(2) {\PModelsf G(b)\to\falses}
+		child {node(21) {G(b)\PModelsf\falses}
+			child {node[label={[yshift=-0.3cm]above:\vdots}](211) {}}}};
+
+
+
+%set of all positions in the tree
+\def\nodes{,1,2,21,11,12,121}
+\def\identifier{10}
+\input{Draw.Tableau}
+\end{tikzpicture}
