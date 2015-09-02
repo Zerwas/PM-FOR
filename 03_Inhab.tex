@@ -96,9 +96,16 @@ Again we can assume that $M$ is in normal form.
 		It follows that $(x:\false)\in\trans{\Gamma}$. Now the definition of $\trans{\Gamma}$ yields that $\false\in\Gamma$. Therefore $\Gamma\PModels \false$ holds.
 	\item[] \underline{$M=M_1M_2$} for some $M_1,M_2\in\lambdaTerms$.\\
 		
+		$M=x\vec{t}\vec{N}$
 		\begin{figure}[H]
 			\centering
-			\input{Figure.C1.2}
+			\input{Figure.C2.1}
+		\end{figure}
+		
+		$M=x\vec{t}\vec{N}L$
+		\begin{figure}[H]
+			\centering
+			\input{Figure.C2.2}
 		\end{figure}
 	\item[] \underline{$M=\lambda x:t_1.M'$} for some $M'\in\lambdaTerms$, some $x\in\lambdaValVar\setminus\dom(\Gamma)$, and some $t_1\in\lambdaTypes$.\\
 		It follows that $t=t_1\to t_2$ for some $t_2\in\lambdaTypes$ which contradicts $t=\false$. So this case is impossible.

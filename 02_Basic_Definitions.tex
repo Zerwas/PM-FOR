@@ -12,22 +12,30 @@ In the following let $\lambdaTypVar=\{\alpha,a,\beta,b,\dots\}$ be a countably i
 	The \define{set of all $\lambda2$ terms over \lambdaTypVar{} and \lambdaValVar}, denoted by \lambdaTerms{}, is the smallest set $\Lambda_\text{T}$ satisfying the following conditions: %TODO lambda2 explicit
 	\begin{itemize}
 		\item $\lambdaValVar\subseteq\Lambda_\text{T}$,
-		\item if $e_1,e_2\in\Lambda_\text{T}$ then $e_1e_2\in\Lambda_\text{T}$,
-		\item if $x\in\lambdaValVar$, $t\in\lambdaTypes$, and $e\in\Lambda_\text{T}$ then $\lambda x:t.e\in\Lambda_\text{T}$,
-		\item if $\alpha\in\lambdaTypVar$ and $e\in\Lambda_\text{T}$ then $\Lambda \alpha.e\in\Lambda_\text{T}$, and
-		\item if $e\in\Lambda_\text{T}$ and $t\in\lambdaTypes$ then $e\,t\in\Lambda_\text{T}$.
+		\item if $M_1,M_2\in\Lambda_\text{T}$ then $M_1M_2\in\Lambda_\text{T}$,
+		\item if $x\in\lambdaValVar$, $t\in\lambdaTypes$, and $M\in\Lambda_\text{T}$ then $\lambda x:t.M\in\Lambda_\text{T}$,
+		\item if $\alpha\in\lambdaTypVar$ and $M\in\Lambda_\text{T}$ then $\Lambda \alpha.M\in\Lambda_\text{T}$, and
+		\item if $M\in\Lambda_\text{T}$ and $t\in\lambdaTypes$ then $M\,t\in\Lambda_\text{T}$.
 	\end{itemize}
 \end{definition}
-If we have a type of the form $(t_1\to(t_2\to(\dots \to(t_{n-1}\to t_n)\cdots)))$ we will often omit the brackets and just write $(t_1\to t_2\to\dots\to t_{n-1}\to t_n)$ or $t_1\to t_2\to\dots \to t_{n-1}\to t_n$ instead.
+If we have a type of the form $(t_1\to(t_2\to(\dots \to(t_{n-1}\to t_n)\cdots)))$ we will often omit the brackets and just write $(t_1\to t_2\to\dots\to t_{n-1}\to t_n)$ or $t_1\to t_2\to\dots \to t_{n-1}\to t_n$ instead. %TODO \vec{\alpha}
 \begin{definition}
-	Let $e\in\lambdaTerms$. The \define{free variables of $e$}, denoted by $\FV(e)$, are defined inductively as follows:
-	\[\FV(e)=
+	Let $t\in\lambdaTypes$. The \define{set of free variables of $t$}, denoted by $\FV(t)$, is defined inductively as follows:
+		\[\FV(t)=
+			\begin{cases}
+				\{a\}                 & \text{if $t=a$}                    \\ 
+				\FV(t_1)\cup\FV(t_2)  & \text{if $t=t_1\to t_2$}           \\
+				\FV(t')\setminus\{\alpha\} & \text{if $t=\forall\alpha.t'$}\\
+			\end{cases}\]
+			
+	Let $M\in\lambdaTerms$. The \define{set of free variables of $M$}, denoted by $\FV(M)$, is defined inductively as follows:
+	\[\FV(M)=
 		\begin{cases}
-			\{x\}                 & \text{if $e=x$}                \\ %TODO, for some $x\in\lambdaValVar$?
-			\FV(e_1)\cup\FV(e_2)  & \text{if $e=e_1e_2$}           \\
-			\FV(e')\setminus\{x\} & \text{if $e=\lambda x:t.e'$}   \\
-			\FV(e')               & \text{if $e=\Lambda\alpha.e'$} \\
-			\FV(e')               & \text{if $e=e'\,t$}            \\
+			\{x\}                 & \text{if $M=x$}                \\ %TODO, for some $x\in\lambdaValVar$?
+			\FV(M_1)\cup\FV(M_2)  & \text{if $M=M_1M_2$}           \\
+			\FV(M')\setminus\{x\} & \text{if $M=\lambda x:t.M'$}   \\
+			\FV(M')               & \text{if $M=\Lambda\alpha.M'$} \\
+			\FV(M')               & \text{if $M=M'\,t$}            \\
 		\end{cases}\]
 \end{definition}
 \begin{definition} Let $\mathcal{V}=\{x_1,\dots,x_n\}$ be a finite subset of \lambdaValVar{} and $t_1,\dots,t_n\in\lambdaTerms$.	A \define{\lambdaTwo-basis} $\Gamma=\{(x_1:t_1),\dots,(x_n:t_n)\}$ is a mapping from $\mathcal{V}$ to \lambdaTypes{}. If the kind of basis is clear from the context we abbreviate \lambdaTwo-basis to basis. 
@@ -38,16 +46,16 @@ The \define{free variables of a basis} $\Gamma$, denoted by $\FV(\Gamma)$, are $
 For a basis $\Gamma$ and another basis $\Sigma$, $x\in\lambdaValVar\setminus\dom(\Gamma)$, and $t\in\lambdaTypes$ we will abbreviate $\Gamma\cup\{(x:t)\}$ to $\Gamma,x:t$ and $\Gamma\cup\Sigma$ to $\Gamma,\Sigma$. %TODO is the second convention use?
 
 \begin{definition}
-Let $e$ be in \lambdaTerms{}, $t$ in \lambdaTypes, and $\Gamma$ be a basis. A statement $e:t$ is \define{derivable} from $\Gamma$, denoted by $\Gamma\lambdaModels e:t$, if $e:t$ can be produced using the following rules.
+Let $M$ be in \lambdaTerms{}, $t$ in \lambdaTypes, and $\Gamma$ be a basis. A statement $M:t$ is \define{derivable} from $\Gamma$, denoted by $\Gamma\lambdaModels M:t$, if $M:t$ can be produced using the following rules.
 \begin{mdframed} 
 	\begingroup
 	\addtolength{\jot}{0.3cm}
 	\begin{align*}
 		&(\text{Axiom}) &&\Gamma,x:t\lambdaModels x:t\vphantom{\frac{t_1}{t_1}}\\
-		&(\lambda\text{-Introduction}) &&\frac{\Gamma,x:t_1\lambdaModels e:t_2}{\Gamma\lambdaModels \lambda x:t_1.e:t_1\to t_2}\\
-		&(\lambda\text{-Elimination}) &&\frac{\Gamma\lambdaModels e_1:t_1\to t_2 \hspace{0.4cm}\Gamma\lambdaModels e_2:t_1}{\Gamma\lambdaModels e_1e_2:t_2}\\
-& (\forall\text{-Introduction}) &   & \frac{\Gamma\lambdaModels e:t}{\Gamma\lambdaModels \Lambda\alpha.e:\forall\alpha.t}                 &   & \alpha\notin\FV(\Gamma) \\
-& (\forall\text{-Elimination})  &   & \frac{\Gamma\lambdaModels e:\forall\alpha.t }{\Gamma\lambdaModels e\,t':t\left[ \alpha:=t'\right] } 
+		&(\lambda\text{-Introduction}) &&\frac{\Gamma,x:t_1\lambdaModels M:t_2}{\Gamma\lambdaModels \lambda x:t_1.M:t_1\to t_2}\\
+		&(\lambda\text{-Elimination}) &&\frac{\Gamma\lambdaModels M_1:t_1\to t_2 \hspace{0.4cm}\Gamma\lambdaModels M_2:t_1}{\Gamma\lambdaModels M_1M_2:t_2}\\
+& (\forall\text{-Introduction}) &   & \frac{\Gamma\lambdaModels M:t}{\Gamma\lambdaModels \Lambda\alpha.M:\forall\alpha.t}                 &   & \alpha\notin\FV(\Gamma) \\
+& (\forall\text{-Elimination})  &   & \frac{\Gamma\lambdaModels M:\forall\alpha.t }{\Gamma\lambdaModels M\,t':t\left[ \alpha:=t'\right] } 
 	\end{align*}
 	\endgroup
 \end{mdframed}
@@ -90,14 +98,14 @@ For nullary relation symbols $P$ we will abbreviate $P()$ to $P$. If a formula $
 If a formula $\varphi$ has multiple variables bound by the same quantifier (i.e. $\varphi=Qy_1.Qy_2.\dots Qy_n.\psi$ for $Q\in\{\exists,\forall\}$, some $n\in\N$, $y_1,y_2,\dots,y_n\in\mathcal{V}$, and $\psi\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$) we abbreviate $\varphi$ to $Qy_1y_2\dots y_n.\psi$ or to $Q\vec{y}.\psi$ where $\vec{y}=(y_1,y_2,\dots,y_n)$.
 
 \begin{definition}
-	The \define{variables of a term $t\in\mathcal{T}_{(\mathcal{V},\mathcal{F})}$}, denoted by $\V(t)$, are defined by:
+	The \define{set of variables of a term $t\in\mathcal{T}_{(\mathcal{V},\mathcal{F})}$}, denoted by $\V(t)$, is defined by:
 	\[\V(t)=
 		\begin{cases}
 			\{y\}                                    & \text{if $t=y$}                    \\ %TODO for some x in V?
 			\V(t_1)\cup \V(t_2)\cup\dots\cup \V(t_k) & \text{if $t=f(t_1,t_2,\dots,t_k)$} 
 		\end{cases}\]
 	
-	The \define{free variables of a formula $\varphi\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$}, denoted by $\FV(\varphi)$, are defined as follows:
+	The \define{set of free variables of a formula $\varphi\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$}, denoted by $\FV(\varphi)$, is defined as follows:
 	\[\FV(\varphi)=
 		\begin{cases} %TODO for some?
 			\V(t_1)\cup \V(t_2)\cup\dots\cup \V(t_k) & \text{if $\varphi=P(t_1,t_2,\dots,t_k)$}                               \\
