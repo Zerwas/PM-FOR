@@ -4,10 +4,11 @@
 In the following let $\VarP=\{\alpha,a,\beta,b,\dots\}$ be a countably infinite subset of \lambdaTypVar{} (of variables). 
 Let $\RelP=\{P,Q,\dots\}$ be a set (of predicate symbols) and $\mathcal{P}$ a ranked set such that $\mathcal{P}^{(0)}=\{\false\}$, $\mathcal{P}^{(2)}=\RelP$, and $\mathcal{P}^{(k)}=\emptyset$ for all $k\in\N\setminus\{0,2\}$.
 A first-order logic formula $\varphi$ over $\VarP$, $\emptyset$, and $\mathcal{P}$ is an
-\begin{description} %TODO quantify \vec{a}
+\begin{description} %TODO quantify \vec{a}, no dummy quantifiers?
 	\item[atomic formula] if $\varphi=\false$ or $\varphi=P(a,b)$ for some $P\in\RelP$ and $a,b\in\VarP$.
-	\item[universal formula] if $\varphi=\forall\vec{\alpha}(A_1\to A_2 \to\dots\to A_n)$ for some $n\in\N$ and where $A_i$ is an atomic formula for $i\in\{1,\dots,n\}$, $A_i\neq\false$ for $i\in\{1,\dots,n-1\}$ and for each $\alpha\in\FV(A_n)$ there exists an $i\in\{1,\dots,n-1\}$ such that $\alpha\in\FV(A_i)$.
-	\item[existential formula] if there is an $n\in\N^+$, atomic formulas $A_i\neq\false$ for $i\in\{1,\dots,n\}$ such that $\varphi=\forall\vec{\alpha}(A_1\to A_2 \to\dots\to A_{n-1}\to\forall\beta(A_n\to\false)\to\false)$.
+	\item[universal formula] if $\varphi=\forall\vec{\alpha}(A_1\to A_2 \to\dots\to A_n)$ for some $n\in\N$ and where $A_i$ is an atomic formula for $i\in\{1,\dots,n\}$, $A_i\neq\false$ for $i\in\{1,\dots,n-1\}$ and for each $\alpha\in\FV(A_n)\setminus\FV(\varphi)$ %TODO or cut GV(\varphi)
+	 there exists an $i\in\{1,\dots,n-1\}$ such that $\alpha\in\FV(A_i)$.
+	\item[existential formula] if there is an $n\in\N^+$, atomic formulas $A_i\neq\false$ for $i\in\{1,\dots,n\}$, $\beta\in\VarP$, such that for each $\alpha\in(\FV(A_n)\setminus\FV(\varphi))\setminus\{\beta\}$ there exists an $i\in\{1,\dots,n-1\}$ such that $\alpha\in\FV(A_i)$ and $\varphi=\forall\vec{\alpha}(A_1\to A_2 \to\dots\to A_{n-1}\to\forall\beta(A_n\to\false)\to\false)$.
 \end{description}
 The set of formulas of System \SysP{} (= set of \SysP-formulas) over $\VarP$ and $\RelP$ is the set of all first-order formulas in $\mathcal{L}_{(\VarP,\emptyset,\mathcal{P})}$ that are either an atomic, universal or existential formula.
 
@@ -25,7 +26,7 @@ Let $A$ be a \SysP-formula, and $\Gamma$ be a basis. The formula $A$ is a \defin
 	\begin{align*}
 		&(\text{Axiom}) &&\Gamma,A\PModels A\vphantom{\frac{\Gamma}{\Gamma}}\\
 		&(\rightarrow\text{-Introduction}) &&\frac{\Gamma,A\PModels B}{\Gamma\PModels A\to B}\\
-		&(\rightarrow\text{-Elimination}) &&\frac{\Gamma\PModels A\to B \hspace{0.4cm}\Gamma\PModels A}{\Gamma\PModels B}\\
+		&(\rightarrow\text{-Elimination}) &&\frac{\Gamma\PModels A\to B \hspace{0.4cm}\Gamma\PModels A}{\Gamma\PModels B}\\ %TODO restrict this rule so that A\to B has to be a P-formula
 		  & (\forall\text{-Introduction}) &   & \frac{\Gamma\PModels B}{\Gamma\PModels \forall\alpha B} &   & \alpha\notin\FV(\Gamma) \\
 		&(\forall\text{-Elimination}) &&\frac{\Gamma\PModels \forall\alpha B }{\Gamma\PModels B\left[ \alpha:=b\right] }
 		&& b\in\VarP %TODO dot after \alpha?, b\in\VarP necessary?

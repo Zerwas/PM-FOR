@@ -7,10 +7,6 @@ is undecidable by reducing \PCons{} to \lambdaInhab{}. Given a \SysP-basis $\Gam
 where \false{} 
 
 \begin{definition}
-For a \SysP-basis $\Gamma$ and a $\lambda2$ type $t$ we define a set $\relativizer{t}$, it contains the ???? \[(x_t:t\to\eta_2)\] and for every $P$ in $Predicateysymbols~of~\Gamma$, $i\in\{1,2\}$ the ??? \[(x_{t,p_i}:(t\to p_i)\to\eta_1).\]
-\end{definition}
-
-\begin{definition}
 We define a function ...
 
 For a \SysP-formula $A$, if $A$ is an atomic formula then
@@ -22,49 +18,74 @@ For a \SysP-formula $A$, if $A$ is an atomic formula then
 \end{cases}
 \]
 if $A$ is an universal formula, it follows that there is an $n\in\N$ and atomic formulas $A_1,A_2,\dots,A_n$ such that $A=\forall\vec{\alpha}(A_1\to A_2 \to\dots\to A_n)$, then %TODO quantify varibales
-\[\trans{A}=\forall\vec{\alpha}(\relativizer{\vec{\alpha}}\to \trans{A_1}\to \trans{A_2} \to\dots\to\trans{ A_n})\]
+\[\trans{A}=\forall\vec{\alpha}(\trans{A_1}\to \trans{A_2} \to\dots\to\trans{ A_n})\]
 if $A$ is an existential formula, it follows that for some $n\in\N^+$ and some atomic formulas $A_1,\dots,A_n$ it holds that $A=\forall\vec{\alpha}(A_1 \to\dots\to A_{n-1}\to \forall\beta((A_n)\to\false)\to\false)$, then %TODO quantify \beta \alpha
-\[\trans{A}=\forall\vec{\alpha}(\relativizer{\vec{\alpha}}\to \trans{A_1}\to\dots\to\forall\beta(\relativizer{\beta}\to\trans{ A_n}\to\false)\to\false)\]
-For a \SysP-basis $\Gamma$ we define $\trans{\Gamma}$ as $\{\trans{A}\mid A\in\Gamma\}\cup\{\relativizer{a}\mid a\in\FV(\Gamma)\}$. %TODO a\in\V()\Gamma)?
+\[\trans{A}=\forall\vec{\alpha}(\trans{A_1}\to\dots\to\forall\beta(\trans{ A_n}\to\false)\to\false)\]
+For a \SysP-basis $\Gamma$ we define $\trans{\Gamma}$ as $\{(x_A:\trans{A})\mid A\in\Gamma\}$.
 
 \end{definition}
 
-\begin{claim}
-%TODO new claim
-Let $\alpha$, $\beta$ be type-variables, $x$ a value-variable, and $\Gamma$ a %TODO ordinary?
-basis such that $\beta$ is not a target in $\Gamma$. %TODO define target
-Furthermore assume that $\Gamma,(x:\alpha\to\beta)\lambdaModels e:\beta$ for some term $e$. It follows that there exists a $\Gamma'$ such that $\Gamma\subseteq\Gamma'$, $\Gamma,(x:\alpha\to\beta)\lambdaModels t$ for each $t\in\{t\mid (x:t)\in\Gamma'\}$, and $\Gamma',(x:\alpha\to\beta)\lambdaModels e':\alpha$ for some term $e'$. %TODO convention G\models e:t -> G\models t
-\end{claim}
+\begin{lemma}
+Let $\Gamma$ be a \SysP-basis, $M\in\lambdaTerms$, $P\in\RelP$, and $t_1,t_2\in\lambdaTypes$ such that $\trans{\Gamma}\lambdaModels M:\code{P}{t_1}{t_2}$ holds.
+Then $t_1=a$ and $t_2=b$ for some $a,b\in\VarP$ (remember that $\VarP\subseteq\lambdaTypVar$). Furthermore $\Gamma\PModels P(a,b)$ holds.
+\end{lemma}
 \begin{proof}
-By structural induction on the term $e$.
+Note that all well typed $\lambda2$ terms are strongly normalizing (see %TODO reference
+). Hence, $M$ is a well typed in $\lambda2$, we can assume that $M$ is in normal form. %TODO define normal form, and typerhaltungstheorem!
+
+We now proof the lemma by structural induction on the term $M$.
 \begin{itemize}
-	\item[] \underline{$e=y$} for some $y\in\lambdaValVar$.\\
-		asd
-	\item[] \underline{$e=e_1e_2$} for some $e_1,e_2\in\lambdaTerms$.\\
+	\item[] \underline{$M=x$} for some $y\in\lambdaValVar$.\\
+		It follows that $(x:\code{P}{t_1}{t_2})\in\trans{\Gamma}$.
+		Now the definition of $\trans{\Gamma}$ yields that $P(t_1,t_2)\in\Gamma$. Therefore $t_1,t_2\in\VarP$ and $t_1=a$ and $t_2=b$ for some $a,b\in\VarP$. Trivially, $\Gamma\PModels P(a,b)$ holds.
+	\item[] \underline{$M=M_1M_2$} for some $M_1,M_2\in\lambdaTerms$.\\
 		
 		\begin{figure}[H]
 			\centering
 			\input{Figure.C1.2}
 		\end{figure}
-	\item[] \underline{$e=\lambda y:t_1.e'$} for some $e'\in\lambdaTerms$, some $y\in\lambdaValVar\setminus\dom(\Gamma)$, $y\neq x$, and $t_1\in\lambdaTypes$.\\
-		It follows that $t=t_1\to t_2$ for some $t_2\in\lambdaTypes$.
+	\item[] \underline{$M=\lambda x:t'.M'$} for some $M'\in\lambdaTerms$, some $x\in\lambdaValVar\setminus\dom(\Gamma)$, and some $t'\in\lambdaTypes$.\\
+		It follows that $t'=t_1\to p_1$ and $\trans{\Gamma},(x:t_1\to p_1)\lambdaModels M':(t_2\to p_2)\to p$
+		%TODO possible M'=yx; y:(t1->p1)->(t2->p2)->p; eta reduction?
+		%or M'=\y:t2->p2.M''; G,x,y |- M'':p
 		
 		\begin{figure}[H]
 			\centering
 			\input{Figure.C1.3}
 		\end{figure}
-	\item[] \underline{$e=\Lambda\gamma.e'$} for some $e'\in\lambdaTerms$, $\gamma\in\lambdaTypVar\setminus\FV(\Gamma)$,$\gamma\neq\beta$, and $\gamma\neq\alpha$.\\
+	\item[] \underline{$M=\Lambda\gamma.M'$} for some $M'\in\lambdaTerms$ and some $\gamma\in\lambdaTypVar\setminus\FV(\Gamma)$.\\
 		It follows that $t=\forall\gamma.t'$ for some $t'\in\lambdaTypes$.
+		But this can not be since $\code{P}{t_1}{t_2}=(t_1\to p_1)\to(t_2\to p_2)\to p$. Therefore $M$ is not of the form $\Lambda\gamma.M'$ and this case is impossible.
+
+	\item[] \underline{$M=M'\,t'$} for some $M'\in\lambdaTerms$ and some $t'\in\lambdaTypes$.\\
+		Since $M$ is in normal form we have that $M'=x$ for some $x\in\lambdaValVar$ and $(x:\forall\beta.t'')\in\trans{\Gamma}$ for some $\beta\in\lambdaTypVar$, some $t''\in\lambdaTerms$ such that $t=t''\left[\beta:=t'\right]$. Obviously, this is impossible if $t'\notin\VarP$. But even if $t'\in\VarP$ we have a contradiction because there are no dummy quantifiers and $\beta$ does not occur in a %TODO reprhase
+		It follows that this case is impossible.
+\end{itemize}
+\end{proof}
+
+\begin{lemma}
+Let $\Gamma$ be a \SysP-basis, $M\in\lambdaTerms$ such that $\trans{\Gamma}\lambdaModels M:\false$ holds. Then $\Gamma\PModels\false$ holds.
+\end{lemma}
+\begin{proof}
+By structural induction on the term $M$.
+Again we can assume that $M$ is in normal form.
+\begin{itemize}
+	\item[] \underline{$M=x$} for some $y\in\lambdaValVar$.\\
+		It follows that $(x:\false)\in\trans{\Gamma}$. Now the definition of $\trans{\Gamma}$ yields that $\false\in\Gamma$. Therefore $\Gamma\PModels \false$ holds.
+	\item[] \underline{$M=M_1M_2$} for some $M_1,M_2\in\lambdaTerms$.\\
 		
 		\begin{figure}[H]
 			\centering
-			\input{Figure.C1.4}
+			\input{Figure.C1.2}
 		\end{figure}
-	\item[] \underline{$e=e'\,t'$} for some $e'\in\lambdaTerms$ and some $t'\in\lambdaTypes$.\\
+	\item[] \underline{$M=\lambda x:t_1.M'$} for some $M'\in\lambdaTerms$, some $x\in\lambdaValVar\setminus\dom(\Gamma)$, and some $t_1\in\lambdaTypes$.\\
+		It follows that $t=t_1\to t_2$ for some $t_2\in\lambdaTypes$ which contradicts $t=\false$. So this case is impossible.
+
+	\item[] \underline{$M=\Lambda\gamma.M'$} for some $M'\in\lambdaTerms$ and some $\gamma\in\lambdaTypVar\setminus\FV(\Gamma)$.\\
+		It follows that $t=\forall\gamma.t'$ for some $t'\in\lambdaTypes$. Again the fact that $t=\false$ leads to a contradiction and makes this case impossible.
 		
-		\begin{figure}[H]
-			\centering
-			\input{Figure.C1.5}
-		\end{figure}
+
+	\item[] \underline{$M=M'\,t'$} for some $M'\in\lambdaTerms$ and some $t'\in\lambdaTypes$.\\
+		
 \end{itemize}
 \end{proof}

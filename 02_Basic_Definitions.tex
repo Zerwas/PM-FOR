@@ -87,7 +87,7 @@ For the remainder of this subsection let $\mathcal{V}=\{y,y_1,y_2,\dots\}$ be a 
 We introduce an additional binary operation $\to$ on formulas, where for some $\varphi$, $\psi\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$ the formula $(\varphi\to\psi)$ is defined as $(\neg\varphi\vee\psi)$, if we have a formula of the form $(\varphi_1\to(\varphi_2\to(\dots \to(\varphi_{n-1}\to \varphi_n)\cdots)))$ we will often omit the brackets and just write $(\varphi_1\to \varphi_2\to\dots\to \varphi_{n-1}\to \varphi_n)$ or $\varphi_1\to \varphi_2\to\dots \to \varphi_{n-1}\to \varphi_n$ instead. 
 
 For nullary relation symbols $P$ we will abbreviate $P()$ to $P$. If a formula $\varphi$ is of the form $Qy.(\psi)$ (where $Q\in\{\exists,\forall\}$, $y\in\mathcal{V}$, and $(\psi)\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$) we often drop the dot and write $Qy(\psi)$ instead. %TODO why brackets around varphi? maybe so that you cannot use this for a negated formula or smth like that
-If a formula $\varphi$ has multiple variables bound by the same quantifier (i.e. $\varphi=Qy_1.Qy_2.\dots Qy_n.\psi$ for $Q\in\{\exists,\forall\}$, some $n\in\N$, $y_1,y_2,\dots,y_n\in\mathcal{V}$, and $\psi\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$) we abbreviate $\varphi$ to $Qy_1y_2\dots y_n.\psi$ or to $Q\vec{y}.\psi$ where $\vec{y}=(y_1,y_2,\dots,y_n)^\top$. %TODO do we need to transpose the vector?
+If a formula $\varphi$ has multiple variables bound by the same quantifier (i.e. $\varphi=Qy_1.Qy_2.\dots Qy_n.\psi$ for $Q\in\{\exists,\forall\}$, some $n\in\N$, $y_1,y_2,\dots,y_n\in\mathcal{V}$, and $\psi\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$) we abbreviate $\varphi$ to $Qy_1y_2\dots y_n.\psi$ or to $Q\vec{y}.\psi$ where $\vec{y}=(y_1,y_2,\dots,y_n)$.
 
 \begin{definition}
 	The \define{variables of a term $t\in\mathcal{T}_{(\mathcal{V},\mathcal{F})}$}, denoted by $\V(t)$, are defined by:
@@ -130,7 +130,7 @@ If a formula $\varphi$ has multiple variables bound by the same quantifier (i.e.
 \end{definition}
 Now we come to the semantics of first-order formulas.
 \begin{definition}
-	An \define{interpretation $I$ over $\mathcal{V}$, $\mathcal{F}$, and $\mathcal{P}$} is a triple $(\Delta,\cdot^I,\omega)$,
+	An \define{interpretation $I$ over $\mathcal{V}$, $\mathcal{F}$, and $\mathcal{P}$} is a triple $I=(\Delta,\cdot^I,\omega)$,
 	\begin{tabular}{llp{0.78\linewidth}}
 		where & $\Delta$  & is a nonempty set (which we call  domain),                                                     \\
 & $\cdot^I$ & is a function such that                                                                        \\
@@ -190,7 +190,7 @@ We will use a version of two-counter automaton which only has two types of trans
 &              & where $\mathcal{R}_\autStates=\{+(i,Q')\mid i\in\{1,2\},Q'\in\autStates\}$                             \\
 &              & ~ \hphantom{where $\mathcal{R}_\autStates$}$\cup\{-(i,Q_1,Q_2)\mid i\in\{1,2\},Q_1,Q_2\in\autStates\}$ 
 	\end{tabular}\\
-	A \define{configuration} $C$ of our automaton is a triple $\langle Q,m,n\rangle$, where $Q\in\autStates$ and $m,n\in\N$.
+	A \define{configuration} $C$ of our automaton is a triple $C=\langle Q,m,n\rangle$, where $Q\in\autStates$ and $m,n\in\N$.
 	Let $r$ be in $\autRules(\autStates\setminus\{Q_f\})$, then $\Rightarrow^r_M$ is a binary relation on the configurations of $M$ such that two configurations $\langle Q,m,n\rangle$, $\langle \widehat{Q},\widehat{m},\widehat{n}\rangle$ of $M$ are in the in the relation if all of the following conditions hold:
 	\begin{itemize}
 		\item $Q\neq Q_f$, $r=\autRules(Q)$,
