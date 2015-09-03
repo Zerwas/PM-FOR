@@ -28,10 +28,11 @@ For a \SysP-basis $\Gamma$ we define $\trans{\Gamma}$ as $\{(x_A:\trans{A})\mid 
 \begin{lemma}
 Let $\Gamma$ be a \SysP-basis, $M\in\lambdaTerms$, $P\in\RelP$, and $t_1,t_2\in\lambdaTypes$ such that $\trans{\Gamma}\lambdaModels M:\code{P}{t_1}{t_2}$ holds.
 Then $t_1=a$ and $t_2=b$ for some $a,b\in\VarP$ (remember that $\VarP\subseteq\lambdaTypVar$). Furthermore $\Gamma\PModels P(a,b)$ holds.
+%TODO alternative: Then $t_1, t_2\in\VarP$ (remember that $\VarP\subseteq\lambdaTypVar$). Furthermore $\Gamma\PModels P(t_1,t_2)$ holds.
 \end{lemma}
 \begin{proof}
 Note that all well typed $\lambda2$ terms are strongly normalizing (see %TODO reference
-). Hence, $M$ is a well typed in $\lambda2$, we can assume that $M$ is in normal form. %TODO define normal form, and typerhaltungstheorem!
+). Hence, $M$ is well typed in $\lambda2$, we can assume that $M$ is in normal form. %TODO define normal form, and typerhaltungstheorem!
 
 We now proof the lemma by structural induction on the term $M$.
 \begin{itemize}
@@ -42,7 +43,7 @@ We now proof the lemma by structural induction on the term $M$.
 		Since $M$ is in normal form we have that $M_1=xN_1\dots N_k$ for some $x\in\lambdaValVar$, $n\in\N$, and some $N_1,\dots,N_k\in\lambdaTerms\cup\lambdaTypes$. %TODO There is only one kind of %TODO functional neccessary P(a,b)
 		%type with target | this is not a target -> $\code{P}{\alpha}{\beta}$ 
 		
-		Therefore there has to be a universal formula $\forall\vec{\alpha}(A_1\to\dots\to A_n\to P(\alpha,\beta))$ in $\Gamma$, $\vec{\alpha}=(\alpha_1,\dots,\alpha_m)$, $\vec{t}=(t_1,\dots,t_m)$, $A_i=P^i(\alpha_i,\beta_i)$. %TODO t_1,t_2 for 2 different variables!!!
+		Therefore there has to be a universal formula $A=\forall\vec{\alpha}(A_1\to\dots\to A_n\to P(\alpha,\beta))$ in $\Gamma$, $\vec{\alpha}=(\alpha_1,\dots,\alpha_m)$, $\vec{t}=(t_1,\dots,t_m)$, $A_i=P^i(\alpha_i,\beta_i)$. $x=x_A$? %TODO t_1,t_2 for 2 different variables!!!
 		
 		$M=x\vec{t}\vec{N}$, $\trans{\Gamma}\lambdaModels N_i:\widetilde{A_i}$ where $\widetilde{A_i}=\trans{A_i}\left[\vec{\alpha}:=\vec{t}\hspace{1mm}\right]=\code{P^i}{\widetilde{a}_i}{\widetilde{b}_i}$ and $\widetilde{a}_i=\alpha_i\left[\vec{\alpha}:=\vec{t}\hspace{1mm}\right]$ for $i\in\{1,\dots,n\}$
 		
@@ -53,7 +54,8 @@ We now proof the lemma by structural induction on the term $M$.
 		
 		For $i\in\{1,\dots,n\}$ we can now apply the induction hypothesis to $\trans{\Gamma}\lambdaModels N_i:\code{P^i}{\widetilde{a}_i}{\widetilde{b}_i}$ and we get that there exist $a_i,b_i\in\VarP$ such that $\widetilde{a}_i=a_i$, $\widetilde{b}_i=b_i$, and $\Gamma\PModels P^i(a_i,b_i)$.
 		
-		Since there are no dummy quantifiers it follows that $\vec{t}=\vec{a}$. Either $\alpha$ is in $\vec{\alpha}$ implies $t_1=\alpha\left[\vec{\alpha}:=\vec{t}\hspace{1mm}\right]=a$ or $\alpha$ is free then $\alpha=t_1\in\VarP$ anyway.
+		Since there are no dummy quantifiers it follows that $\vec{t}=\vec{a}$. Either $\alpha$ is in $\vec{\alpha}$ which implies $t_1=\alpha\left[\vec{\alpha}:=\vec{t}\hspace{1mm}\right]=a$ or $\alpha$ is free then $\alpha=t_1\in\VarP$ anyway.
+		For $t_2$ we can make a similar argument and get $t_2=b$ for some $b\in\VarP$.
 		
 		\begin{figure}[H]
 			\centering
@@ -62,8 +64,11 @@ We now proof the lemma by structural induction on the term $M$.
 		
 	\item[] \underline{$M=\lambda x:t'.M'$} for some $M'\in\lambdaTerms$, some $x\in\lambdaValVar\setminus\dom(\Gamma)$, and some $t'\in\lambdaTypes$.\\
 		It follows that $t'=t_1\to p_1$ and $\trans{\Gamma},(x:t_1\to p_1)\lambdaModels M':(t_2\to p_2)\to p$
-		%TODO possible M'=yx; y:(t1->p1)->(t2->p2)->p; eta reduction?
-		%or M'=\y:t2->p2.M''; G,x,y |- M'':p
+		
+		
+		$M'=yx$; $y:(t_1\to p_1)\to(t_2\to p_2)\to p$; (eta reduction?)
+		
+		$M'=\lambda y:t_2\to p_2.M''$; $\Gamma,x,y \lambdaModels M''=zxy:p$
 		
 		\begin{figure}[H]
 			\centering
@@ -107,6 +112,15 @@ Again we can assume that $M$ is in normal form.
 			\centering
 			\input{Figure.C2.2}
 		\end{figure}
+		
+		Lets take a closer look at $L$.
+		
+		$L=y$
+		
+		$L=\Lambda\beta.y\vec{t'}\vec{N'}$
+		
+		$L=\Lambda\beta.\lambda y:\code{P^n}{\widetilde{\alpha}_n}{\widetilde{\beta}_n}.N$,\hspace{2cm} $\trans{\Gamma},y:\code{P^n}{\widetilde{\alpha}_n}{\widetilde{\beta}_n}\lambdaModels N:\false$ by IH
+		
 	\item[] \underline{$M=\lambda x:t_1.M'$} for some $M'\in\lambdaTerms$, some $x\in\lambdaValVar\setminus\dom(\Gamma)$, and some $t_1\in\lambdaTypes$.\\
 		It follows that $t=t_1\to t_2$ for some $t_2\in\lambdaTypes$ which contradicts $t=\false$. So this case is impossible.
 
@@ -115,6 +129,11 @@ Again we can assume that $M$ is in normal form.
 		
 
 	\item[] \underline{$M=M'\,t'$} for some $M'\in\lambdaTerms$ and some $t'\in\lambdaTypes$.\\
+		$M'=xM_1\dots M_n$
+		
+		$n>0$ impossible no dummy quantifiers
+		
+		$n=0$ $M'=x:\forall\alpha.\alpha$, $t'=\false$ impossible
 		
 \end{itemize}
 \end{proof}

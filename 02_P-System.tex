@@ -95,8 +95,8 @@ For a configuration $C=\langle Q,m,n\rangle$ of $M$ we define a set of \SysP-for
 	\item $Q(a),G(a)$
 	\item $R_1(a,a_0),P(a_{i-1},a_i)~\text{for}~i\in\{1,\dots,m\}$
 	\item $R_2(a,b_0),P(b_{i-1},b_i)~\text{for}~i\in\{1,\dots,n\}$
-	\item $D(a_i),G(a_i),D(b_j),G(b_j)~\text{for}~i\in\{0,\dots,m-1\}~\text{and}~j\in\{0,\dots,n-1\}$
-	\item $E(a_m),G(a_m),E(b_n),G(b_n)$
+	\item $D(a_i),D(b_j),G(a_i),G(b_j)~\text{for}~i\in\{0,\dots,m-1\}~\text{and}~j\in\{0,\dots,n-1\}$
+	\item $E(a_m),E(b_n),G(a_m),G(b_n)$
 \end{itemize}
 Next we need sets of \SysP-formulas for all possible transitions.
 For every $Q\in\autStates\setminus\{Q_f\}$ and $r\in\mathcal{R}_\autStates$ we define $\Gamma_{Q,r}$.
@@ -120,7 +120,7 @@ If $r=-(1,Q_1,Q_2)$ for some $Q_1,Q_2\in\autStates$ then $\Gamma_{Q,-(1,Q_1,Q_2)
 For $r=+(2,Q')$ for some $Q'\in\autStates$ or $r=-(2,Q_1,Q_2)$ for some $Q_1,Q_2\in\autStates$ the sets $\Gamma_{Q,r}$ are defined analogously.
 
 We also need a set $\Gamma_1$ to ensure that our representation works correctly. The following formula are in $\Gamma_1$:
-\begin{itemize}
+\begin{itemize} %TODO rephrase all with G(a)
 	\item $\forall\alpha\beta(S(\alpha,\beta)\to G(\beta))$
 	\item $\forall\alpha(D(\alpha)\to G(\alpha))$	
 	%\item $\forall\alpha(D(\alpha)\to\forall\beta(P(\alpha,\beta)\to\false)\to\false)$\\every %element that is not the end of a chain has a predecessor
