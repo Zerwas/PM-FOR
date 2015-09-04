@@ -31,6 +31,39 @@
 \newcommand{\trans}[1]{\ensuremath{\overline{#1}}}
 \newcommand{\relativizer}[1]{\ensuremath{\mathcal{U}(#1)}}
 \newcommand{\code}[3]{\ensuremath{#1_{#2#3}}}
+\newcommand{\mapping}[1]{\ensuremath{{\mappingSymbol(#1)}}}
+\newcommand{\mappingSymbol}{\ensuremath{v}}
+\NewDocumentCommand\predFst{o}{%
+  \IfNoValueTF{#1}
+    {\alpha}
+    {\alpha_{#1}}%
+}
+\NewDocumentCommand\predSnd{o}{%
+  \IfNoValueTF{#1}
+    {\beta}
+    {\beta_{#1}}%
+}
+\NewDocumentCommand\predVec{o}{%
+  \IfNoValueTF{#1}
+    {\vec{\alpha}}
+    {\overline{\alpha}_{#1}}%
+}
+\NewDocumentCommand\predTFst{o}{%
+  \IfNoValueTF{#1}
+    {s}
+    {s_{#1}}%
+}
+\NewDocumentCommand\predTSnd{o}{%
+  \IfNoValueTF{#1}
+    {t}
+    {t_{#1}}%
+}
+\NewDocumentCommand\predTVec{o}{%
+  \IfNoValueTF{#1}
+    {\vec{t}}
+    {\overline{t}_{#1}}%
+}
+
 
 %System P
 \newcommand{\PCons}{\textbf{CONS}}

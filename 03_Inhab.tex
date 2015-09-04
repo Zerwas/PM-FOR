@@ -26,9 +26,9 @@ For a \SysP-basis $\Gamma$ we define $\trans{\Gamma}$ as $\{(x_A:\trans{A})\mid 
 \end{definition}
 
 \begin{lemma}
-Let $\Gamma$ be a \SysP-basis, $M\in\lambdaTerms$, $P\in\RelP$, and $t_1,t_2\in\lambdaTypes$ such that $\trans{\Gamma}\lambdaModels M:\code{P}{t_1}{t_2}$ holds.
-Then $t_1=a$ and $t_2=b$ for some $a,b\in\VarP$ (remember that $\VarP\subseteq\lambdaTypVar$). Furthermore $\Gamma\PModels P(a,b)$ holds.
-%TODO alternative: Then $t_1, t_2\in\VarP$ (remember that $\VarP\subseteq\lambdaTypVar$). Furthermore $\Gamma\PModels P(t_1,t_2)$ holds.
+Let $\Gamma$ be a \SysP-basis, $M\in\lambdaTerms$, $P\in\RelP$, and $\predTFst,\predTSnd\in\lambdaTypes$ such that $\trans{\Gamma}\lambdaModels M:\code{P}{\predTFst}{\predTSnd}$ holds.
+%Then $t_1=a$ and $t_2=b$ for some $a,b\in\VarP$ (remember that $\VarP\subseteq\lambdaTypVar$). Furthermore $\Gamma\PModels P(a,b)$ holds.
+Then $\predTFst, \predTSnd\in\VarP$ (remember that $\VarP\subseteq\lambdaTypVar$). Furthermore $\Gamma\PModels P(\predTFst,\predTSnd)$ holds.
 \end{lemma}
 \begin{proof}
 Note that all well typed $\lambda2$ terms are strongly normalizing (see %TODO reference
@@ -37,22 +37,29 @@ Note that all well typed $\lambda2$ terms are strongly normalizing (see %TODO re
 We now proof the lemma by structural induction on the term $M$.
 \begin{itemize}
 	\item[] \underline{$M=x$} for some $y\in\lambdaValVar$.\\
-		It follows that $(x:\code{P}{t_1}{t_2})\in\trans{\Gamma}$.
-		Now the definition of $\trans{\Gamma}$ yields that $P(t_1,t_2)\in\Gamma$. Therefore $t_1,t_2\in\VarP$ and $t_1=a$ and $t_2=b$ for some $a,b\in\VarP$. Trivially, $\Gamma\PModels P(a,b)$ holds.
+		It follows that $(x:\code{P}{\predTFst}{\predTSnd})\in\trans{\Gamma}$.
+		Now the definition of $\trans{\Gamma}$ yields that $P(\predTFst,\predTSnd)\in\Gamma$. Therefore $\predTFst,\predTSnd\in\VarP$ and $\Gamma\PModels P(s,t)$ holds trivially.
 	\item[] \underline{$M=M_1M_2$} for some $M_1,M_2\in\lambdaTerms$.\\
 		Since $M$ is in normal form we have that $M_1=xN_1\dots N_k$ for some $x\in\lambdaValVar$, $n\in\N$, and some $N_1,\dots,N_k\in\lambdaTerms\cup\lambdaTypes$. %TODO There is only one kind of %TODO functional neccessary P(a,b)
 		%type with target | this is not a target -> $\code{P}{\alpha}{\beta}$ 
 		
-		Therefore there has to be a universal formula $A=\forall\vec{\alpha}(A_1\to\dots\to A_n\to P(\alpha,\beta))$ in $\Gamma$, $\vec{\alpha}=(\alpha_1,\dots,\alpha_m)$, $\vec{t}=(t_1,\dots,t_m)$, $A_i=P^i(\alpha_i,\beta_i)$. $x=x_A$? %TODO t_1,t_2 for 2 different variables!!!
+		%TODO mapping is bullshit
+		Therefore $x=x_A$ for some universal formula $A=\forall\vec{\alpha}(A_1\to\dots\to A_n\to P(\predFst,\predSnd))$ in $\Gamma$ with $A_i=P^i(\predFst[i],\predSnd[i])$ for some $P^i\in\RelP$ and $\predFst[i], \predSnd[i]\in\VarP$ for all $i\in\{1,\dots,n\}$ and $\predVec=\predVec[1]\dots\predVec[m]$ for some $\predVec[1],\dots,\predVec[m]\in\VarP$. %forall ai exists j: ai=aj or ai=bj
 		
-		$M=x\vec{t}\vec{N}$, $\trans{\Gamma}\lambdaModels N_i:\widetilde{A_i}$ where $\widetilde{A_i}=\trans{A_i}\left[\vec{\alpha}:=\vec{t}\hspace{1mm}\right]=\code{P^i}{\widetilde{a}_i}{\widetilde{b}_i}$ and $\widetilde{a}_i=\alpha_i\left[\vec{\alpha}:=\vec{t}\hspace{1mm}\right]$ for $i\in\{1,\dots,n\}$
+		%$\vec{\alpha}=\alpha_\mapping{1}\dots\alpha_\mapping{m}$ where $\mappingSymbol\colon \{1,\dots,m\}\to\{1,\dots,n\}$ is a mapping. %more than injective since a_v(i)=a_v(j) => i=j
+
+		Furthermore $M=x\vec{t}\vec{N}$ for some $\predTVec=\predTVec[1]\dots \predTVec[m]$ with $\predTVec[1],\dots,\predTVec[m]\in\lambdaTypes$ and some $\vec{N}=N_1\dots N_n$ with $N_1,\dots,N_n\in\lambdaTerms$ and $\trans{\Gamma}\lambdaModels N_i:\code{P^i}{\predTFst[i]}{\predTSnd[i]}$ (where $\predTFst[i]=\predFst[i]\left[\predVec:=\predTVec\hspace{1mm}\right]$ and  $\predTSnd[i]=\predSnd[i]\left[\predVec:=\predTVec\hspace{1mm}\right]$) for $i\in\{1,\dots,n\}$.
+		
+		%$\vec{t}=(s,\dots,t_m)$, $A_i=P^i(\alpha_i,\beta_i)$. $x=x_A$? %TODO t_1,t_2 for 2 different variables!!!
+		
+		%$M=x\vec{t}\vec{N}$, $\trans{\Gamma}\lambdaModels N_i:\widetilde{A_i}$ where $\widetilde{A_i}=\trans{A_i}\left[\vec{\alpha}:=\vec{t}\hspace{1mm}\right]=\code{P^i}{\widetilde{a}_i}{\widetilde{b}_i}$ and $\widetilde{a}_i=\alpha_i\left[\vec{\alpha}:=\vec{t}\hspace{1mm}\right]$ for $i\in\{1,\dots,n\}$
 		
 		\begin{figure}[H]
 			\centering
 			\input{Figure.C1.2}
 		\end{figure}
 		
-		For $i\in\{1,\dots,n\}$ we can now apply the induction hypothesis to $\trans{\Gamma}\lambdaModels N_i:\code{P^i}{\widetilde{a}_i}{\widetilde{b}_i}$ and we get that there exist $a_i,b_i\in\VarP$ such that $\widetilde{a}_i=a_i$, $\widetilde{b}_i=b_i$, and $\Gamma\PModels P^i(a_i,b_i)$.
+		For $i\in\{1,\dots,n\}$ we can now apply the induction hypothesis to $\trans{\Gamma}\lambdaModels N_i:\code{P^i}{\predTFst[i]}{\predTSnd[i]}$ and we get that $\predTFst[i],\predTSnd[i]\in\VarP$ and that $\Gamma\PModels P^i(\predTFst[i],\predTSnd[i])$ holds.
 		
 		Since there are no dummy quantifiers it follows that $\vec{t}=\vec{a}$. Either $\alpha$ is in $\vec{\alpha}$ which implies $t_1=\alpha\left[\vec{\alpha}:=\vec{t}\hspace{1mm}\right]=a$ or $\alpha$ is free then $\alpha=t_1\in\VarP$ anyway.
 		For $t_2$ we can make a similar argument and get $t_2=b$ for some $b\in\VarP$.
