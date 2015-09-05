@@ -44,7 +44,7 @@ We now proof the lemma by structural induction on the term $M$.
 		%type with target | this is not a target -> $\code{P}{\alpha}{\beta}$ 
 		
 		%TODO mapping is bullshit
-		Therefore $x=x_A$ for some universal formula $A=\forall\vec{\alpha}(A_1\to\dots\to A_n\to P(\predFst,\predSnd))$ in $\Gamma$ with $A_i=P^i(\predFst[i],\predSnd[i])$ for some $P^i\in\RelP$ and $\predFst[i], \predSnd[i]\in\VarP$ for all $i\in\{1,\dots,n\}$ and $\predVec=\predVec[1]\dots\predVec[m]$ for some $\predVec[1],\dots,\predVec[m]\in\VarP$. %forall ai exists j: ai=aj or ai=bj
+		It follows that $x=x_A$ and $(x:\trans{A})\in\trans{\Gamma}$ for some universal formula $A=\forall\predVec(P^1(\predFst[1],\predSnd[1])\to\dots\to P^n(\predFst[n],\predSnd[n])\to P(\predFst,\predSnd))$ in $\Gamma$ for some $P^i\in\RelP$ and some $\predFst[i], \predSnd[i]\in\VarP$ for all $i\in\{1,\dots,n\}$, $\predFst,\predSnd\in\VarP$, and $\predVec=\predVec[1]\dots\predVec[m]$ for some $\predVec[1],\dots,\predVec[m]\in\VarP$. %forall ai exists j: ai=aj or ai=bj
 		
 		%$\vec{\alpha}=\alpha_\mapping{1}\dots\alpha_\mapping{m}$ where $\mappingSymbol\colon \{1,\dots,m\}\to\{1,\dots,n\}$ is a mapping. %more than injective since a_v(i)=a_v(j) => i=j
 
@@ -61,9 +61,14 @@ We now proof the lemma by structural induction on the term $M$.
 		
 		For $i\in\{1,\dots,n\}$ we can now apply the induction hypothesis to $\trans{\Gamma}\lambdaModels N_i:\code{P^i}{\predTFst[i]}{\predTSnd[i]}$ and we get that $\predTFst[i],\predTSnd[i]\in\VarP$ and that $\Gamma\PModels P^i(\predTFst[i],\predTSnd[i])$ holds.
 		
-		Since there are no dummy quantifiers it follows that $\vec{t}=\vec{a}$. Either $\alpha$ is in $\vec{\alpha}$ which implies $t_1=\alpha\left[\vec{\alpha}:=\vec{t}\hspace{1mm}\right]=a$ or $\alpha$ is free then $\alpha=t_1\in\VarP$ anyway.
-		For $t_2$ we can make a similar argument and get $t_2=b$ for some $b\in\VarP$.
+		If $\predFst=\predVec[j]$ for some $j\in\{1,\dots,n\}$ then because there are no dummy quantifiers we get that $\predTFst=\predTVec[j]$. Furthermore since $\alpha\in\FV(P(\predFst,\predSnd))\setminus\FV(A)$ it follows that there exists an $i\in\{1,\dots,n\}$ such that $\predFst\in\FV(P^i(\predFst[i],\predSnd[i]))$, i.e. $\predFst=\predFst[i]$ or $\predFst=\predSnd[i]$. It follows that $\predTFst=\predTFst[i]$ or $\predTFst=\predTSnd[i]$, in both cases we get that $\predTFst\in\VarP$.
 		
+		If $\predFst\neq\predVec[j]$ for all $j\in\{1,\dots,n\}$ then $\predFst\in\FV(A)$ and therefore $\predTFst=\predFst$ and $\predTFst\in\VarP$.
+		
+		%Since there are no dummy quantifiers it follows that $\vec{t}=\vec{a}$. Either $\alpha$ is in $\vec{\alpha}$ which implies $t_1=\alpha\left[\vec{\alpha}:=\vec{t}\hspace{1mm}\right]=a$ or $\alpha$ is free then $\alpha=t_1\in\VarP$ anyway.
+		For $\predTSnd$ we can make a similar argument and get that $\predTSnd\in\VarP$.
+		
+		Finally we have to deduce $\Gamma\PModels P(\predTFst,\predTSnd)$.
 		\begin{figure}[H]
 			\centering
 			\input{Figure.C1.3}
@@ -81,19 +86,19 @@ We now proof the lemma by structural induction on the term $M$.
 			\centering
 			\input{Figure.C1.3}
 		\end{figure}
-	\item[] \underline{$M=\Lambda\gamma.M'$} for some $M'\in\lambdaTerms$ and some $\gamma\in\lambdaTypVar\setminus\FV(\Gamma)$.\\
-		It follows that $t=\forall\gamma.t'$ for some $t'\in\lambdaTypes$.
-		But this can not be since $\code{P}{t_1}{t_2}=(t_1\to p_1)\to(t_2\to p_2)\to p$. Therefore $M$ is not of the form $\Lambda\gamma.M'$ and this case is impossible.
+	\item[] \underline{$M=\Lambda\gamma.M'$} for some $M'\in\lambdaTerms$ and some $\gamma\in\lambdaTypVar$.\\ %\setminus\FV(\Gamma)$.\\
+		It follows that $\trans{\Gamma}\lambdaModels M:\forall\gamma.t'$ for some $t'\in\lambdaTypes$.
+		But this can not be since $\code{P}{\predTFst}{\predTSnd}=(\predTFst\to p_1)\to(\predTSnd\to p_2)\to p$. Therefore $M$ is not of the form $\Lambda\gamma.M'$ and this case is impossible.
 
 	\item[] \underline{$M=M'\,t'$} for some $M'\in\lambdaTerms$ and some $t'\in\lambdaTypes$.\\
-		Since $M$ is in normal form we have that either $M'=x$ for some $x\in\lambdaValVar$ and $(x:\forall\beta.t'')\in\trans{\Gamma}$ for some $\beta\in\lambdaTypVar$ and some $t''\in\lambdaTerms$ such that $t=t''\left[\beta:=t'\right]$ or $M'=xM_1\dots M_n$ for some $x\in\lambdaValVar$, $n\in\N$, and some $M_1,\dots,M_n\in\lambdaTerms\cup\lambdaTypes$.
+		%Since $M$ is in normal form we have that either $M'=x$ for some $x\in\lambdaValVar$ and $(x:\forall\beta.t'')\in\trans{\Gamma}$ for some $\beta\in\lambdaTypVar$ and some $t''\in\lambdaTerms$ such that $t=t''\left[\beta:=t'\right]$ or $M'=xM_1\dots M_n$ for some $x\in\lambdaValVar$, $n\in\N$, and some $M_1,\dots,M_n\in\lambdaTerms\cup\lambdaTypes$.
+		Since $M$ is in normal form we have that $M'=xM_1\dots M_n$ for some $x\in\lambdaValVar$, $n\in\N$, and some $M_1,\dots,M_n\in\lambdaTerms\cup\lambdaTypes$.
+		Hence, $(x:\trans{A})\in\trans{\Gamma}$ for some \SysP-formula $A$ and $M=M'\,t'$, we get that this case is impossible because no such $A$ exists.
 		
-		If $n>1$ impossible
+		The only case where the contradiction is not obvious is when $A$ is an existential formula and $M_1,\dots,M_n\in\lambdaTypes$. Furthermore because there are no dummy quantifiers $n\leq1$. So $A$ is of the form $A=\forall\predVec(P(\predFst,\predSnd))$ where $\predVec\in\{\predFst\predSnd,\predSnd\predFst,\predFst,\predSnd\}$.
+		But in every case $A$ is not a \SysP-formula since there always is a $\gamma\in\FV(P(\predFst,\predSnd))\setminus\FV(A)$.
 		
-		If $n=1$ $M_1=t''$
-		
-		Obviously, this is impossible if $t'\notin\VarP$. But even if $t'\in\VarP$ we have a contradiction because there are no dummy quantifiers and so there is no \SysP-formula $A$ such that $\trans{A}=t''$. %TODO since the scnd condition cannot be fullfilled rephrase
-		It follows that this case is impossible.
+		%Obviously, this is impossible if $t'\notin\VarP$. But even if $t'\in\VarP$ we have a contradiction because there are no dummy quantifiers and so there is no \SysP-formula $A$ such that $\trans{A}=t''$. %TODO since the scnd condition cannot be fullfilled rephrase
 \end{itemize}
 \end{proof}
 
@@ -131,16 +136,26 @@ Again we can assume that $M$ is in normal form.
 	\item[] \underline{$M=\lambda x:t_1.M'$} for some $M'\in\lambdaTerms$, some $x\in\lambdaValVar\setminus\dom(\Gamma)$, and some $t_1\in\lambdaTypes$.\\
 		It follows that $t=t_1\to t_2$ for some $t_2\in\lambdaTypes$ which contradicts $t=\false$. So this case is impossible.
 
-	\item[] \underline{$M=\Lambda\gamma.M'$} for some $M'\in\lambdaTerms$ and some $\gamma\in\lambdaTypVar\setminus\FV(\Gamma)$.\\
+	\item[] \underline{$M=\Lambda\gamma.M'$} for some $M'\in\lambdaTerms$ and some $\gamma\in\lambdaTypVar$.\\ %\setminus\FV(\Gamma)$.\\
 		It follows that $t=\forall\gamma.t'$ for some $t'\in\lambdaTypes$. Again the fact that $t=\false$ leads to a contradiction and makes this case impossible.
 		
 
 	\item[] \underline{$M=M'\,t'$} for some $M'\in\lambdaTerms$ and some $t'\in\lambdaTypes$.\\
-		$M'=xM_1\dots M_n$
+		Since $M$ is in normal form we have that $M'=xM_1\dots M_n$ for some $x\in\lambdaValVar$, $n\in\N$, and some $M_1,\dots,M_n\in\lambdaTerms\cup\lambdaTypes$.
+		Hence, $(x:\trans{A})\in\trans{\Gamma}$ for some \SysP-formula $A$ and $M=M'\,t'$, we get that this case is impossible because no such $A$ exists.
 		
-		$n>0$ impossible no dummy quantifiers
+		%$n>0$ impossible no dummy quantifiers
 		
-		$n=0$ $M'=x:\forall\alpha.\alpha$, $t'=\false$ impossible
+		%$n=0$ $M'=x:\forall\alpha.\alpha$, $t'=\false$ impossible
 		
 \end{itemize}
 \end{proof}
+
+\begin{lemma}
+Let $\Gamma$ be a \SysP-basis, $P\in\RelP$, and $\predTFst,\predTSnd\in\lambdaTypes$ such that $\Gamma\PModels P(\predTFst,\predTSnd)$ holds.
+Then there exists a term $M\in\lambdaTerms$ such that $\trans{\Gamma}\lambdaModels M: \code{P}{\predTFst}{\predTSnd}$.
+\end{lemma}
+
+\begin{lemma}
+Let $\Gamma$ be a \SysP-basis such that $\Gamma\PModels\false$ holds. Then there exists a term $M\in\lambdaTerms$ such that $\trans{\Gamma}\lambdaModels M:\false$ holds.
+\end{lemma}

@@ -11,6 +11,7 @@ A first-order logic formula $\varphi$ over $\VarP$, $\emptyset$, and $\mathcal{P
 	\item[existential formula] if there is an $n\in\N^+$, atomic formulas $A_i\neq\false$ for $i\in\{1,\dots,n\}$, $\beta\in\VarP$, such that for each $\alpha\in(\FV(A_n)\setminus\FV(\varphi))\setminus\{\beta\}$ there exists an $i\in\{1,\dots,n-1\}$ such that $\alpha\in\FV(A_i)$ and $\varphi=\forall\vec{\alpha}(A_1\to A_2 \to\dots\to A_{n-1}\to\forall\beta(A_n\to\false)\to\false)$.
 \end{description}
 The set of formulas of System \SysP{} (= set of \SysP-formulas) over $\VarP$ and $\RelP$ is the set of all first-order formulas in $\mathcal{L}_{(\VarP,\emptyset,\mathcal{P})}$ that are either an atomic, universal or existential formula.
+%TODO no dummy quantifiers i.e. \forall subformulas of \varphi \forall\alpha.\psi:\alpha\in\FV\psi
 
 \begin{definition}
 A finite set of \SysP-formulas $\Gamma$ is called \SysP-basis, or basis if it is clear from the context whether a \SysP-basis or a \lambdaTwo-basis is meant.
@@ -144,7 +145,7 @@ Finally we can define $\Gamma_M$ as $\Gamma_{C_0}\cup\conGM$, where $C_0=\langle
 	\tikz[baseline=-3pt]{
 		\node (1) {$d_1$};
 		\node[right of=1] (2) {$d_2$};
-		\path[->,>=latex'] (1) edge node[above,scale=0.8] {R} (2);}
+		\path[->,>=latex'] (1) edge node[above,scale=0.8] {$R$} (2);}
 	we say that $(d_1,d_2)\in R^I$. And we use
 	\tikz[baseline=5pt]{
 		\node (1) {$d$};
