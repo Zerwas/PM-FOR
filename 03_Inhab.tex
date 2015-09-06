@@ -186,6 +186,13 @@ Again we can assume that $M$ is in normal form.
 		
 		$L=M'\,t'$, $M'=yt_1\dots t_l$,\hspace{2cm}$A'\in\Gamma$ trivial
 		
+		implies $\Gamma\PModels\forall\beta(P^n(\predTFst[n],\predTSnd[n])\to\false)$. Now we can show that \false{} is a semantic consequence of $\Gamma$.
+		
+		\begin{figure}[H]
+			\centering
+			\input{Figure.C2.3}
+		\end{figure}
+		
 	\item[] \underline{$M=\lambda x:t_1.M'$} for some $M'\in\lambdaTerms$, some $x\in\lambdaValVar\setminus\dom(\Gamma)$, and some $t_1\in\lambdaTypes$.\\
 		It follows that $t=t_1\to t_2$ for some $t_2\in\lambdaTypes$ which contradicts $t=\false$. So this case is impossible.
 

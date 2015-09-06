@@ -7,8 +7,8 @@ every child/.style={edge from parent/.style={opacity=0}}]
 	child {node(1) {\Gamma\PModels P^ n(\predTFst[n],\predTSnd[n])}}
 	child {node(2) {\Gamma\PModels P^ n(\predTFst[n],\predTSnd[n])\to P(a,b)}
 		child {{node[label={[yshift=-0.44cm]above:\vdots}](21) {}} [sibling distance = 6cm]
-			child {node(211) {\Gamma\PModels P^ 1(\predTFst[1],\predTSnd[1])}}
-			child {node(212) {\Gamma\PModels P^ 1(\predTFst[1],\predTSnd[1])\to\dots\to P^ n(\predTFst[n],\predTSnd[n])\to P(\predTFst,\predTSnd)}
+			child[xshift=1.5cm] {node(211) {\Gamma\PModels P^ 1(\predTFst[1],\predTSnd[1])}}
+			child[xshift=1.5cm] {node(212) {\Gamma\PModels P^ 1(\predTFst[1],\predTSnd[1])\to\dots\to P^ n(\predTFst[n],\predTSnd[n])\to P(\predTFst,\predTSnd)}
 				child {node(2121) {\Gamma\PModels \forall\predVec(P^ 1(\predFst[1],\predSnd[1])\to\dots\to P^n(\predFst[n],\predSnd[n])\to P(\predFst,\predSnd))}}}}};
 
 
