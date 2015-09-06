@@ -63,7 +63,16 @@
     {\vec{t}}
     {\overline{t}_{#1}}%
 }
-
+\NewDocumentCommand\predPFst{o}{%
+  \IfNoValueTF{#1}
+    {a}
+    {a_{#1}}%
+}
+\NewDocumentCommand\predPSnd{o}{%
+  \IfNoValueTF{#1}
+    {b}
+    {b_{#1}}%
+}
 
 %System P
 \newcommand{\PCons}{\textbf{CONS}}

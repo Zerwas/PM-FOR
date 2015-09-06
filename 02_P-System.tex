@@ -181,7 +181,7 @@ We proof the other direction by induction on the length of the computation. But 
 \begin{proof} By induction on the length $i$ of the computation.
 	
 	Induction Base: $i=0$\\
-	Since a final configuration is reachable in 0 steps $C$ must be this final configuration. So $C=\langle Q_f,m,n\rangle$ for some $m,n\in\N$. Hence, $Q_f(a)$ is in $\Gamma_C$ for some $a\in\VarP$ and $\forall\alpha(Q_f(\alpha)\to\false)$ is in $\conGM$, we can easily deduce false.
+	Since a final configuration is reachable in 0 steps $C$ must be this final configuration. So $C=\langle Q_f,m,n\rangle$ for some $m,n\in\N$. Hence, $Q_f(a)$ is in $\Gamma_C$ for some $a\in\VarP$ and $\forall\alpha(Q_f(\alpha)\to\false)$ is in $\conGM$, we can easily deduce \false.
 	\begin{figure}[H]
 		\centering
 		\input{Figure.Tableau.0}
@@ -312,10 +312,10 @@ We proof the other direction by induction on the length of the computation. But 
 	\end{align*}
 \end{lemma}
 \begin{proof}
-	The $\Leftarrow$ directions is proven in Claim \ref{cla.17}. And the $\Rightarrow$ direction is a direct consequence of Claim \ref{cla.18} with $C=\langle Q_0,0,0\rangle$.
+	The $\Leftarrow$ direction is proven in Claim \ref{cla.17}. And the $\Rightarrow$ direction is a direct consequence of Claim \ref{cla.18} with $C=\langle Q_0,0,0\rangle$.
 \end{proof}
 
-\begin{theorem}
+\begin{theorem}\label{the:1}
 	\PCons{} is undecidable.
 \end{theorem}
 \begin{proof}

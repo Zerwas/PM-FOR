@@ -4,12 +4,12 @@ every node/.style={opacity=1},
 every child/.style={edge from parent/.style={opacity=0}}]
 \def\dist{0.7cm}
 \node(e) {\trans{\Gamma}\lambdaModels (x\vec{t}\vec{N})L:\false} [sibling distance = 6.5cm]
-	child {node(1) {\trans{\Gamma}\lambdaModels L:\forall\beta(\code{P^n}{\widetilde{a}_n}{\widetilde{b}_n}\to\false)}}
-	child {node(2) {\trans{\Gamma}\lambdaModels x\vec{t}\vec{N}:\forall\beta(\code{P^n}{\widetilde{a}_n}{\widetilde{b}_n}\to\false)\to\false}
+	child {node(1) {\trans{\Gamma}\lambdaModels L:\forall\beta(\code{P^n}{\predTFst[n]}{\predTSnd[n]}\to\false)}}
+	child {node(2) {\trans{\Gamma}\lambdaModels x\vec{t}\vec{N}:\forall\beta(\code{P^n}{\predTFst[n]}{\predTSnd[n]}\to\false)\to\false}
 		child {{node[label={[yshift=-0.44cm]above:\vdots}](21) {}}
-			child {node(211) {\trans{\Gamma}\lambdaModels N_1:\code{P^1}{\widetilde{a}_1}{\widetilde{b}_1}}}
-			child {node(212) {\trans{\Gamma}\lambdaModels x\vec{t}:\code{P^1}{\widetilde{a}_1}{\widetilde{b}_1}\to\dots\to\forall\beta(\code{P^n}{\widetilde{a}_n}{\widetilde{b}_n}\to\false)\to\false}
-				child {node(2121) {\trans{\Gamma}\lambdaModels x:\forall\vec{\alpha}(\trans{A_1}\to\dots\to\forall\beta(\trans{A_n}\to\false)\to\false)}}}}};
+			child {node(211) {\trans{\Gamma}\lambdaModels N_1:\code{P^1}{\predTFst[1]}{\predTSnd[1]}}}
+			child {node(212) {\trans{\Gamma}\lambdaModels x\vec{t}:\code{P^1}{\predTFst[1]}{\predTSnd[1]}\to\dots\to\forall\beta(\code{P^n}{\predTFst[n]}{\predTSnd[n]}\to\false)\to\false}
+				child {node(2121) {\trans{\Gamma}\lambdaModels x:\forall\predVec(\code{P^1}{\predFst[1]}{\predSnd[1]}\to\dots\to\forall\beta(\code{P^n}{\predFst[n]}{\predSnd[n]}\to\false)\to\false)}}}}};
 
 
 \def\nodes{,1,2,21,211,212,2121}
