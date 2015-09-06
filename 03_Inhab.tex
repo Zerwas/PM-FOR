@@ -70,7 +70,7 @@ Again we proof this by induction on the length $l$ of the proof.
 
 In the next two lemmas we will prove the $\Leftarrow$ direction.
 
-\begin{lemma}
+\begin{lemma}\label{l2h}
 Let $\Gamma$ be a \SysP-basis, $M\in\lambdaTerms$, $P\in\RelP$, and $\predTFst,\predTSnd\in\lambdaTypes$ such that $\trans{\Gamma}\lambdaModels M:\code{P}{\predTFst}{\predTSnd}$ holds.
 %Then $t_1=a$ and $t_2=b$ for some $a,b\in\VarP$ (remember that $\VarP\subseteq\lambdaTypVar$). Furthermore $\Gamma\PModels P(a,b)$ holds.
 Then $\predTFst, \predTSnd\in\VarP$ (remember that $\VarP\subseteq\lambdaTypVar$). Furthermore $\Gamma\PModels P(\predTFst,\predTSnd)$ holds.
@@ -85,10 +85,9 @@ We now proof the lemma by structural induction on the term $M$.
 		It follows that $(x:\code{P}{\predTFst}{\predTSnd})\in\trans{\Gamma}$.
 		Now the definition of $\trans{\Gamma}$ yields that $P(\predTFst,\predTSnd)\in\Gamma$. Therefore $\predTFst,\predTSnd\in\VarP$ and $\Gamma\PModels P(s,t)$ holds trivially.
 	\item[] \underline{$M=M_1M_2$} for some $M_1,M_2\in\lambdaTerms$.\\
-		Since $M$ is in normal form we have that $M_1=xN_1\dots N_k$ for some $x\in\lambdaValVar$, $n\in\N$, and some $N_1,\dots,N_k\in\lambdaTerms\cup\lambdaTypes$. %TODO There is only one kind of %TODO functional neccessary P(a,b)
+		Since $M$ is in normal form we have that $M_1=xN_1\dots N_k$ for some $x\in\lambdaValVar$, $k\in\N^+$, and some $N_1,\dots,N_k\in\lambdaTerms\cup\lambdaTypes$. %TODO There is only one kind of %TODO functional neccessary P(a,b)
 		%type with target | this is not a target -> $\code{P}{\alpha}{\beta}$ 
 		
-		%TODO mapping is bullshit
 		It follows that $x=x_A$ and $(x:\trans{A})\in\trans{\Gamma}$ for some universal formula $A=\forall\predVec(P^1(\predFst[1],\predSnd[1])\to\dots\to P^n(\predFst[n],\predSnd[n])\to P(\predFst,\predSnd))$ in $\Gamma$ where $\predVec=\predVec[1]\dots\predVec[m]$ for some $m\in\N$ and some $\predVec[1],\dots,\predVec[m]\in\VarP$.
 		%for some $P^i\in\RelP$ and some $\predFst[i], \predSnd[i]\in\VarP$ for all $i\in\{1,\dots,n\}$, $\predFst,\predSnd\in\VarP$, and $\predVec=\predVec[1]\dots\predVec[m]$ for some $\predVec[1],\dots,\predVec[m]\in\VarP$. %forall ai exists j: ai=aj or ai=bj
 		
@@ -159,26 +158,33 @@ Again we can assume that $M$ is in normal form.
 	\item[] \underline{$M=x$} for some $y\in\lambdaValVar$.\\
 		It follows that $(x:\false)\in\trans{\Gamma}$. Now the definition of $\trans{\Gamma}$ yields that $\false\in\Gamma$. Therefore $\Gamma\PModels \false$ holds.
 	\item[] \underline{$M=M_1M_2$} for some $M_1,M_2\in\lambdaTerms$.\\
+		Because $M$ is in normal form we have that $M_1=xN_1\dots N_k$ for some $x\in\lambdaTypVar$, $k\in\N^+$, and some $N_1,\dots N_k\in\lambdaTerms\cup\lambdaTypes$.
+		We know that $x=x_A$ for some $A\in\Gamma$.
 		
-		$M=x\vec{t}\vec{N}$
-		\begin{figure}[H]
-			\centering
-			\input{Figure.C2.1}
-		\end{figure}
+		Firstly $A$ could be a universal formula. It follows that $A$ is of the form $A=\forall\predVec(P^1(\predFst[1],\predSnd[1])\to\dots\to P^n(\predFst[n],\predSnd[n])\to\false)$ where $\predVec=\predVec[1]\dots\predVec[m]$ for some $m\in\N$ and some $\predVec[1],\dots,\predVec[m]\in\VarP$. In this case $M=x\vec{t}\vec{N}$ for some $\predTVec=\predTVec[1]\dots \predTVec[m]$ with $\predTVec[1],\dots,\predTVec[m]\in\lambdaTypes$ and some $\vec{N}=N_1\dots N_n$ with $N_1,\dots,N_n\in\lambdaTerms$. Now $\Gamma\PModels\false$ can be deduced as in the previous proof.
 		
-		$M=x\vec{t}\vec{N}L$
+		Secondly $A$ could be an existential formula. It follows that $A$ is of the form $A=\forall\predVec(P^1(\predFst[1],\predSnd[1])\to\dots\to \forall\beta(P^n(\predFst[n],\predSnd[n])\to\false)\to \false)$ where $\predVec=\predVec[1]\dots\predVec[m]$ for some $m\in\N$ and some $\predVec[1],\dots,\predVec[m]\in\VarP$ (w.l.o.g. $\beta\neq\predVec[i]$ for all $i\in\{1,\dots,m\}$).
+		Then $M$ has to be of the form $M=x\vec{t}\vec{N}L$ for some $\predTVec=\predTVec[1]\dots \predTVec[m]$ with $\predTVec[1],\dots,\predTVec[m]\in\lambdaTypes$, some $\vec{N}=N_1\dots N_{n-1}$ with $N_1,\dots,N_{n-1}\in\lambdaTerms$, and some $L\in\lambdaTerms$. It also has to hold that $\trans{\Gamma}\lambdaModels L:\forall\beta(\code{P^n}{\predTFst[n]}{\predTSnd[n]}\to\false)$ and for $i\in\{1,\dots,n-1\}$ that $\trans{\Gamma}\lambdaModels N_i:\code{P^i}{\predTFst[i]}{\predTSnd[i]}$ (where $\predTFst[i]=\predFst[i]\left[\predVec:=\predTVec\hspace{1mm}\right]$ and  $\predTSnd[i]=\predSnd[i]\left[\predVec:=\predTVec\hspace{1mm}\right]$ for $i\in\{1,\dots,n\}$).
+		
 		\begin{figure}[H]
 			\centering
 			\input{Figure.C2.2}
 		\end{figure}
 		
-		Lets take a closer look at $L$.
+		For $i\in\{1,\dots,n-1\}$ we can apply Lemma \ref{l2h} to $\trans{\Gamma}\lambdaModels N_i:\code{P^i}{\predTFst[i]}{\predTSnd[i]}$ to get that $\predTFst[i],\predTSnd[i]\in\VarP$ and that $\Gamma\PModels P^i(\predTFst[i],\predTSnd[i])$.
+		Now we take a closer look at $L$. First note that because either $\predFst[n]=\beta$ or there exits an $i\in\{1,\dots,n-1\}$ such that $\predFst[n]\in\FV(P^i(\predFst[i],\predSnd[i]))$ which implies that $\predTFst[n]=\predTFst[i]$ or $\predTFst[n]=\predTSnd[i]$. In both cases we get that $\predTFst[n]\in\VarP$. A similar argument yields $\predTSnd[n]\in\VarP$.
 		
-		$L=y$
+		$L=y$,\hspace{2cm}$A'\in\Gamma$ trivial
 		
-		$L=\Lambda\beta.y\vec{t'}\vec{N'}$
+		$L=\Lambda\beta.y$,\hspace{2cm}$A'\in\Gamma$ trivial
+		
+		$L=\Lambda\beta.y\vec{t'}\vec{N'}$,\hspace{2cm}as in previous proof
 		
 		$L=\Lambda\beta.\lambda y:\code{P^n}{\predTFst[n]}{\predTSnd[n]}.N$,\hspace{2cm} $\trans{\Gamma},y:\code{P^n}{\predTFst[n]}{\predTSnd[n]}\lambdaModels N:\false$ by IH
+		
+		$L=\Lambda\beta.M'\,t'$, $M'=yt_1\dots t_l$,\hspace{2cm}$A'\in\Gamma$ trivial
+		
+		$L=M'\,t'$, $M'=yt_1\dots t_l$,\hspace{2cm}$A'\in\Gamma$ trivial
 		
 	\item[] \underline{$M=\lambda x:t_1.M'$} for some $M'\in\lambdaTerms$, some $x\in\lambdaValVar\setminus\dom(\Gamma)$, and some $t_1\in\lambdaTypes$.\\
 		It follows that $t=t_1\to t_2$ for some $t_2\in\lambdaTypes$ which contradicts $t=\false$. So this case is impossible.
