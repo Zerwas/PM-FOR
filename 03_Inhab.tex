@@ -29,7 +29,7 @@ For a \SysP-basis $\Gamma$ we define the code of $\Gamma$, denoted by $\trans{\G
 
 In the following two lemmas we prove the $\Rightarrow$ direction by constructing a $\lambda2$ term $M$ with the required type.
 
-\begin{lemma}
+\begin{lemma}\label{l1h}
 Let $\Gamma$ be a \SysP-basis, $P\in\RelP$, and $\predPFst,\predPSnd\in\VarP$ such that $\Gamma\PModels P(\predPFst,\predPSnd)$ holds.
 Then there exists a term $M\in\lambdaTerms$ such that $\trans{\Gamma}\lambdaModels M: \code{P}{\predPFst}{\predPSnd}$.
 \end{lemma}
@@ -64,7 +64,15 @@ Again we proof this by induction on the length $l$ of the proof.
 	Firstly we could have a universal formula $A=\forall\predVec(P^1(\predFst[1],\predSnd[1])\to\dots\to P^n(\predFst[n],\predSnd[n])\to \false)$ in $\Gamma$ where $\predVec=\predVec[1]\dots\predVec[m]$ for some $m\in\N$ and some $\predVec[1],\dots,\predVec[m]\in\VarP$ and a $\vec{\beta}=\overline{\beta}_1\dots\overline{\beta}_m$ for some $\overline{\beta}_1,\dots,\overline{\beta}_m\in\VarP$. In this case we can construct $M$ as in the previous proof.%TODO rephrase
 
 
-	And secondly we also could have an existential formula of the form $A=\forall\predVec(P^1(\predFst[1],\predSnd[1])\to\dots\to \forall\beta(P^n(\predFst[n],\predSnd[n])\to\false)\to \false)$ in $\Gamma$ and 
+	And secondly we also could have a $\vec{\beta}=\overline{\beta}_1\dots\overline{\beta}_m$ for some $\overline{\beta}_1,\dots,\overline{\beta}_m\in\VarP$ and an existential formula  $A=\forall\predVec(P^1(\predFst[1],\predSnd[1])\to\dots\to \forall\beta(P^n(\predFst[n],\predSnd[n])\to\false)\to \false)$ in $\Gamma$ where $\predVec=\predVec[1]\dots\predVec[m]$ for some $m\in\N$ and some $\predVec[1],\dots,\predVec[m]\in\VarP$ (w.l.o.g. $\beta\notin\FV(\Gamma)$ and $\beta\neq\predVec[i]$ for all $i\in\{1,\dots,m\}$). 
+	Such that, with $\predPFst[i]:=\predFst[i]\left[\predVec:=\vec{\beta}\right]$ and $\predPSnd[i]:=\predSnd[i]\left[\predVec:=\vec{\beta}\right]$ for $i\in\{1,\dots,n\}$, \false{} can be produced in the following way.
+		
+	\begin{figure}[H]
+		\centering
+		\input{Figure.C4.1}
+	\end{figure}
+	
+	For $i\in\{1,\dots,n-1\}$ we can apply Lemma $\ref{l1h}$ to $P^i(\predPFst[i],\predPSnd[i])$ and we get that there exists an $M_i$ such that $\trans{\Gamma}\lambdaModels M_i:\code{P^i}{\predPFst[i]}{\predPSnd[i]}$.
 \end{itemize}
 \end{proof}
 
