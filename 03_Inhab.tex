@@ -121,17 +121,14 @@ We now proof the lemma by structural induction on the term $M$.
 		\end{figure}
 		
 	\item[] \underline{$M=\lambda x:t'.M'$} for some $M'\in\lambdaTerms$, some $x\in\lambdaValVar\setminus\dom(\Gamma)$, and some $t'\in\lambdaTypes$.\\
-		It follows that $t'=t_1\to p_1$ and $\trans{\Gamma},(x:t_1\to p_1)\lambdaModels M':(t_2\to p_2)\to p$
+		It follows that $t'=\predTFst\to p_1$ and $\trans{\Gamma},x:\predTFst\to p_1\lambdaModels M':(\predTSnd\to p_2)\to p$.
 		
+		If $M'=yx$ for some $y\in\lambdaTypVar$ then it has to be that $y=x_{P(\predTFst,\predTSnd)}$ and $(y:(\predTFst\to p_1)\to(\predTSnd\to p_2)\to p)\in\trans{\Gamma}$. It follows that $P(\predTFst,\predTSnd)\in\Gamma$ and therefore $\predTFst,\predTSnd\in\VarP$ and $\Gamma\PModels P(\predTFst,\predTSnd)$.
 		
-		$M'=yx$; $y:(t_1\to p_1)\to(t_2\to p_2)\to p$; (eta reduction?)
+		If $M'=\lambda y:\predTSnd\to p_2.zxy$ for some $y,z\in\lambdaTypVar$ then $z=x_{P(\predTFst,\predTSnd)}$ and therefore $(z:(\predTFst\to p_1)\to(\predTSnd\to p_2)\to p)\in\trans{\Gamma}$. We get that $P(\predTFst,\predTSnd)\in\Gamma$ and conclude that $\predTFst,\predTSnd\in\VarP$ and $\Gamma\PModels P(\predTFst,\predTSnd)$.
+		%$\Gamma,x,y \lambdaModels M''=zxy:p$
 		
-		$M'=\lambda y:t_2\to p_2.M''$; $\Gamma,x,y \lambdaModels M''=zxy:p$
-		
-		\begin{figure}[H]
-			\centering
-			\input{Figure.C1.3}
-		\end{figure}
+		All other cases for $M'$ are impossible because there are no \SysP-formulas $A$ such that $\trans{A}$ has the required type. 
 	\item[] \underline{$M=\Lambda\gamma.M'$} for some $M'\in\lambdaTerms$ and some $\gamma\in\lambdaTypVar$.\\ %\setminus\FV(\Gamma)$.\\
 		It follows that $\trans{\Gamma}\lambdaModels M:\forall\gamma.t'$ for some $t'\in\lambdaTypes$.
 		But this can not be since $\code{P}{\predTFst}{\predTSnd}=(\predTFst\to p_1)\to(\predTSnd\to p_2)\to p$. Therefore $M$ is not of the form $\Lambda\gamma.M'$ and this case is impossible.
