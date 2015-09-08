@@ -1,4 +1,14 @@
 \section{Basic Definitions}
+\subsection{mathematical definitions}
+\begin{definition}
+	Let $B$ be a set and $A\subseteq B$, $\vec{a}=a_1\dots a_n$ for some $n\in\N$ and some $a_1,\dots,a_n\in A$ and $\vec{b}=b_1\dots b_n$ for some $b_1,\dots,b_n\in B$. For an $a\in A$ the substitution of $\vec{a}$ by $\vec{b}$, denoted by $a\left[\vec{a}:=\vec{b}\right]$, is defined as follows.
+	\[a\left[a_1\dots a_n:=b_1\dots b_n\right]:=
+	\begin{cases}
+		a &\text{if $n=0$}\\
+		b_n &\text{if $n>0$ and $a_n= a$}\\
+		a\left[a_1\dots a_{n-1}:=b_1\dots b_{n-1}\right] &\text{if $n>0$ and $a_n\neq a$}
+	\end{cases}\]
+\end{definition}
 \subsection{$\lambda$-calculus \lambdaTwo}
 In the following let $\lambdaTypVar=\{\alpha,a,\beta,b,\dots\}$ be a countably infinite set (of type-variables) and $\lambdaValVar=\{x,x_1,x_2,\dots\}$ be a countably infinite set (of value-variables).
 \begin{definition}
@@ -113,6 +123,21 @@ If a formula $\varphi$ has multiple variables bound by the same quantifier (i.e.
 			\FV(\varphi_1)\cup\FV(\varphi_2)         & \text{if $\varphi=(\varphi_1\wedge\varphi_2)$ or $\varphi=(\varphi_1\vee\varphi_2)$} \\
 			\FV(\psi)\setminus\{y\}                  & \text{if $\varphi=\forall y.\psi$ or $\varphi=\exists y.\psi$}                 
 		\end{cases}\]
+\end{definition}
+
+\begin{definition}
+	The \define{set of subformulas of a formula $\varphi\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$}, denoted by $\SUB(\varphi)$, is defined as follows:
+	\[\FV(\varphi)=
+		\begin{cases}
+			\{\varphi\} & \text{if $\varphi=P(t_1,t_2,\dots,t_k)$}                               \\
+			\{\varphi\}\cup\SUB(\psi)                                 & \text{if $\varphi=\neg\psi$}                               \\
+			\{\varphi\}\cup\SUB(\varphi_1)\cup\SUB(\varphi_2)         & \text{if $\varphi=(\varphi_1\wedge\varphi_2)$ or $\varphi=(\varphi_1\vee\varphi_2)$} \\
+			\{\varphi\}\cup\SUB(\psi)                  & \text{if $\varphi=\forall y.\psi$ or $\varphi=\exists y.\psi$}                 
+		\end{cases}\]
+\end{definition}
+
+\begin{definition}
+We say that a formula $\varphi\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$ contains no \define{dummy quantifiers} if for all $\psi\in\SUB(\varphi)$ of the form $\psi=\forall y.\psi'$ or $\psi=\exists y.\psi'$ for some $y\in\VarP$ and some $\psi'\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$ we have that $y\in\FV(\psi')$.
 \end{definition}
 
 \begin{definition}
