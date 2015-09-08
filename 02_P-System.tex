@@ -76,7 +76,7 @@ This allows us to add the following deduction rule.
 \subsection{\PCons{} is undecidable}
 We will show that $\autHalt\leq\PCons$ then the undecidability of \PCons{} directly follows from the undecidability of \autHalt. For a given two-counter automaton $M$ we will effectively construct a \SysP-basis $\Gamma_M$ such that
 \begin{align*}
- & \text{$M$ terminates on input $(0,0)$} &   & \text{iff} & \text{$\Gamma_M\PModels\false$ holds in System \SysP.} 
+ & \textit{$M$ terminates on input $(0,0)$} &   & \textit{iff} & \textit{$\Gamma_M\PModels\false$ holds in System \SysP.} 
 \end{align*}
 Let $M=(\autStates,Q_0,Q_f,\autRules)$ be a two-counter automaton, w.l.o.g. $S,P,R_1,R_2,E,D,G\notin\autStates$. In the following we will consider \SysP-formulas over $\VarP$ and $\RelP$, where $\RelP=\autStates\uplus\{S,P,R_1,R_2,E,D,G\}$. We will abbreviate $P(a,a)$ to $P(a)$, note that this way we can use binary predicate symbols as unary ones.
 
