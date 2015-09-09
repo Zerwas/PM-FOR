@@ -1,14 +1,4 @@
 \section{Basic Definitions}
-\subsection{mathematical definitions}
-\begin{definition}
-	Let $B$ be a set and $A\subseteq B$, $\vec{a}=a_1\dots a_n$ for some $n\in\N$ and some $a_1,\dots,a_n\in A$ and $\vec{b}=b_1\dots b_n$ for some $b_1,\dots,b_n\in B$. For an $a\in A$ the substitution of $\vec{a}$ by $\vec{b}$, denoted by $a\left[\vec{a}:=\vec{b}\right]$, is defined as follows.
-	\[a\left[a_1\dots a_n:=b_1\dots b_n\right]:=
-	\begin{cases}
-		a &\text{if $n=0$}\\
-		b_n &\text{if $n>0$ and $a_n= a$}\\
-		a\left[a_1\dots a_{n-1}:=b_1\dots b_{n-1}\right] &\text{if $n>0$ and $a_n\neq a$}
-	\end{cases}\]
-\end{definition}
 \subsection{$\lambda$-calculus \lambdaTwo}
 In the following let $\lambdaTypVar=\{\alpha,a,\beta,b,\dots\}$ be a countably infinite set (of type-variables) and $\lambdaValVar=\{x,x_1,x_2,\dots\}$ be a countably infinite set (of value-variables).
 \begin{definition}
@@ -30,24 +20,133 @@ In the following let $\lambdaTypVar=\{\alpha,a,\beta,b,\dots\}$ be a countably i
 \end{definition}
 If we have a type of the form $(t_1\to(t_2\to(\dots \to(t_{n-1}\to t_n)\cdots)))$ we will often omit the brackets and just write $(t_1\to t_2\to\dots\to t_{n-1}\to t_n)$ or $t_1\to t_2\to\dots \to t_{n-1}\to t_n$ instead. %TODO \vec{\alpha}
 \begin{definition}
-	Let $t\in\lambdaTypes$. The \define{set of free variables of $t$}, denoted by $\FV(t)$, is defined inductively as follows:
-		\[\FV(t)=
-			\begin{cases}
-				\{a\}                 & \text{if $t=a$}                    \\ 
-				\FV(t_1)\cup\FV(t_2)  & \text{if $t=t_1\to t_2$}           \\
-				\FV(t')\setminus\{\alpha\} & \text{if $t=\forall\alpha.t'$}\\
-			\end{cases}\]
-			
+	Let $M,N\in\lambdaTerms$ and $x\in\lambdaValVar$. The \define{substitution of $x$ by $N$ in $M$}, denoted by $M\left[x:=N\right]$ is defined as follows:
+	\[M\left[x:=N\right]=
+		\begin{cases}
+			N                     & \text{if $M=x$}                \\
+			y                     & \text{if $M=y$ and $y\neq x$}  \\
+			(M_1\left[x:=N\right])(M_2\left[x:=N\right])  & \text{if $M=M_1M_2$}           \\
+			M                     & \text{if $M=\lambda x:t.M'$}   \\
+			\lambda y:t.(M'\left[x:=N\right])             & \text{if $M=\lambda y:t.M'$ and $y\neq x$}   \\
+			\Lambda\alpha.(M'\left[x:=N\right])           & \text{if $M=\Lambda\alpha.M'$} \\
+			(M'\left[x:=N\right])\,t                      & \text{if $M=M'\,t$}            \\
+		\end{cases}\]
+	Let $t,t'\in\lambdaTypes$ and $a\in\lambdaTypVar$. The \define{substitution of $a$ by $t'$ in $t'$}, denoted by $t\left[a:=t'\right]$ is defined as follows:
+	\[t\left[a:=t'\right]=
+		\begin{cases}
+			t'                    & \text{if $t=a$}                    \\ 
+			b                     & \text{if $t=b$ and $b\neq a$}      \\ 
+			(t_1\left[a:=t'\right])\to (t_2\left[a:=t'\right])  & \text{if $t=t_1\to t_2$}           \\
+			t & \text{if $t=\forall a.t''$}\\
+			\forall\beta.(t''\left[a:=t'\right]) & \text{if $t=\forall\beta.t''$ and $\beta\neq a$}\\
+		\end{cases}\]
+		
+	Let $M\in\lambdaTerms$, $a\in\lambdaTypVar$, and $t\in\lambdaTypes$. The \define{substitution of $a$ by $t$ in $M$}, denoted by $M\left[a:=t\right]$ is defined as follows:
+	\[M\left[a:=t\right]=
+		\begin{cases}
+			x                                             & \text{if $M=x$}  \\
+			(M_1\left[a:=t\right])(M_2\left[a:=t\right])  & \text{if $M=M_1M_2$}           \\
+			\lambda x:t'\left[a:=t\right].(M'\left[a:=t\right])             & \text{if $M=\lambda x:t'.M'$}   \\
+			M                                             & \text{if $M=\Lambda a.M'$} \\
+			\Lambda\beta.(M'\left[a:=t\right])           & \text{if $M=\Lambda\beta.M'$ and $\beta\neq a$} \\
+			(M'\left[a:=t\right])\,t\left[a:=t\right]     & \text{if $M=M'\,t$}            \\
+		\end{cases}\]
+\end{definition}
+
+We will often abbreviate $(\dots(M\left[a_n:=b_n\right])\dots)\left[a_1:=b_1\right]$ to $M\left[\vec{a}:=\vec{b}\right]$ where $\vec{a}=a_1\dots a_n$ and $\vec{b}=b_1\dots b_n$.
+
+\begin{definition}
 	Let $M\in\lambdaTerms$. The \define{set of free variables of $M$}, denoted by $\FV(M)$, is defined inductively as follows:
 	\[\FV(M)=
 		\begin{cases}
-			\{x\}                 & \text{if $M=x$}                \\ %TODO, for some $x\in\lambdaValVar$?
+			\{x\}                 & \text{if $M=x$}                \\
 			\FV(M_1)\cup\FV(M_2)  & \text{if $M=M_1M_2$}           \\
 			\FV(M')\setminus\{x\} & \text{if $M=\lambda x:t.M'$}   \\
 			\FV(M')               & \text{if $M=\Lambda\alpha.M'$} \\
 			\FV(M')               & \text{if $M=M'\,t$}            \\
 		\end{cases}\]
+			
+	The \define{set of bound variables of $M$}, denoted by $\GV(M)$, is defined as follows:
+	\[\GV(M)=
+		\begin{cases}
+			\emptyset             & \text{if $M=x$}                \\ 
+			\GV(M_1)\cup\FV(M_2)  & \text{if $M=M_1M_2$}           \\
+			\GV(M')\cup\{x\}      & \text{if $M=\lambda x:t.M'$}   \\
+			\GV(M')               & \text{if $M=\Lambda\alpha.M'$} \\
+			\GV(M')               & \text{if $M=M'\,t$}            \\
+		\end{cases}\]
 \end{definition}
+
+\begin{definition}
+	Let $t\in\lambdaTypes$. The \define{set of free type-variables of $t$}, denoted by $\FV(t)$, is defined inductively as follows:
+	\[\FV(t)=
+		\begin{cases}
+			\{a\}                 & \text{if $t=a$}                    \\ 
+			\FV(t_1)\cup\FV(t_2)  & \text{if $t=t_1\to t_2$}           \\
+			\FV(t')\setminus\{\alpha\} & \text{if $t=\forall\alpha.t'$}\\
+		\end{cases}\]
+	The \define{set of bound type-variables of $t$}, denoted by $\GV(t)$, is defined inductively as follows:
+	\[\GV(t)=
+		\begin{cases}
+			\emptyset              & \text{if $t=a$}                    \\ 
+			\GV(t_1)\cup\FV(t_2)  & \text{if $t=t_1\to t_2$}           \\
+			\GV(t')\cup\{\alpha\} & \text{if $t=\forall\alpha.t'$}
+		\end{cases}\]	
+\end{definition}
+
+Now we can lift this definition to terms.
+
+\begin{definition}
+	Let $M\in\lambdaTerms$. The \define{set of free type-variables of $M$}, denoted by $\TFV(M)$, is the union of all sets of free type-variables of types occurring in $M$.
+	
+	The \define{set of bound type-variables of $M$}, denoted by $\TGV(M)$, is the union of all sets of bound type-variables of types occurring in $M$.
+	%defined inductively as follows:
+%	\[\TFV(M)=
+%		\begin{cases}
+%			\emptyset                   & \text{if $M=x$}                \\
+%			\TFV(M_1)\cup\TFV(M_2)      & \text{if $M=M_1M_2$}           \\
+%			\TFV(M')\cup\FV(t)          & \text{if $M=\lambda x:t.M'$}   \\
+%			\TFV(M')                    & \text{if $M=\Lambda\alpha.M'$} \\
+%			\TFV(M')\cup\FV(t)          & \text{if $M=M'\,t$}            \\
+%		\end{cases}\]
+			
+%	The \define{set of bound type-variables of $M$}, denoted by $\GV(M)$, is defined as follows:
+%	\[\TGV(M)=
+%		\begin{cases}
+%			\emptyset              & \text{if $M=x$}                \\ 
+%			\TGV(M_1)\cup\TGV(M_2) & \text{if $M=M_1M_2$}           \\
+%			\TGV(M')\cup\GV(t)     & \text{if $M=\lambda x:t.M'$}   \\
+%			\TGV(M')               & \text{if $M=\Lambda\alpha.M'$} \\
+%			\TGV(M')\cup\GV(t)     & \text{if $M=M'\,t$}            \\
+%		\end{cases}\]
+\end{definition}
+
+\begin{definition}
+The \define{$\alpha$-conversion}, denoted by $\lambdaA$, is a binary relation on $\lambdaTerms$. For all $M\in\lambdaTerms$, $x,x'\in\lambdaTypVar$, $t\in\lambdaTypes$, and $\alpha,\beta\in\lambdaTypVar$ if $x'\notin\FV(M)\cup\GV(M)$ then $\lambda x:t.M\lambdaA\lambda x':t.(M\left[x:=x'\right])$ and if $\beta\notin\TFV(M)\cup\TGV(M)$ then $\Lambda \alpha.M\lambdaA\Lambda \beta:t.(M\left[\alpha:=\beta\right])$.
+
+The \define{$\beta$-reduction}, denoted by $\lambdaB$, is a binary relation on $\lambdaTerms$. For all $M,N\in\lambdaTerms$, $x\in\lambdaTypVar$, $t\in\lambdaTypes$, and $\alpha\in\lambdaTypVar$ if $\GV(M)\cap\FV(N)=\emptyset$ then $(\lambda x:t.M)N\lambdaB M\left[x:=N\right]$ and if $\TGV(M)\cap\TFV(N)=\emptyset$ then $(\Lambda\alpha.M)t\lambdaB M\left[\alpha:=t\right]$.
+\end{definition}
+
+Note that right now we are not able to reduce terms within a context (e.g there is no $M\in\lambdaTerms$ such that $\lambda x:t.(\lambda y:t.y)x\lambdaB M$).
+
+\begin{definition}
+So, for $\lambdaA$ we define a new relation $\lambdaAC$. Let $M,N,M'\in\lambdaTerms$, $x\in\lambdaTypVar$, $t\in\lambdaTypes$, and $\alpha\in\lambdaTypVar$. If $M\lambdaA M'$ then
+\begin{align*}
+M&\lambdaAC M'        & MN&\lambdaAC M'N      & \lambda x:t.M&\lambdaAC\lambda x:t.M'\\
+Mt&\lambdaAC M't      & NM&\lambdaAC NM'   & \Lambda\alpha.M&\lambdaAC \Lambda\alpha.M'   
+\end{align*}
+
+For $\lambdaB$ we define $\lambdaBC$ analogously.
+\end{definition}
+
+\begin{definition}
+Let $M\in\lambdaTerms$. The term $M$ is in \define{normal form} if there is no $N',N\in\lambdaTerms$ such that $M\lambdaAC^*N'\lambdaBC N$.
+
+$M$ is \define{weakly normalizing} if there exists an $M'\in\lambdaTerms$ such that $N$ is in normal form and $M\lambdaRed N$.
+
+The term $M$ is \define{strongly normalizing} if there is no infinite chain $M\lambdaAC^* M_1'\lambdaBC M_1\lambdaAC^* M_2'\lambdaBC M_2\dots$.
+\end{definition}
+
 \begin{definition} Let $\mathcal{V}=\{x_1,\dots,x_n\}$ be a finite subset of \lambdaValVar{} and $t_1,\dots,t_n\in\lambdaTerms$.	A \define{\lambdaTwo-basis} $\Gamma=\{(x_1:t_1),\dots,(x_n:t_n)\}$ is a mapping from $\mathcal{V}$ to \lambdaTypes{}. If the kind of basis is clear from the context we abbreviate \lambdaTwo-basis to basis. 
 
 The \define{free variables of a basis} $\Gamma$, denoted by $\FV(\Gamma)$, are $\bigcup\{\FV(t)\mid(x:t)\in\Gamma\}$.
@@ -70,6 +169,18 @@ Let $M$ be in \lambdaTerms{}, $t$ in \lambdaTypes, and $\Gamma$ be a basis. A st
 	\endgroup
 \end{mdframed}
 \end{definition}
+
+\begin{definition}
+A term $M\in\lambdaTerms$ is \define{well typed} if there exists a basis $\Gamma$ and a type $t\in\lambdaTypes$ such that $\Gamma\lambdaModels M:t$ holds.
+\end{definition}
+
+\begin{theorem}
+Let $M,M'$ be in \lambdaTerms{} and $M\lambdaAC M'$ or $M\lambdaBC M'$, $t$ in \lambdaTypes, and $\Gamma$ be a basis. If $\Gamma\lambdaModels M:t$ then $\Gamma\lambdaModels M':t$.
+\end{theorem}
+
+\begin{theorem}
+All well typed $\lambda2$ terms are strongly normalizing.
+\end{theorem}
 
 \begin{definition}
 The inhabitation problem for $\lambda2$, denoted by \lambdaInhab, is defined as follows. Given a $\lambda2$ type $t$.
