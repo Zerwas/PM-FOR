@@ -1,7 +1,7 @@
-\section{Basic Definitions}
+\section{Basic Definitions}\label{sec.2}
 \subsection{$\lambda$-calculus \lambdaTwo}
 In the following let $\lambdaTypVar=\{\alpha,a,\beta,b,\dots\}$ be a countably infinite set (of type-variables) and $\lambdaValVar=\{x,x_1,x_2,\dots\}$ be a countably infinite set (of value-variables).
-\begin{definition}
+\begin{definition}\label{def.2.1}
 	The \define{set of all $\lambda2$ types over \lambdaTypVar}, denoted by \lambdaTypes{}, is the smallest set T satisfying the following conditions: %TODO maybe put \lambdaTypVar in \lambdaTypes
 	\begin{itemize}
 		\item $\lambdaTypVar\subseteq\text{T}$,
@@ -19,7 +19,7 @@ In the following let $\lambdaTypVar=\{\alpha,a,\beta,b,\dots\}$ be a countably i
 	\end{itemize}
 \end{definition}
 If we have a type of the form $(t_1\to(t_2\to(\dots \to(t_{n-1}\to t_n)\cdots)))$ we will often omit the brackets and just write $(t_1\to t_2\to\dots\to t_{n-1}\to t_n)$ or $t_1\to t_2\to\dots \to t_{n-1}\to t_n$ instead. %TODO \vec{\alpha}
-\begin{definition}
+\begin{definition}\label{def.2.2}
 	Let $M,N\in\lambdaTerms$ and $x\in\lambdaValVar$. The \define{substitution of $x$ by $N$ in $M$}, denoted by $M\left[x:=N\right]$ is defined as follows:
 	\[M\left[x:=N\right]=
 		\begin{cases}
@@ -55,7 +55,7 @@ If we have a type of the form $(t_1\to(t_2\to(\dots \to(t_{n-1}\to t_n)\cdots)))
 
 We will often abbreviate $(\dots(M\left[a_n:=b_n\right])\dots)\left[a_1:=b_1\right]$ to $M\left[\vec{a}:=\vec{b}\right]$ where $\vec{a}=a_1\dots a_n$ and $\vec{b}=b_1\dots b_n$.
 
-\begin{definition}
+\begin{definition}\label{def.2.3}
 	Let $M\in\lambdaTerms$. The \define{set of free variables of $M$}, denoted by $\FV(M)$, is defined inductively as follows:
 	\[\FV(M)=
 		\begin{cases}
@@ -77,7 +77,7 @@ We will often abbreviate $(\dots(M\left[a_n:=b_n\right])\dots)\left[a_1:=b_1\rig
 		\end{cases}\]
 \end{definition}
 
-\begin{definition}
+\begin{definition}\label{def.2.4}
 	Let $t\in\lambdaTypes$. The \define{set of free type-variables of $t$}, denoted by $\FV(t)$, is defined inductively as follows:
 	\[\FV(t)=
 		\begin{cases}
@@ -96,7 +96,7 @@ We will often abbreviate $(\dots(M\left[a_n:=b_n\right])\dots)\left[a_1:=b_1\rig
 
 Now we can lift this definition to terms.
 
-\begin{definition}
+\begin{definition}\label{def.2.5}
 	Let $M\in\lambdaTerms$. The \define{set of free type-variables of $M$}, denoted by $\TFV(M)$, is the union of all sets of free type-variables of types occurring in $M$.
 	
 	The \define{set of bound type-variables of $M$}, denoted by $\TGV(M)$, is the union of all sets of bound type-variables of types occurring in $M$.
@@ -121,7 +121,7 @@ Now we can lift this definition to terms.
 %		\end{cases}\]
 \end{definition}
 
-\begin{definition}
+\begin{definition}\label{def.2.6}
 The \define{$\alpha$-conversion}, denoted by $\lambdaA$, is a binary relation on $\lambdaTerms$. For all $M\in\lambdaTerms$, $x,x'\in\lambdaTypVar$, $t\in\lambdaTypes$, and $\alpha,\beta\in\lambdaTypVar$ if $x'\notin\FV(M)\cup\GV(M)$ then $\lambda x:t.M\lambdaA\lambda x':t.(M\left[x:=x'\right])$ and if $\beta\notin\TFV(M)\cup\TGV(M)$ then $\Lambda \alpha.M\lambdaA\Lambda \beta:t.(M\left[\alpha:=\beta\right])$.
 
 The \define{$\beta$-reduction}, denoted by $\lambdaB$, is a binary relation on $\lambdaTerms$. For all $M,N\in\lambdaTerms$, $x\in\lambdaTypVar$, $t\in\lambdaTypes$, and $\alpha\in\lambdaTypVar$ if $\GV(M)\cap\FV(N)=\emptyset$ then $(\lambda x:t.M)N\lambdaB M\left[x:=N\right]$ and if $\TGV(M)\cap\TFV(N)=\emptyset$ then $(\Lambda\alpha.M)t\lambdaB M\left[\alpha:=t\right]$.
@@ -129,7 +129,7 @@ The \define{$\beta$-reduction}, denoted by $\lambdaB$, is a binary relation on $
 
 Note that right now we are not able to reduce terms within a context (e.g there is no $M\in\lambdaTerms$ such that $\lambda x:t.(\lambda y:t.y)x\lambdaB M$).
 
-\begin{definition}
+\begin{definition}\label{def.2.7}
 So, for $\lambdaA$ we define a new relation $\lambdaAC$. Let $M,N,M'\in\lambdaTerms$, $x\in\lambdaTypVar$, $t\in\lambdaTypes$, and $\alpha\in\lambdaTypVar$. If $M\lambdaA M'$ then
 \begin{align*}
 M&\lambdaAC M'        & MN&\lambdaAC M'N      & \lambda x:t.M&\lambdaAC\lambda x:t.M'\\
@@ -139,7 +139,7 @@ Mt&\lambdaAC M't      & NM&\lambdaAC NM'   & \Lambda\alpha.M&\lambdaAC \Lambda\a
 For $\lambdaB$ we define $\lambdaBC$ analogously.
 \end{definition}
 
-\begin{definition}
+\begin{definition}\label{def.2.8}
 Let $M\in\lambdaTerms$. The term $M$ is in \define{normal form} if there is no $N',N\in\lambdaTerms$ such that $M\lambdaAC^*N'\lambdaBC N$.
 
 $M$ is \define{weakly normalizing} if there exists an $M'\in\lambdaTerms$ such that $N$ is in normal form and $M\lambdaRed N$.
@@ -147,14 +147,14 @@ $M$ is \define{weakly normalizing} if there exists an $M'\in\lambdaTerms$ such t
 The term $M$ is \define{strongly normalizing} if there is no infinite chain $M\lambdaAC^* M_1'\lambdaBC M_1\lambdaAC^* M_2'\lambdaBC M_2\dots$.
 \end{definition}
 
-\begin{definition} Let $\mathcal{V}=\{x_1,\dots,x_n\}$ be a finite subset of \lambdaValVar{} and $t_1,\dots,t_n\in\lambdaTerms$.	A \define{\lambdaTwo-basis} $\Gamma=\{(x_1:t_1),\dots,(x_n:t_n)\}$ is a mapping from $\mathcal{V}$ to \lambdaTypes{}. If the kind of basis is clear from the context we abbreviate \lambdaTwo-basis to basis. 
+\begin{definition}\label{def.2.9} Let $\mathcal{V}=\{x_1,\dots,x_n\}$ be a finite subset of \lambdaValVar{} and $t_1,\dots,t_n\in\lambdaTerms$.	A \define{\lambdaTwo-basis} $\Gamma=\{(x_1:t_1),\dots,(x_n:t_n)\}$ is a mapping from $\mathcal{V}$ to \lambdaTypes{}. If the kind of basis is clear from the context we abbreviate \lambdaTwo-basis to basis. 
 
 The \define{free variables of a basis} $\Gamma$, denoted by $\FV(\Gamma)$, are $\bigcup\{\FV(t)\mid(x:t)\in\Gamma\}$.
 \end{definition}
 
 For a basis $\Gamma$ and another basis $\Sigma$, $x\in\lambdaValVar\setminus\dom(\Gamma)$, and $t\in\lambdaTypes$ we will abbreviate $\Gamma\cup\{(x:t)\}$ to $\Gamma,x:t$ and $\Gamma\cup\Sigma$ to $\Gamma,\Sigma$. %TODO is the second convention use?
 
-\begin{definition}
+\begin{definition}\label{def.2.10}
 Let $M$ be in \lambdaTerms{}, $t$ in \lambdaTypes, and $\Gamma$ be a basis. A statement $M:t$ is \define{derivable} from $\Gamma$, denoted by $\Gamma\lambdaModels M:t$, if $M:t$ can be produced using the following rules.
 \begin{mdframed} 
 	\begingroup
@@ -170,19 +170,19 @@ Let $M$ be in \lambdaTerms{}, $t$ in \lambdaTypes, and $\Gamma$ be a basis. A st
 \end{mdframed}
 \end{definition}
 
-\begin{definition}
+\begin{definition}\label{def.2.11}
 A term $M\in\lambdaTerms$ is \define{well typed} if there exists a basis $\Gamma$ and a type $t\in\lambdaTypes$ such that $\Gamma\lambdaModels M:t$ holds.
 \end{definition}
 
-\begin{theorem}
+\begin{theorem}\label{the.2.12}
 Let $M,M'$ be in \lambdaTerms{} and $M\lambdaAC M'$ or $M\lambdaBC M'$, $t$ in \lambdaTypes, and $\Gamma$ be a basis. If $\Gamma\lambdaModels M:t$ then $\Gamma\lambdaModels M':t$.
 \end{theorem}
 
-\begin{theorem}
+\begin{theorem}\label{the.2.13}
 All well typed $\lambda2$ terms are strongly normalizing.
 \end{theorem}
 
-\begin{definition}
+\begin{definition}\label{def.2.14}
 The inhabitation problem for $\lambda2$, denoted by \lambdaInhab, is defined as follows. Given a $\lambda2$ type $t$.
 \[\text{Is there a $\lambda2$ term $M$ such that } \emptyset\lambdaModels M:t?\]
 But we can rephrase this problem so that it becomes more general:
@@ -191,7 +191,7 @@ Given a basis $\Gamma$ and a $\lambda2$ type $t$.
 Obviously the second version is a special case of the first one. For the other direction consider a basis $\Gamma=\{(x_1:t_1),\dots,(x_n:t_n)\}$ and a $\lambda2$ type $t$. Clearly, for every term $M$, $\Gamma\lambdaModels M:t$ holds iff $\emptyset\lambdaModels \lambda x_1:t_1.\dots\lambda x_n:t_n.M:t_1\to\dots\to t_n\to t$.
 \end{definition}
 \subsection{first-order logic}
-\begin{definition}
+\begin{definition}\label{def.2.15}
 	A \define{ranked set} is a tuple $(\Sigma,\rank)$, where $\Sigma$ is a countable set and $\rank\colon\Sigma\to\N$ is a function that maps every symbol from $\Sigma$ to a natural number (its rank).
 \end{definition}
 If the function \rank{} is understood we will just write $\Sigma$ instead of $(\Sigma,\rank)$. The set of all elements in $\Sigma$ with a certain rank $k$, denoted by $\Sigma^{(k)}$, is defined as $\Sigma^{(k)}:=rk^{-1}(k)$. 
@@ -200,7 +200,7 @@ If the function \rank{} is understood we will just write $\Sigma$ instead of $(\
 
 
 For the remainder of this subsection let $\mathcal{V}=\{y,y_1,y_2,\dots\}$ be a countable set (of variables), $\mathcal{F}$ a ranked set (of function symbols), and $\mathcal{P}$ a ranked set (of predicate symbols).
-\begin{definition}
+\begin{definition}\label{def.2.16}
 	The set of \define{terms over $\mathcal{V}$ and $\mathcal{F}$}, denoted by $\mathcal{T}_{(\mathcal{V},\mathcal{F})}$, is the smallest set $\mathcal{T}$ satisfying the following conditions:
 	\begin{itemize}
 		\item $\mathcal{V} \subseteq \mathcal{T}$, and
@@ -218,7 +218,7 @@ We introduce an additional binary operation $\to$ on formulas, where for some $\
 For nullary relation symbols $P$ we will abbreviate $P()$ to $P$. If a formula $\varphi$ is of the form $Qy.(\psi)$ (where $Q\in\{\exists,\forall\}$, $y\in\mathcal{V}$, and $(\psi)\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$) we often drop the dot and write $Qy(\psi)$ instead. %TODO why brackets around varphi? maybe so that you cannot use this for a negated formula or smth like that
 If a formula $\varphi$ has multiple variables bound by the same quantifier (i.e. $\varphi=Qy_1.Qy_2.\dots Qy_n.\psi$ for $Q\in\{\exists,\forall\}$, some $n\in\N$, $y_1,y_2,\dots,y_n\in\mathcal{V}$, and $\psi\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$) we abbreviate $\varphi$ to $Qy_1y_2\dots y_n.\psi$ or to $Q\vec{y}.\psi$ where $\vec{y}=y_1y_2\dots y_n$.
 
-\begin{definition}
+\begin{definition}\label{def.2.17}
 	The \define{set of variables of a term $t\in\mathcal{T}_{(\mathcal{V},\mathcal{F})}$}, denoted by $\V(t)$, is defined by:
 	\[\V(t)=
 		\begin{cases}
@@ -236,7 +236,7 @@ If a formula $\varphi$ has multiple variables bound by the same quantifier (i.e.
 		\end{cases}\]
 \end{definition}
 
-\begin{definition}
+\begin{definition}\label{def.2.18}
 	The \define{set of subformulas of a formula $\varphi\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$}, denoted by $\SUB(\varphi)$, is defined as follows:
 	\[\FV(\varphi)=
 		\begin{cases}
@@ -247,11 +247,11 @@ If a formula $\varphi$ has multiple variables bound by the same quantifier (i.e.
 		\end{cases}\]
 \end{definition}
 
-\begin{definition}
+\begin{definition}\label{def.2.19}
 We say that a formula $\varphi\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$ contains no \define{dummy quantifiers} if for all $\psi\in\SUB(\varphi)$ of the form $\psi=\forall y.\psi'$ or $\psi=\exists y.\psi'$ for some $y\in\VarP$ and some $\psi'\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$ we have that $y\in\FV(\psi')$.
 \end{definition}
 
-\begin{definition}
+\begin{definition}\label{def.2.20}
 	Let $y$ be in $\mathcal{V}$ and $t,t'\in\mathcal{T}_{(\mathcal{V},\mathcal{F})}$. The \define{substitution of $y$ by $t'$ in $t$}, denoted by $t\left[y:=t'\right]$, is defined as follows:
 	\[t\left[y:=t'\right]=
 		\begin{cases}
@@ -273,7 +273,7 @@ We say that a formula $\varphi\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{
 
 \end{definition}
 Now we come to the semantics of first-order formulas.
-\begin{definition}
+\begin{definition}\label{def.2.21}
 	An \define{interpretation $I$ over $\mathcal{V}$, $\mathcal{F}$, and $\mathcal{P}$} is a triple $I=(\Delta,\cdot^I,\omega)$,
 	\begin{tabular}{llp{0.78\linewidth}}
 		where & $\Delta$  & is a nonempty set (which we call  domain),                                                     \\
@@ -289,7 +289,7 @@ Let $I=(\Delta,\cdot^I,\omega)$ be an interpretation, $y\in\mathcal{V}$, and $d\
 		d         & \text{if $z=y$}   \\
 		\omega(y) & \text{otherwise.} 
 	\end{cases}\]
-\begin{definition}
+\begin{definition}\label{def.2.22}
 	Let $I=(\Delta,\cdot^I,\omega)$ be an interpretation and $t$ a term. The \define{interpretation of $t$ under $I$}, denoted by $t^I$, is defined as follows:
 	\[t^I=
 		\begin{cases}
@@ -313,7 +313,7 @@ Let $I=(\Delta,\cdot^I,\omega)$ be an interpretation, $y\in\mathcal{V}$, and $d\
 	The interpretation $I$ is a \define{model} of $\varphi$, denoted by $I\models\varphi$, if $\varphi^I=\top$.
 \end{definition}
 When we define an interpretation $I$ and we have a nullary predicate symbol $P$ we write $P^I=\top$ instead of $P^I=\{()\}$ and $P^I=\bot$ for $P^I=\emptyset$ (this works because $P()^I=\top$ iff $()\in P^I$).
-\begin{definition} %TODO finite?
+\begin{definition}\label{def.2.23} %TODO finite?
 	Let $\Gamma$ be a finite set of first-order formulas.
 	\begin{description}
 		\item We say that an interpretation $I$ is a \define{model} of $\Gamma$, denoted by $I\models\Gamma$, if $I\models\psi$ for every $\psi$ in $\Gamma$.
@@ -324,7 +324,7 @@ When we define an interpretation $I$ and we have a nullary predicate symbol $P$ 
 
 \subsection{two-counter automaton} %TODO maby later in System P proof
 We will use a version of two-counter automaton which only has two types of transitions. First it can increment a register and second it can decrement a register or jump if the register is already zero. Formally:
-\begin{definition}
+\begin{definition}\label{def.2.24}
 	A \define{deterministic two-counter automaton} is a 4-tuple $M=(\autStates,Q_0,Q_f,\autRules)$,
 	\begin{tabular}{llp{0.78\linewidth}}
 		where & $\autStates$ & is a finite set (of states),                                                                           \\
@@ -351,7 +351,7 @@ We will use a version of two-counter automaton which only has two types of trans
 		
 	Let $m$, $n$ be in $\N$, we say that \define{$M$ terminates on input $(m,n)$} if there exist $\widehat{m},\widehat{n}\in\N$ such that $\langle Q_0,m,n\rangle\Rightarrow^*_M\langle Q_f,\widehat{m},\widehat{n}\rangle$ (It follows that there exists an $i\in\N$ and configurations $D_1,\dots,D_i$ of $M$ such that $\langle Q_0,m,n\rangle= D_1\Rightarrow_M\dots\Rightarrow_M D_i=\langle Q_f,\widehat{m},\widehat{n}\rangle$, we call this chain a computation with length $i$).
 \end{definition}
-\begin{definition}
+\begin{definition}\label{def.2.25}
 	The halting problem for two-counter automaton, denoted by \autHalt{}, is defined as follows.
 	Given a two-counter automaton $M$. 
 	\begin{center}

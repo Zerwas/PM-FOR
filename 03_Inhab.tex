@@ -1,4 +1,4 @@
-\section{\lambdaInhab{} is undecidable}
+\section{\lambdaInhab{} is undecidable}\label{sec.4}
 Now we can show that the inhabitation problem in $\lambda2$ %explicit?
 is undecidable by reducing \PCons{} to \lambdaInhab{}. Given a \SysP-basis $\Gamma$ we construct a \lambdaTwo-basis $\trans{\Gamma}$ such that 
 \begin{align*}
@@ -6,7 +6,7 @@ is undecidable by reducing \PCons{} to \lambdaInhab{}. Given a \SysP-basis $\Gam
 \end{align*}
 where $\false\in\lambdaTypVar$. Furthermore for every $P\in\RelP$ we have $p,p_1,p_2\in\lambdaTypVar$. 
 
-\begin{definition}
+\begin{definition}\label{def.4.1}
 For a \SysP-formula $A$ we define the \define{code} of $A$, denoted by $\trans{A}$, as:
 
 If $A$ is an atomic formula then
@@ -29,7 +29,7 @@ For a \SysP-basis $\Gamma$ we define the code of $\Gamma$, denoted by $\trans{\G
 
 In the following lemma we prove the $\Rightarrow$ direction by constructing a $\lambda2$ term $M$ with the required type.
 
-\begin{lemma}\label{l1}
+\begin{lemma}\label{lem.4.2}
 Let $\Gamma$ be a \SysP-basis and $A$ a \SysP-formula such that $\Gamma\PModels A$. Then there exists a term $M\in\lambdaTerms$ such that $\trans{\Gamma}\lambdaModels M:\trans{A}$ holds.
 \end{lemma}
 \begin{proof}
@@ -50,7 +50,7 @@ We proof this by induction on the structure of the proof. %TODO on the length of
 
 In the next two lemmas we will prove the $\Leftarrow$ direction.
 
-\begin{lemma}\label{l2h}
+\begin{lemma}\label{lem.4.3}
 Let $\Gamma$ be a \SysP-basis, $M\in\lambdaTerms$, $P\in\RelP$, and $\predTFst,\predTSnd\in\lambdaTypes$ such that $\trans{\Gamma}\lambdaModels M:\code{P}{\predTFst}{\predTSnd}$ holds.
 %Then $t_1=a$ and $t_2=b$ for some $a,b\in\VarP$ (remember that $\VarP\subseteq\lambdaTypVar$). Furthermore $\Gamma\PModels P(a,b)$ holds.
 Then $\predTFst, \predTSnd\in\VarP$ (remember that $\VarP\subseteq\lambdaTypVar$). Furthermore $\Gamma\PModels P(\predTFst,\predTSnd)$ holds.
@@ -125,7 +125,7 @@ We now proof the lemma by structural induction on the term $M$.
 \end{itemize}
 \end{proof}
 
-\begin{lemma}\label{l2}
+\begin{lemma}\label{lem.4.4}
 Let $\Gamma$ be a \SysP-basis, $M\in\lambdaTerms$ such that $\trans{\Gamma}\lambdaModels M:\false$ holds. Then $\Gamma\PModels\false$ holds.
 \end{lemma}
 \begin{proof}
@@ -148,7 +148,7 @@ Again we can assume that $M$ is in normal form.
 			\input{Figure.C2.2}
 		\end{figure}
 		
-		For $i\in\{1,\dots,n-1\}$ we can apply Lemma \ref{l2h} to $\trans{\Gamma}\lambdaModels N_i:\code{P^i}{\predTFst[i]}{\predTSnd[i]}$ to get that $\predTFst[i],\predTSnd[i]\in\VarP$ and that $\Gamma\PModels P^i(\predTFst[i],\predTSnd[i])$. But to proof that \false{} is a semantic consequence of $\Gamma$ we still need $\Gamma\PModels\forall\beta(P^n(\predTFst[n],\predTSnd[n])\to\false)$.
+		For $i\in\{1,\dots,n-1\}$ we can apply Lemma \ref{lem.4.3} to $\trans{\Gamma}\lambdaModels N_i:\code{P^i}{\predTFst[i]}{\predTSnd[i]}$ to get that $\predTFst[i],\predTSnd[i]\in\VarP$ and that $\Gamma\PModels P^i(\predTFst[i],\predTSnd[i])$. But to proof that \false{} is a semantic consequence of $\Gamma$ we still need $\Gamma\PModels\forall\beta(P^n(\predTFst[n],\predTSnd[n])\to\false)$.
 		
 		To deduce this we have to take a closer look at $L$. First note that because either $\predFst[n]=\beta=\predTFst[n]$ or there exits an $i\in\{1,\dots,n-1\}$ such that $\predFst[n]\in\FV(P^i(\predFst[i],\predSnd[i]))$ which implies that $\predTFst[n]=\predTFst[i]$ or $\predTFst[n]=\predTSnd[i]$. In all cases we get that $\predTFst[n]\in\VarP$. A similar argument yields $\predTSnd[n]\in\VarP$.
 		
@@ -210,19 +210,19 @@ Again we can assume that $M$ is in normal form.
 \end{itemize}
 \end{proof}
 
-\begin{lemma}\label{l3}
+\begin{lemma}\label{lem.4.5}
 \begin{align*}
 \Gamma\PModels\false&&\text{iff}&&\text{There is a $\lambda2$ term $M$ such that } \trans{\Gamma}\lambdaModels M:\false
 \end{align*}
 \end{lemma}
 \begin{proof}
 The $\Leftarrow$ direction follows from Lemma %TODO here Lemma in Cons proof Claims
-\ref{l2}. And the $\Rightarrow$ direction follows from Lemma \ref{l1} with $A=\false$.
+\ref{lem.4.4}. And the $\Rightarrow$ direction follows from Lemma \ref{lem.4.2} with $A=\false$.
 \end{proof}
 
-\begin{theorem}
+\begin{theorem}\label{the.4.6}
 \lambdaInhab{} is undecidable.
 \end{theorem}
 \begin{proof}
-From Lemma \ref{l3} it follows that $\PCons\leq\lambdaInhab$. Since , by Theorem \ref{the:1}, \PCons{} is undecidable we have shown that \lambdaInhab{} is undecidable too.
+From Lemma \ref{lem.4.5} it follows that $\PCons\leq\lambdaInhab$. Since , by Theorem \ref{the.3.8}, \PCons{} is undecidable we have shown that \lambdaInhab{} is undecidable too.
 \end{proof}

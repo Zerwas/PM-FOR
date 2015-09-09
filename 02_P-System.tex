@@ -1,4 +1,4 @@
-\section{System P}
+\section{System P}\label{sec.3}
 \subsection{Definitions}
 %TODO mention the convention that a free and \alpha not or change the convention :D
 In the following let $\VarP=\{\alpha,a,\beta,b,\dots\}$ be a countably infinite subset of \lambdaTypVar{} (of variables). 
@@ -12,13 +12,13 @@ A first-order logic formula $\varphi$ over $\VarP$, $\emptyset$, and $\mathcal{P
 \end{description}
 The set of formulas of System \SysP{} (= set of \SysP-formulas) over $\VarP$ and $\RelP$ is the set of all first-order formulas in $\mathcal{L}_{(\VarP,\emptyset,\mathcal{P})}$ that are either an atomic, universal or existential formula. In what follows we assume all \SysP-formulas to contain no dummy quantifiers.
 
-\begin{definition}
+\begin{definition}\label{def.3.1}
 A finite set of \SysP-formulas $\Gamma$ is called \SysP-basis, or basis if it is clear from the context whether a \SysP-basis or a \lambdaTwo-basis is meant.
 \end{definition}
 
 For a \SysP-basis $\Gamma$, another \SysP-basis $\Sigma$, and a \SysP-formula $A$ we will abbreviate $\Gamma\cup\{A\}$ to $\Gamma,A$ and $\Gamma\cup\Sigma$ to $\Gamma,\Sigma$ (c.f. \lambdaTwo-basis).
 
-\begin{definition}
+\begin{definition}\label{def.3.2}
 Let $A$ be a \SysP-formula, and $\Gamma$ be a basis. The formula $A$ is a \define{semantic consequence} of $\Gamma$, denoted by $\Gamma\PModels A$, if $A$ can be produced using the following deduction rules.
 \begin{mdframed}
 	\begingroup%TODO maybe not A and B for terms?
@@ -36,7 +36,7 @@ Let $A$ be a \SysP-formula, and $\Gamma$ be a basis. The formula $A$ is a \defin
 \end{definition}
 
 We define a more general consequence relation in which we demand that \false{} is interpreted with $\bot$. In this relation existential formulas will behave like the name suggests. Formally:
-\begin{definition}
+\begin{definition}\label{def.3.3}
 Let $\Gamma$ be a basis. The \SysP-formula $A$ is a \define{semantic consequence with falsity} of $\Gamma$, denoted by $\Gamma\PModelsf A$, if for every interpretation $I$
 \[I\models\Gamma \text{ and } \false^I=\bot\text{ implies }I\models A.\]
 
@@ -65,7 +65,7 @@ This allows us to add the following deduction rule.
 	\end{align*}
 	Together with $a\notin\emph{FV}(\Gamma,A')$, it follows that $I\left[a\mapsto d\right]$ is a model of $\Gamma,A\left[\alpha:=a\right]$. Which implies $I\left[a\mapsto d\right]\models B$.	Since $a$ is not free in $B$ we conclude that $I$ is also a model of $B$.
 \end{proof}
-\begin{definition}
+\begin{definition}\label{def.3.4}
 	The problem to decide whether a given set of \SysP-formulas is consistent, denoted by \PCons, is defined as follows.
 	Given a set of \SysP-formulas $\Gamma$. 
 	\begin{center}
@@ -131,7 +131,7 @@ We also need a set $\Gamma_1$ to ensure that our representation works correctly.
 \end{itemize}
 We define $\conGM$ as $\bigcup_{Q\in\autStates\setminus\{Q_f\}}\Gamma_{Q,R(Q)}\cup\{\forall\alpha(Q_f(\alpha)\to\false)\}\cup\Gamma_1$. We have added the formula $\forall\alpha(Q_f(\alpha)\to\false)$ to be able to deduce \false{} if our automaton terminates.
 Finally we can define $\Gamma_M$ as $\Gamma_{C_0}\cup\conGM$, where $C_0=\langle Q_0,0,0\rangle$ is the initial configuration.
-\begin{claim}\label{cla.17}
+\begin{claim}\label{cla.3.5}
 	\begin{align*}
 		  & \text{$\Gamma_M\PModels\false$ holds in system P} &   & \implies & \text{$M$ terminates on input $(0,0)$} 
 	\end{align*}
@@ -174,7 +174,7 @@ Finally we can define $\Gamma_M$ as $\Gamma_{C_0}\cup\conGM$, where $C_0=\langle
 \end{proof}
 
 We proof the other direction by induction on the length of the computation. But to be able to use the induction hypothesis we need a slightly more general statement (this is why we defined $\conGM$ and not just $\Gamma_M$ right away).
-\begin{claim}\label{cla.18}
+\begin{claim}\label{cla.3.6}
 	Let $C=\langle Q,m,n\rangle$ be a configuration of $M$. If a final configuration (i.e. a configuration $\langle Q_f,\widehat{m},\widehat{n}\rangle$ for some $\widehat{m},\widehat{n}\in\N$) is reachable from $C$ then $\Gamma_C\cup\conGM\PModels\false$.
 \end{claim}
 \begin{proof} By induction on the length $i$ of the computation.
@@ -305,18 +305,18 @@ We proof the other direction by induction on the length of the computation. But 
 	Again it is obvious that we have deduced $\Gamma_D$ ($\widehat{a}:=b$, $\widehat{b}_i:=b_i$ for $i\in\{0,\dots,n\}$, and $\widehat{a}_{i-1}:=a_i$ for $i\in\{1,\dots,m\}$). Hence, by induction hypothesis, we can deduce \false{}.
 \end{proof}
 
-\begin{lemma}\label{lem.19}
+\begin{lemma}\label{lem.3.7}
 	\begin{align*} %TODO for any M one can effectively construct? or is M the M from the construction
 		  & \text{$M$ terminates on input $(0,0)$} &   & \text{iff} & \text{$\Gamma_M\PModels\false$ holds in system P.} 
 	\end{align*}
 \end{lemma}
 \begin{proof}
-	The $\Leftarrow$ direction is proven in Claim \ref{cla.17}. And the $\Rightarrow$ direction is a direct consequence of Claim \ref{cla.18} with $C=\langle Q_0,0,0\rangle$.
+	The $\Leftarrow$ direction is proven in Claim \ref{cla.3.5}. And the $\Rightarrow$ direction is a direct consequence of Claim \ref{cla.3.6} with $C=\langle Q_0,0,0\rangle$.
 \end{proof}
 
-\begin{theorem}\label{the:1}
+\begin{theorem}\label{the.3.8}
 	\PCons{} is undecidable.
 \end{theorem}
 \begin{proof}
-	Since by Lemma \ref{lem.19} for a given two-counter automaton $M$ we can effectively construct a set of \SysP-formulas $\Gamma_M$ such that $M$ terminates on input $(0,0)$ iff $\Gamma_M$ is not consistent. It follows that $\autHalt\leq\PCons$. Since \autHalt{} is undecidable we have shown that \PCons{} is undecidable too.
+	Since by Lemma \ref{lem.3.7} for a given two-counter automaton $M$ we can effectively construct a set of \SysP-formulas $\Gamma_M$ such that $M$ terminates on input $(0,0)$ iff $\Gamma_M$ is not consistent. It follows that $\autHalt\leq\PCons$. Since \autHalt{} is undecidable we have shown that \PCons{} is undecidable too.
 \end{proof}
