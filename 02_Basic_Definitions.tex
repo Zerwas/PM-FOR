@@ -1,15 +1,30 @@
 \section{Basic Definitions}\label{sec.2}
-\subsection{$\lambda$-calculus \lambdaTwo}
+\subsection{Conventions}
+For variable names we will use the following conventions.\\
+\lambdaTwo{} types: $t, t', t'', t_1, t_2, \dots,s,s_1,s_2,\dots$\\
+\lambdaTwo{} terms: $M, M', M_1, M_2,\dots, N, N', N_1, N_2, \dots$\\
+first-order terms: $t,t_1, t_2,\dots$\\
+first-order formulas: $\varphi,\varphi_1,\varphi_2,\psi,\psi'$\\
+type-variables: $p,p_1,p_2,\alpha, a,\alpha_1, a_1,\alpha_2,a_2, \dots, \beta, b,\beta_1,b_1,\beta_2,b_2, \dots$\\
+value-variables: $x,y,z, x_1 , x_2 ,\dots$\\
+predicate-symbols: $P,P^1,P^2,\dots$\\
+\SysP-variables: $\alpha, a,\alpha_1, a_1,\alpha_2,a_2, \dots, \beta, b,\beta_1,b_1,\beta_2,b_2, \dots$\\
+\SysP-formulas: $A,A' ,B,B',A_1,A_2,\dots$\\
+states: $Q,Q',\widehat{Q},Q_f,Q_0,Q_1,Q_2,\dots$
+
+If possible we will use Greek letters for bound type-variables and Latin letters for free type-variables.
+\subsection{$\boldsymbol{\lambda}$-calculus \lambdaTwo{}}
+
 In the following let $\lambdaTypVar=\{\alpha,a,\beta,b,\dots\}$ be a countably infinite set (of type-variables) and $\lambdaValVar=\{x,x_1,x_2,\dots\}$ be a countably infinite set (of value-variables).
 \begin{definition}\label{def.2.1}
-	The \define{set of all $\lambda2$ types over \lambdaTypVar}, denoted by \lambdaTypes{}, is the smallest set T satisfying the following conditions: %TODO maybe put \lambdaTypVar in \lambdaTypes
+	The \define{set of all \lambdaTwo{} types over \lambdaTypVar}, denoted by \lambdaTypes{}, is the smallest set T satisfying the following conditions: %TODO maybe put \lambdaTypVar in \lambdaTypes
 	\begin{itemize}
 		\item $\lambdaTypVar\subseteq\text{T}$,
 		\item if $t_1,t_2\in\text{T}$ then $(t_1\to t_2)\in\text{T}$, and
 		\item if $t\in\text{T}$ and $\alpha\in\lambdaTypVar$ then $\forall\alpha.t\in\text{T}$.
 	\end{itemize}
 	
-	The \define{set of all $\lambda2$ terms over \lambdaTypVar{} and \lambdaValVar}, denoted by \lambdaTerms{}, is the smallest set $\Lambda_\text{T}$ satisfying the following conditions: %TODO lambda2 explicit
+	The \define{set of all \lambdaTwo{} terms over \lambdaTypVar{} and \lambdaValVar}, denoted by \lambdaTerms{}, is the smallest set $\Lambda_\text{T}$ satisfying the following conditions: %TODO lambda2 explicit
 	\begin{itemize}
 		\item $\lambdaValVar\subseteq\Lambda_\text{T}$,
 		\item if $M_1,M_2\in\Lambda_\text{T}$ then $M_1M_2\in\Lambda_\text{T}$,
@@ -26,7 +41,7 @@ If we have a type of the form $(t_1\to(t_2\to(\dots \to(t_{n-1}\to t_n)\cdots)))
 			N                     & \text{if $M=x$}                \\
 			y                     & \text{if $M=y$ and $y\neq x$}  \\
 			(M_1\left[x:=N\right])(M_2\left[x:=N\right])  & \text{if $M=M_1M_2$}           \\
-			M                     & \text{if $M=\lambda x:t.M'$}   \\
+			\lambda x:t.M'        & \text{if $M=\lambda x:t.M'$}   \\
 			\lambda y:t.(M'\left[x:=N\right])             & \text{if $M=\lambda y:t.M'$ and $y\neq x$}   \\
 			\Lambda\alpha.(M'\left[x:=N\right])           & \text{if $M=\Lambda\alpha.M'$} \\
 			(M'\left[x:=N\right])\,t                      & \text{if $M=M'\,t$}            \\
@@ -37,7 +52,7 @@ If we have a type of the form $(t_1\to(t_2\to(\dots \to(t_{n-1}\to t_n)\cdots)))
 			t'                    & \text{if $t=a$}                    \\ 
 			b                     & \text{if $t=b$ and $b\neq a$}      \\ 
 			(t_1\left[a:=t'\right])\to (t_2\left[a:=t'\right])  & \text{if $t=t_1\to t_2$}           \\
-			t & \text{if $t=\forall a.t''$}\\
+			\forall a.t''         & \text{if $t=\forall a.t''$}\\
 			\forall\beta.(t''\left[a:=t'\right]) & \text{if $t=\forall\beta.t''$ and $\beta\neq a$}\\
 		\end{cases}\]
 		
@@ -122,9 +137,9 @@ Now we can lift this definition to terms.
 \end{definition}
 
 \begin{definition}\label{def.2.6}
-The \define{$\beta$-reduction}, denoted by $\lambdaB$, is a binary relation on $\lambdaTerms$. For all $M,N\in\lambdaTerms$, $x\in\lambdaValVar$, $t\in\lambdaTypes$, and $\alpha\in\lambdaTypVar$ if $\GV(M)\cap\FV(N)=\emptyset$ then $(\lambda x:t.M)N\lambdaB M\left[x:=N\right]$ and if $\TGV(M)\cap\TFV(N)=\emptyset$ then $(\Lambda\alpha.M)t\lambdaB M\left[\alpha:=t\right]$.
+The \define{$\beta$-reduction}, denoted by $\lambdaB$, is a binary relation on $\lambdaTerms$. For all $M,N\in\lambdaTerms$, $x\in\lambdaValVar$, $t\in\lambdaTypes$, and $\alpha\in\lambdaTypVar$ if $\GV(M)\cap\FV(N)=\emptyset$ then $(\lambda x:t.M)N\lambdaB M\left[x:=N\right]$ and from $\TGV(M)\cap\TFV(N)=\emptyset$ it follows that $(\Lambda\alpha.M)t\lambdaB M\left[\alpha:=t\right]$.
 
-The \define{$\alpha_1$-conversion}, denoted by $\lambdaAO$, is a binary relation on $\lambdaTerms$. For all $M\in\lambdaTerms$, $x,x'\in\lambdaValVar$, $t\in\lambdaTypes$, and $\alpha,\beta\in\lambdaTypVar$ if $x'\notin\FV(M)\cup\GV(M)$ then $\lambda x:t.M\lambdaAO\lambda x':t.(M\left[x:=x'\right])$ and if $\beta\notin\TFV(M)\cup\TGV(M)$ then $\Lambda \alpha.M\lambdaAO\Lambda \beta.(M\left[\alpha:=\beta\right])$.
+The \define{$\alpha_1$-conversion}, denoted by $\lambdaAO$, is a binary relation on $\lambdaTerms$. For all $M\in\lambdaTerms$, $x,x'\in\lambdaValVar$, $t\in\lambdaTypes$, and $\alpha,\beta\in\lambdaTypVar$ if $x'\notin\FV(M)\cup\GV(M)$ then $\lambda x:t.M\lambdaAO\lambda x':t.(M\left[x:=x'\right])$ and from $\beta\notin\TFV(M)\cup\TGV(M)$ it follows that $\Lambda \alpha.M\lambdaAO\Lambda \beta.(M\left[\alpha:=\beta\right])$.
 
 The \define{$\alpha_2$-conversion}, denoted by $\lambdaAT$, is a binary relation on $\lambdaTypes$. For all $t\in\lambdaTypes$, and $\alpha,\beta\in\lambdaTypVar$ if $\beta\notin\FV(t)\cup\GV(t)$ then $\forall\alpha.t\lambdaAT\forall\beta.(t\left[\alpha:=\beta\right])$.
 \end{definition}
@@ -161,12 +176,12 @@ $M$ is \define{weakly normalizing} if there exists an $N\in\lambdaTerms$ such th
 The term $M$ is called \define{strongly normalizing} if there is no infinite chain $M\lambdaRed M_1\lambdaRed M_2\dots$.
 \end{definition}
 
-\begin{definition}\label{def.2.9} Let $\mathcal{V}=\{x_1,\dots,x_n\}$ be a finite subset of \lambdaValVar{} such that $x_i\neq x_j$ for $1\leq i<j\leq n$ and $t_1,\dots,t_n\in\lambdaTerms$.	A \define{\lambdaTwo-basis} $\Gamma=\{(x_1:t_1),\dots,(x_n:t_n)\}$ is a mapping from $\mathcal{V}$ to \lambdaTypes{}. If the kind of basis is clear from the context we abbreviate \lambdaTwo-basis to basis. 
+\begin{definition}\label{def.2.9} Let $\mathcal{V}=\{x_1,\dots,x_n\}$ be a finite subset of \lambdaValVar{} such that $x_i\neq x_j$ for $1\leq i<j\leq n$ and $t_1,\dots,t_n\in\lambdaTypes$.	A \define{\lambdaTwo-basis} $\Gamma=\{(x_1:t_1),\dots,(x_n:t_n)\}$ is a mapping from $\mathcal{V}$ to \lambdaTypes{}. If the kind of basis is clear from the context we abbreviate \lambdaTwo-basis to basis. 
 
 The \define{free variables of a basis} $\Gamma$, denoted by $\FV(\Gamma)$, are $\bigcup\{\FV(t)\mid(x:t)\in\Gamma\}$.
 \end{definition}
 
-For a basis $\Gamma$ and another basis $\Sigma$, $x\in\lambdaValVar\setminus\dom(\Gamma)$, and $t\in\lambdaTypes$ we will abbreviate $\Gamma\cup\{(x:t)\}$ to $\Gamma,x:t$ and $\Gamma\cup\Sigma$ to $\Gamma,\Sigma$. %TODO is the second convention used?
+For a basis $\Gamma$ and another basis $\Sigma$ such that $\dom(\Gamma)\cap\dom(\Sigma)=\emptyset$, $x\in\lambdaValVar\setminus\dom(\Gamma)$, and $t\in\lambdaTypes$ we will abbreviate $\Gamma\cup\{(x:t)\}$ to $\Gamma,x:t$ and $\Gamma\cup\Sigma$ to $\Gamma,\Sigma$. %TODO is the second convention used?
 
 \begin{definition}\label{def.2.10}
 Let $M$ be in \lambdaTerms{}, $t$ in \lambdaTypes, and $\Gamma$ be a basis. A statement $M:t$ is \define{derivable} from $\Gamma$, denoted by $\Gamma\lambdaModels M:t$, if $M:t$ can be produced using the following rules.
@@ -188,23 +203,25 @@ Let $M$ be in \lambdaTerms{}, $t$ in \lambdaTypes, and $\Gamma$ be a basis. A st
 A term $M\in\lambdaTerms$ is \define{well typed} if there exists a basis $\Gamma$ and a type $t\in\lambdaTypes$ such that $\Gamma\lambdaModels M:t$ holds.
 \end{definition}
 
+The following two theorems are well known (for formal proofs see \cite{1}).
+
 \begin{theorem}\label{the.2.12}
 Let $M,M'$ be in \lambdaTerms{} and $M\lambdaAC M'$ or $M\lambdaBC M'$, $t$ in \lambdaTypes, and $\Gamma$ be a basis. If $\Gamma\lambdaModels M:t$ then $\Gamma\lambdaModels M':t$.
 \end{theorem}
 
 \begin{theorem}\label{the.2.13}
-All well typed $\lambda2$ terms are strongly normalizing.
+All well typed \lambdaTwo{} terms are strongly normalizing.
 \end{theorem}
 
 \begin{definition}\label{def.2.14}
-The inhabitation problem for $\lambda2$, denoted by \lambdaInhab, is defined as follows. Given a $\lambda2$ type $t$.
-\[\text{Is there a $\lambda2$ term $M$ such that } \emptyset\lambdaModels M:t?\]
+The inhabitation problem for \lambdaTwo{}, denoted by \lambdaInhab, is defined as follows. Given a \lambdaTwo{} type $t$.
+\[\text{Is there a \lambdaTwo{} term $M$ such that } \emptyset\lambdaModels M:t?\]
 But we can rephrase this problem so that it becomes more general:
-Given a basis $\Gamma$ and a $\lambda2$ type $t$.
-\[\text{Is there a $\lambda2$ term $M$ such that } \Gamma\lambdaModels M:t?\]
-Obviously the second version is a special case of the first one. For the other direction consider a basis $\Gamma=\{(x_1:t_1),\dots,(x_n:t_n)\}$ and a $\lambda2$ type $t$. Clearly, for every term $M$, $\Gamma\lambdaModels M:t$ holds iff $\emptyset\lambdaModels \lambda x_1:t_1.\dots\lambda x_n:t_n.M:t_1\to\dots\to t_n\to t$.
+Given a basis $\Gamma$ and a \lambdaTwo{} type $t$.
+\[\text{Is there a \lambdaTwo{} term $M$ such that } \Gamma\lambdaModels M:t?\]
+Obviously the second version is a special case of the first one. For the other direction consider a basis $\Gamma=\{(x_1:t_1),\dots,(x_n:t_n)\}$ and a \lambdaTwo{} type $t$. Clearly, for every term $M$, $\Gamma\lambdaModels M:t$ holds iff $\emptyset\lambdaModels \lambda x_1:t_1.\dots\lambda x_n:t_n.M:t_1\to\dots\to t_n\to t$.
 \end{definition}
-\subsection{first-order logic}
+\subsection{First-order logic}
 \begin{definition}\label{def.2.15}
 	A \define{ranked set} is a tuple $(\Sigma,\rank)$, where $\Sigma$ is a countable set and $\rank\colon\Sigma\to\N$ is a function that maps every symbol from $\Sigma$ to a natural number (its rank).
 \end{definition}
@@ -229,7 +246,7 @@ For the remainder of this subsection let $\mathcal{V}=\{y,y_1,y_2,\dots\}$ be a 
 \end{definition}
 We introduce an additional binary operation $\to$ on formulas, where for some $\varphi$, $\psi\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$ the formula $(\varphi\to\psi)$ is defined as $(\neg\varphi\vee\psi)$, if we have a formula of the form $(\varphi_1\to(\varphi_2\to(\dots \to(\varphi_{n-1}\to \varphi_n)\cdots)))$ we will often omit the brackets and just write $(\varphi_1\to \varphi_2\to\dots\to \varphi_{n-1}\to \varphi_n)$ or $\varphi_1\to \varphi_2\to\dots \to \varphi_{n-1}\to \varphi_n$ instead. 
 
-For nullary relation symbols $P$ we will abbreviate $P()$ to $P$. If a formula $\varphi$ is of the form $Qy.(\psi)$ (where $Q\in\{\exists,\forall\}$, $y\in\mathcal{V}$, and $(\psi)\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$) we often drop the dot and write $Qy(\psi)$ instead. %TODO why brackets around varphi? maybe so that you cannot use this for a negated formula or smth like that
+For nullary relation symbols $P$ we will abbreviate $P()$ to $P$. If a formula $\varphi$ is of the form $Qy.\psi$ (where $Q\in\{\exists,\forall\}$, $y\in\mathcal{V}$, and $\psi\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$) we often drop the dot and write $Qy\psi$ instead. 
 If a formula $\varphi$ has multiple variables bound by the same quantifier (i.e. $\varphi=Qy_1.Qy_2.\dots Qy_n.\psi$ for $Q\in\{\exists,\forall\}$, some $n\in\N$, $y_1,y_2,\dots,y_n\in\mathcal{V}$, and $\psi\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$) we abbreviate $\varphi$ to $Qy_1y_2\dots y_n.\psi$ or to $Q\vec{y}.\psi$ where $\vec{y}=y_1y_2\dots y_n$.
 
 \begin{definition}\label{def.2.17}
@@ -262,7 +279,7 @@ If a formula $\varphi$ has multiple variables bound by the same quantifier (i.e.
 \end{definition}
 
 \begin{definition}\label{def.2.19}
-We say that a formula $\varphi\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$ contains no \define{dummy quantifiers} if for all $\psi\in\SUB(\varphi)$ of the form $\psi=\forall y.\psi'$ or $\psi=\exists y.\psi'$ for some $y\in\VarP$ and some $\psi'\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$ we have that $y\in\FV(\psi')$.
+We say that a formula $\varphi\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$ contains no \define{dummy quantifiers} if for all $\psi\in\SUB(\varphi)$ of the form $\psi=\forall y.\psi'$ or $\psi=\exists y.\psi'$ for some $y\in\mathcal{V}$ and some $\psi'\in\mathcal{L}_{(\mathcal{V},\mathcal{F},\mathcal{P})}$ we have that $y\in\FV(\psi')$.
 \end{definition}
 
 \begin{definition}\label{def.2.20}
@@ -321,8 +338,8 @@ Let $I=(\Delta,\cdot^I,\omega)$ be an interpretation, $y\in\mathcal{V}$, and $d\
 			\varphi^I_1~\text{and}~\varphi^I_2                     & \text{if $\varphi=(\varphi_1\wedge\varphi_2)$}                           \\
 			\varphi^I_1~\text{or}~\varphi^I_2                      & \text{if $\varphi=(\varphi_1\vee\varphi_2)$}                             \\
 			%TODO how to handle implies?
-			\text{exists $d\in\Delta$}~\psi^{I\left[y\mapsto d\right]} & \text{if $\varphi=\exists y.\psi$}                                        \\
-			\text{forall $d\in\Delta$}~\psi^{I\left[y\mapsto d\right]} & \text{if $\varphi=\forall y.\psi$}                                        \\
+			\text{exists $d\in\Delta$}:\psi^{I\left[y\mapsto d\right]} & \text{if $\varphi=\exists y.\psi$}                                        \\
+			\text{forall $d\in\Delta$}:\psi^{I\left[y\mapsto d\right]} & \text{if $\varphi=\forall y.\psi$}                                        \\
 		\end{cases}\]
 	The interpretation $I$ is a \define{model} of $\varphi$, denoted by $I\models\varphi$, if $\varphi^I=\top$.
 \end{definition}
@@ -336,7 +353,7 @@ When we define an interpretation $I$ and we have a nullary predicate symbol $P$ 
 	\end{description}
 \end{definition}
 
-\subsection{two-counter automaton} %TODO maby later in System P proof
+\subsection{Two-counter automaton} %TODO maby later in System P proof
 We will use a version of two-counter automaton which only has two types of transitions. First it can increment a register and second it can decrement a register or jump if the register is already zero. Formally:
 \begin{definition}\label{def.2.24}
 	A \define{deterministic two-counter automaton} is a 4-tuple $M=(\autStates,Q_0,Q_f,\autRules)$,
@@ -361,9 +378,9 @@ We will use a version of two-counter automaton which only has two types of trans
 \subitem if $n=0$ then $\widehat{Q}=Q_2$, $\widehat{m}=m$, and $\widehat{n}=0$,
 \subitem if $n\geq1$ then $\widehat{Q}=Q_1$, $\widehat{m}=m$, and $\widehat{n}=n-1$.
 	\end{itemize}
-	The \define{transition relation of $M$}, denoted by $\Rightarrow_M$, is defined as $\bigcup_{r\in\autRules(Q\setminus\{Q_f\})}\Rightarrow^r_M$. We denote the transitive reflexive closure of $\Rightarrow_M$ by $\Rightarrow^*_M$
+	The \define{transition relation of $M$}, denoted by $\Rightarrow_M$, is defined as $\bigcup_{r\in\autRules(Q\setminus\{Q_f\})}\Rightarrow^r_M$.% We denote the transitive reflexive closure of $\Rightarrow_M$ by $\Rightarrow^*_M$.
 		
-	Let $m$, $n$ be in $\N$, we say that \define{$M$ terminates on input $(m,n)$} if there exist $\widehat{m},\widehat{n}\in\N$ such that $\langle Q_0,m,n\rangle\Rightarrow^*_M\langle Q_f,\widehat{m},\widehat{n}\rangle$ (It follows that there exists an $i\in\N$ and configurations $D_1,\dots,D_i$ of $M$ such that $\langle Q_0,m,n\rangle= D_1\Rightarrow_M\dots\Rightarrow_M D_i=\langle Q_f,\widehat{m},\widehat{n}\rangle$, we call this chain a computation with length $i$).
+	Let $m$, $n$ be in $\N$, we say that \define{$M$ terminates on input $(m,n)$} if there exist $\widehat{m},\widehat{n}\in\N$ such that $\langle Q_0,m,n\rangle\Rightarrow^*_M\langle Q_f,\widehat{m},\widehat{n}\rangle$ (It follows that there exists an $i\in\N$ and configurations $D_1,\dots,D_i$ of $M$ such that $\langle Q_0,m,n\rangle= D_1\Rightarrow_M\dots\Rightarrow_M D_i=\langle Q_f,\widehat{m},\widehat{n}\rangle$, we call this chain a computation with length $i-1$).
 \end{definition}
 \begin{definition}\label{def.2.25}
 	The halting problem for two-counter automaton, denoted by \autHalt{}, is defined as follows.

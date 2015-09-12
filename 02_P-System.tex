@@ -1,14 +1,13 @@
 \section{System P}\label{sec.3}
 \subsection{Definitions}
-%TODO mention the convention that a free and \alpha not or change the convention :D
 In the following let $\VarP=\{\alpha,a,\beta,b,\dots\}$ be a countably infinite subset of \lambdaTypVar{} (of variables). 
 Let $\RelP=\{P,Q,\dots\}$ be a set (of predicate symbols) and $\mathcal{P}$ a ranked set such that $\mathcal{P}^{(0)}=\{\false\}$, $\mathcal{P}^{(2)}=\RelP$, and $\mathcal{P}^{(k)}=\emptyset$ for all $k\in\N\setminus\{0,2\}$.
 A first-order logic formula $\varphi$ over $\VarP$, $\emptyset$, and $\mathcal{P}$ is an
 \begin{description} %TODO quantify \vec{a}, no dummy quantifiers?
 	\item[atomic formula] if $\varphi=\false$ or $\varphi=P(a,b)$ for some $P\in\RelP$ and $a,b\in\VarP$.
-	\item[universal formula] if $\varphi=\forall\vec{\alpha}(A_1\to A_2 \to\dots\to A_n)$ for some $n\in\N$ and where $A_i$ is an atomic formula for $i\in\{1,\dots,n\}$, $A_i\neq\false$ for $i\in\{1,\dots,n-1\}$ and for each $\alpha\in\FV(A_n)\setminus\FV(\varphi)$ %TODO or cut GV(\varphi)
+	\item[universal formula] if $\varphi=\forall\vec{\alpha}(A_1\to A_2 \to\dots\to A_n)$ for some $\vec{\alpha}=\alpha_1\dots\alpha_m$ where $\alpha_1,\dots,\alpha_m\in\VarP$, some $n\in\N$ and where $A_i$ is an atomic formula for $i\in\{1,\dots,n\}$, $A_i\neq\false$ for $i\in\{1,\dots,n-1\}$ and for each $\alpha\in\FV(A_n)\cap\GV(\varphi)$ %TODO or cut GV(\varphi)
 	 there exists an $i\in\{1,\dots,n-1\}$ such that $\alpha\in\FV(A_i)$.
-	\item[existential formula] if there is an $n\in\N^+$, atomic formulas $A_i\neq\false$ for $i\in\{1,\dots,n\}$, $\beta\in\VarP$, such that for each $\alpha\in(\FV(A_n)\setminus\FV(\varphi))\setminus\{\beta\}$ there exists an $i\in\{1,\dots,n-1\}$ such that $\alpha\in\FV(A_i)$ and $\varphi=\forall\vec{\alpha}(A_1\to A_2 \to\dots\to A_{n-1}\to\forall\beta(A_n\to\false)\to\false)$.
+	\item[existential formula] if there is a $\vec{\alpha}=\alpha_1\dots\alpha_m$ where $\alpha_1,\dots,\alpha_m\in\VarP$, an $n\in\N^+$, atomic formulas $A_i\neq\false$ for $i\in\{1,\dots,n\}$, $\beta\in\VarP$, such that for each $\alpha\in(\FV(A_n)\cap\GV(\varphi))\setminus\{\beta\}$ there exists an $i\in\{1,\dots,n-1\}$ such that $\alpha\in\FV(A_i)$ and $\varphi=\forall\vec{\alpha}(A_1\to A_2 \to\dots\to A_{n-1}\to\forall\beta(A_n\to\false)\to\false)$.
 \end{description}
 The set of formulas of System \SysP{} (= set of \SysP-formulas) over $\VarP$ and $\RelP$ is the set of all first-order formulas in $\mathcal{L}_{(\VarP,\emptyset,\mathcal{P})}$ that are either an atomic, universal or existential formula. In what follows we assume all \SysP-formulas to contain no dummy quantifiers.
 
@@ -51,17 +50,17 @@ This allows us to add the following deduction rule.
 \end{mdframed}
 \end{definition}
 \begin{proof}
-	Let $I=(\Delta,\cdot^I,\omega)$ be a model of $\Gamma,\forall\alpha(A\to\false)\to\false$ with $\false^I=\bot$ and $a\in\VarP$ a variable such that $a\notin\emph{FV}(\Gamma,A',B)$.
+	Let $I=(\Delta,\cdot^I,\omega)$ be a model of $\Gamma,A':=\forall\alpha(A\to\false)\to\false$ with $\false^I=\bot$ and $a\in\VarP$ a variable such that $a\notin\emph{FV}(\Gamma,A',B)$.
 	\begin{align*}
 		I\models\Gamma,\forall\alpha(A\to\false)\to\false & \Rightarrow I\models\forall\alpha(A\to\false)\to\false                                                          \\
-        & \Rightarrow (\forall\alpha(A\to\false))^I\to\false^I                                                            \\
-        & \Rightarrow (\forall\alpha(A\to\false))^I\to\bot                                                                \\
-        & \Rightarrow \neg(\forall\alpha(A\to\false))^I                                                                   \\
-        & \Rightarrow \neg(\forall d\in\Delta\colon(A\to\false)^{I\left[\alpha\mapsto d\right]})                               \\
-        & \Rightarrow \exists d\in\Delta\colon\neg(A^{I\left[\alpha\mapsto d\right]}\to\false^{I\left[\alpha\mapsto d\right]}) \\
-        & \Rightarrow \exists d\in\Delta\colon\neg(A^{I\left[\alpha\mapsto d\right]}\to\bot)                                   \\
-        & \Rightarrow \exists d\in\Delta\colon\neg(\neg A^{I\left[\alpha\mapsto d\right]})                                     \\
-        & \Rightarrow \exists d\in\Delta\colon A^{I\left[\alpha\mapsto d\right]}
+        & \Rightarrow\text{not}~ (\forall\alpha(A\to\false))^I~\text{or}~\false^I                                                            \\
+        & \Rightarrow\text{not}~ (\forall\alpha(A\to\false))^I~\text{or}~\bot                                                                \\
+        & \Rightarrow\text{not}~ (\forall\alpha(A\to\false))^I                                                                   \\
+        & \Rightarrow\text{not}~(\text{forall}~ d\in\Delta\colon(A\to\false)^{I\left[\alpha\mapsto d\right]})                               \\
+        & \Rightarrow\text{exists}~ d\in\Delta\colon\text{not}~(\text{not}~A^{I\left[\alpha\mapsto d\right]}~\text{or}~\false^{I\left[\alpha\mapsto d\right]}) \\
+        & \Rightarrow\text{exists}~ d\in\Delta\colon\text{not}~(\text{not}~A^{I\left[\alpha\mapsto d\right]}~\text{or}~\bot)                                   \\
+        & \Rightarrow\text{exists}~ d\in\Delta\colon\text{not}~(\text{not}~ A^{I\left[\alpha\mapsto d\right]})                                     \\
+        & \Rightarrow\text{exists}~ d\in\Delta\colon A^{I\left[\alpha\mapsto d\right]}
 	\end{align*}
 	Together with $a\notin\emph{FV}(\Gamma,A')$, it follows that $I\left[a\mapsto d\right]$ is a model of $\Gamma,A\left[\alpha:=a\right]$. Which implies $I\left[a\mapsto d\right]\models B$.	Since $a$ is not free in $B$ we conclude that $I$ is also a model of $B$.
 \end{proof}
@@ -72,14 +71,13 @@ This allows us to add the following deduction rule.
 		Does $\Gamma\PModels\false$ not hold?
 	\end{center}
 \end{definition}
-\subsection{\PCons{} is undecidable}
+\subsection{Consistency in System \SysP{} is undecidable}
 We will show that $\autHalt\leq\PCons$ then the undecidability of \PCons{} directly follows from the undecidability of \autHalt. For a given two-counter automaton $M$ we will effectively construct a \SysP-basis $\Gamma_M$ such that
 \begin{align*}
  & \textit{$M$ terminates on input $(0,0)$} &   & \textit{iff} & \textit{$\Gamma_M\PModels\false$ holds in System \SysP.} 
 \end{align*}
 Let $M=(\autStates,Q_0,Q_f,\autRules)$ be a two-counter automaton, w.l.o.g. $S,P,R_1,R_2,E,D,G\notin\autStates$. In the following we will consider \SysP-formulas over $\VarP$ and $\RelP$, where $\RelP=\autStates\uplus\{S,P,R_1,R_2,E,D,G\}$. We will abbreviate $P(a,a)$ to $P(a)$, note that this way we can use binary predicate symbols as unary ones.
 
-%TODO better readable explenation of new predicate symbols
 The intended informal meaning for these new relation symbols is the following:
 \begin{itemize}
 	\item The meaning of $Q(a)$ is ``$a$ represents a configuration and $Q$ is the state of this configuration".
@@ -88,7 +86,7 @@ The intended informal meaning for these new relation symbols is the following:
 	\item The meaning of $P(a,b)$ is ``$b$ is a predecessor of $a$".
 	\item And $E(a)$ marks ``$a$ as the end of chain".
 	\item With $D(a)$ we state that ``$a$ is not the end of a chain".
-	\item Finally $G(a)$ has no actual meaning we just need it for the existential formulas. %TODO rephrase?
+	\item Finally $G(a)$ has no actual meaning, it holds for all elements representing a configuration or a number. But we just need it for the existential formulas.
 \end{itemize}
 For a configuration $C=\langle Q,m,n\rangle$ of $M$ we define a set of \SysP-formulas $\Gamma_C$. It contains the following formulas:
 \begin{itemize}
@@ -120,22 +118,21 @@ If $r=-(1,Q_1,Q_2)$ for some $Q_1,Q_2\in\autStates$ then $\Gamma_{Q,-(1,Q_1,Q_2)
 For $r=+(2,Q')$ for some $Q'\in\autStates$ or $r=-(2,Q_1,Q_2)$ for some $Q_1,Q_2\in\autStates$ the sets $\Gamma_{Q,r}$ are defined analogously.
 
 We also need a set $\Gamma_1$ to ensure that our representation works correctly. The following formula are in $\Gamma_1$:
-\begin{itemize} %TODO rephrase all with G(a)
+\begin{itemize}
 	\item $\forall\alpha\beta(S(\alpha,\beta)\to G(\beta))$
 	\item $\forall\alpha(D(\alpha)\to G(\alpha))$	
 	%\item $\forall\alpha(D(\alpha)\to\forall\beta(P(\alpha,\beta)\to\false)\to\false)$\\every %element that is not the end of a chain has a predecessor
-	%TODO necessary?
-	\item $\forall\alpha(G(\alpha)\to\forall\beta(R_1(\alpha,\beta)\to\false)\to\false)$\\every element represents a configuration so it has a value for register 1
-	\item $\forall\alpha(G(\alpha)\to\forall\beta(R_2(\alpha,\beta)\to\false)\to\false)$\\every element represents a configuration so it has a value for register 2
-	\item $\forall\alpha(G(\alpha)\to\forall\beta(S(\alpha,\beta)\to\false)\to\false)$\\every element has a successor
+	\item $\forall\alpha(G(\alpha)\to\forall\beta(R_1(\alpha,\beta)\to\false)\to\false)$\\every element that represents a configuration has a value for register 1
+	\item $\forall\alpha(G(\alpha)\to\forall\beta(R_2(\alpha,\beta)\to\false)\to\false)$\\every element that represents a configuration has a value for register 2
+	\item $\forall\alpha(G(\alpha)\to\forall\beta(S(\alpha,\beta)\to\false)\to\false)$\\every element that represents a configuration has a successor
 \end{itemize}
 We define $\conGM$ as $\bigcup_{Q\in\autStates\setminus\{Q_f\}}\Gamma_{Q,R(Q)}\cup\{\forall\alpha(Q_f(\alpha)\to\false)\}\cup\Gamma_1$. We have added the formula $\forall\alpha(Q_f(\alpha)\to\false)$ to be able to deduce \false{} if our automaton terminates.
 Finally we can define $\Gamma_M$ as $\Gamma_{C_0}\cup\conGM$, where $C_0=\langle Q_0,0,0\rangle$ is the initial configuration.
-\begin{claim}\label{cla.3.5}
+\begin{lemma}\label{cla.3.5}
 	\begin{align*}
-		  & \text{$\Gamma_M\PModels\false$ holds in system P} &   & \implies & \text{$M$ terminates on input $(0,0)$} 
+		  & \text{$\Gamma_M\PModels\false$ holds in System \SysP} &   & \implies & \text{$M$ terminates on input $(0,0)$} 
 	\end{align*}
-\end{claim}
+\end{lemma}
 \begin{proof}
 	Assume $M$ does not terminate then there is an infinite chain $C_0\Rightarrow_M C_1\Rightarrow_M C_2\Rightarrow_M\cdots$ ($C_i=\langle Q_i,m_i,n_i\rangle$ for $i\in\N$). Now we construct a model of $\Gamma_M$ which interprets \false{} with $\bot$ this contradicts $\Gamma_M\PModels\false$.
 
@@ -148,7 +145,7 @@ Finally we can define $\Gamma_M$ as $\Gamma_{C_0}\cup\conGM$, where $C_0=\langle
 	we say that $(d_1,d_2)\in R^I$. And we use
 	\tikz[baseline=5pt]{
 		\node (1) {$d$};
-		\node[node distance = 0.6cm,above of=1,scale=0.8] {P};}
+		\node[node distance = 0.6cm,above of=1,scale=0.8] {$P$};}
 	to say that $(d,d)\in P^I$ for predicate symbols that are used as unary predicate symbols. 
 	As domain for our interpretation we will use the natural numbers. Every number will have two tasks: firstly it will represent itself as a possible value for register 1 or 2 and secondly every number $i$ will also represent the $i$\textsuperscript{th} configuration of our infinite computation.
 	Now the idea for our model of $\Gamma_M$ looks like this:
@@ -174,9 +171,9 @@ Finally we can define $\Gamma_M$ as $\Gamma_{C_0}\cup\conGM$, where $C_0=\langle
 \end{proof}
 
 We proof the other direction by induction on the length of the computation. But to be able to use the induction hypothesis we need a slightly more general statement (this is why we defined $\conGM$ and not just $\Gamma_M$ right away).
-\begin{claim}\label{cla.3.6}
+\begin{lemma}\label{cla.3.6}
 	Let $C=\langle Q,m,n\rangle$ be a configuration of $M$. If a final configuration (i.e. a configuration $\langle Q_f,\widehat{m},\widehat{n}\rangle$ for some $\widehat{m},\widehat{n}\in\N$) is reachable from $C$ then $\Gamma_C\cup\conGM\PModels\false$.
-\end{claim}
+\end{lemma}
 \begin{proof} By induction on the length $i$ of the computation.
 	
 	Induction Base: $i=0$\\
@@ -211,8 +208,8 @@ We proof the other direction by induction on the length of the computation. But 
 	
 	We achieve this by looking at the four possible cases for the type of the rule $r$. We will only consider the cases $r=+(1,Q')$ and $r=-(1,Q_1,Q_2)$, because the two remaining cases $r=+(2,Q')$ and $r=-(2,Q_1,Q_2)$ follow by exchanging the roles of register 1 and register 2 in the first two cases.
 	
-	First we need a new free variable representing the configuration $D$. Also the value in register 2 does not change, because in both cases we are only concerned with register 1.
-	For the succeeding tableau proofs we will abbreviate \false{} by \falses{} and we will drop $\Gamma_C\cup\conGM$ and only write new formulas on the left side of $\PModelsf$.
+	In every case we need a new free variable representing the configuration $D$. Also the value in register 2 does not change, because in both cases we are only concerned with register 1.
+	In the following tableau proofs we will abbreviate \false{} by \falses{} and we will drop $\Gamma_C\cup\conGM$ and only write new formulas on the left side of $\PModelsf$.
 	
 	We first introduce a new variable representing the new configuration $D$ (let $b\in \VarP\setminus\text{FV}(\Gamma_C)$, note that $\FV(\conGM)=\emptyset$).
 	
@@ -221,27 +218,27 @@ We proof the other direction by induction on the length of the computation. But 
 		\input{Figure.Tableau.1}
 	\end{figure}
 	
-	For the new variable $b$ we have to deduce $G(b)$.
+	For the new variable $b$ we have to deduce $G(b)$. Again we will just drop $S(a,b)$ on the left side for comprehensibility.
 	
 	\begin{figure}[H]
 		\centering
 		\input{Figure.Tableau.11}
 	\end{figure}
 	
-	Since register 2 should not change we need $R_2(b,b_0)$. Again we will just drop $S(a,b)$ on the left side for comprehensibility.
+	Since register 2 should not change we need $R_2(b,b_0)$.
 		
 	\begin{figure}[H]
 		\centering
 		\input{Figure.Tableau.6}
 	\end{figure}
 	
-	For the case that $\boldsymbol{r=+(1,Q')}$, we have that $\widehat{Q}=Q'$, $\widehat{m}=m+1$, and $\widehat{n}=n$. So we need to increment register 1 and ensure that the state of $b$ is $Q'$.
+	For the case that $\boldsymbol{r=+(1,Q')}$, we have that $\widehat{Q}=Q'$, $\widehat{m}=m+1$, and $\widehat{n}=n$. So we need to increment register 1 and ensure that the state of the configuration represented by $b$ is $Q'$.
 	\begin{figure}[H]
 		\centering
 		\input{Figure.Tableau.3}
 	\end{figure}
 	
-	To increment register 1 we need a new free variable as anchor for register 1 (let $d\in\VarP\setminus\text{FV}(\Gamma_C)$ and $d\neq b$).
+	To increment register 1 we need a new free variable as anchor of $b$ for register 1 (let $d\in\VarP\setminus\text{FV}(\Gamma_C)$ and $d\neq b$).
 	
 	\begin{figure}[H]
 		\centering
@@ -311,7 +308,7 @@ We proof the other direction by induction on the length of the computation. But 
 	\end{align*}
 \end{lemma}
 \begin{proof}
-	The $\Leftarrow$ direction is proven in Claim \ref{cla.3.5}. And the $\Rightarrow$ direction is a direct consequence of Claim \ref{cla.3.6} with $C=\langle Q_0,0,0\rangle$.
+	The $\Leftarrow$ direction is proven in Lemma \ref{cla.3.5}. And the $\Rightarrow$ direction is a direct consequence of Lemma \ref{cla.3.6} with $C=\langle Q_0,0,0\rangle$.
 \end{proof}
 
 \begin{theorem}\label{the.3.8}
