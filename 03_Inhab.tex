@@ -44,7 +44,7 @@ We proof this by induction on the structure of the proof. %TODO on the length of
 	
 	\item[] $A$ is produced by the \underline{$\forall$-Introduction} rule. It follows that $A=\forall\beta B$ for some $\beta\in\VarP\setminus\FV(\Gamma)$ and some \SysP-formula $B$. By applying the induction hypothesis to $\Gamma\PModels B$ we get that there exists an $M'\in\lambdaTerms$ such that $\trans{\Gamma}\lambdaModels M':\trans{B}$. We deduce that $M:=\Lambda\beta.M'$ has type $\forall\beta.\trans{B}=\trans{\forall\beta B}$ as desired. 
 	
-	\item[] $A$ is produced by the \underline{$\forall$-Elimination} rule. There is a \SysP-formula $B$ and variables $\alpha,b\in\VarP$ such that $\Gamma\PModels\forall\alpha B$ and $A=B\left[\alpha:=b\right]$. The induction hypothesis implies that there exits an $M'\in\lambdaTerms$ such that $\trans{\Gamma}\lambdaModels M':\trans{\forall\alpha B}$. Since $\trans{\forall\alpha B}=\forall\alpha.\trans{B}$ the term $M:=M'b$ has the type $\trans{B}\left[\alpha:=b\right]=\trans{B\left[\alpha:=b\right]}$.
+	\item[] $A$ is produced by the \underline{$\forall$-Elimination} rule. There is a \SysP-formula $B$ and variables $\alpha,b\in\VarP$ such that $\Gamma\PModels\forall\alpha B$ and $A=B\left[\alpha:=b\right]$. The induction hypothesis implies that there exits an $M'\in\lambdaTerms$ such that $\trans{\Gamma}\lambdaModels M':\trans{\forall\alpha B}$. Since $\trans{\forall\alpha B}=\forall\alpha.\trans{B}$ the term $M:=M'\,b$ has the type $\trans{B}\left[\alpha:=b\right]=\trans{B\left[\alpha:=b\right]}$.
 \end{itemize}
 \end{proof}
 
@@ -100,7 +100,7 @@ We now proof the lemma by structural induction on the term $M$.
 			\input{Figure.C1.3}
 		\end{figure}
 		
-	\item[] \underline{$M=\lambda x:t'.M'$} for some $M'\in\lambdaTerms$, some $x\in\lambdaValVar\setminus\dom(\Gamma)$, and some $t'\in\lambdaTypes$.\\
+	\item[] \underline{$M=\lambda x:t'.M'$} for some $M'\in\lambdaTerms$, some $x\in\lambdaValVar$, and some $t'\in\lambdaTypes$ (w.l.o.g. $x\notin\dom(\Gamma)$).\\
 		It follows that $t'=\predTFst\to p_1$ and $\trans{\Gamma},x:\predTFst\to p_1\lambdaModels M':(\predTSnd\to p_2)\to p$.
 		
 		If $M'=yx$ for some $y\in\lambdaTypVar$ then it has to be that $y=x_{P(\predTFst,\predTSnd)}$ and $(y:(\predTFst\to p_1)\to(\predTSnd\to p_2)\to p)\in\trans{\Gamma}$. It follows that $P(\predTFst,\predTSnd)\in\Gamma$ and therefore $\predTFst,\predTSnd\in\VarP$ and $\Gamma\PModels P(\predTFst,\predTSnd)$.
@@ -118,7 +118,7 @@ We now proof the lemma by structural induction on the term $M$.
 		Since $M$ is in normal form we have that $M'=xM_1\dots M_n$ for some $x\in\lambdaValVar$, $n\in\N$, and some $M_1,\dots,M_n\in\lambdaTerms\cup\lambdaTypes$.
 		Hence, $(x:\trans{A})\in\trans{\Gamma}$ for some \SysP-formula $A$ and $M=M'\,t'$, we get that this case is impossible because no such $A$ exists.
 		
-		The only case where the contradiction is not obvious is when $A$ is an existential formula and $M_1,\dots,M_n\in\lambdaTypes$. Furthermore because there are no dummy quantifiers $n\leq1$. So $A$ is of the form $A=\forall\predVec(P(\predFst,\predSnd))$ where $\predVec\in\{\predFst\predSnd,\predSnd\predFst,\predFst,\predSnd\}$.
+		The only case where the contradiction is not obvious is when $A$ is a universal formula and $M_1,\dots,M_n\in\lambdaTypes$. Furthermore because there are no dummy quantifiers $n\leq1$. So $A$ is of the form $A=\forall\predVec(P(\predFst,\predSnd))$ where $\predVec\in\{\predFst\predSnd,\predSnd\predFst,\predFst,\predSnd\}$.
 		But in every case $A$ is not a \SysP-formula since there always is a $\gamma\in\FV(P(\predFst,\predSnd))\setminus\FV(A)$.
 		
 		%Obviously, this is impossible if $t'\notin\VarP$. But even if $t'\in\VarP$ we have a contradiction because there are no dummy quantifiers and so there is no \SysP-formula $A$ such that $\trans{A}=t''$. %TODO since the scnd condition cannot be fullfilled rephrase

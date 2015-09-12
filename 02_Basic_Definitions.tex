@@ -31,7 +31,7 @@ If we have a type of the form $(t_1\to(t_2\to(\dots \to(t_{n-1}\to t_n)\cdots)))
 			\Lambda\alpha.(M'\left[x:=N\right])           & \text{if $M=\Lambda\alpha.M'$} \\
 			(M'\left[x:=N\right])\,t                      & \text{if $M=M'\,t$}            \\
 		\end{cases}\]
-	Let $t,t'\in\lambdaTypes$ and $a\in\lambdaTypVar$. The \define{substitution of $a$ by $t'$ in $t'$}, denoted by $t\left[a:=t'\right]$ is defined as follows:
+	Let $t,t'\in\lambdaTypes$ and $a\in\lambdaTypVar$. The \define{substitution of $a$ by $t$ in $t'$}, denoted by $t\left[a:=t'\right]$ is defined as follows:
 	\[t\left[a:=t'\right]=
 		\begin{cases}
 			t'                    & \text{if $t=a$}                    \\ 
@@ -70,7 +70,7 @@ We will often abbreviate $(\dots(M\left[a_n:=b_n\right])\dots)\left[a_1:=b_1\rig
 	\[\GV(M)=
 		\begin{cases}
 			\emptyset             & \text{if $M=x$}                \\ 
-			\GV(M_1)\cup\FV(M_2)  & \text{if $M=M_1M_2$}           \\
+			\GV(M_1)\cup\GV(M_2)  & \text{if $M=M_1M_2$}           \\
 			\GV(M')\cup\{x\}      & \text{if $M=\lambda x:t.M'$}   \\
 			\GV(M')               & \text{if $M=\Lambda\alpha.M'$} \\
 			\GV(M')               & \text{if $M=M'\,t$}            \\
@@ -89,7 +89,7 @@ We will often abbreviate $(\dots(M\left[a_n:=b_n\right])\dots)\left[a_1:=b_1\rig
 	\[\GV(t)=
 		\begin{cases}
 			\emptyset              & \text{if $t=a$}                    \\ 
-			\GV(t_1)\cup\FV(t_2)  & \text{if $t=t_1\to t_2$}           \\
+			\GV(t_1)\cup\GV(t_2)  & \text{if $t=t_1\to t_2$}           \\
 			\GV(t')\cup\{\alpha\} & \text{if $t=\forall\alpha.t'$}
 		\end{cases}\]	
 \end{definition}
@@ -122,37 +122,51 @@ Now we can lift this definition to terms.
 \end{definition}
 
 \begin{definition}\label{def.2.6}
-The \define{$\alpha$-conversion}, denoted by $\lambdaA$, is a binary relation on $\lambdaTerms$. For all $M\in\lambdaTerms$, $x,x'\in\lambdaTypVar$, $t\in\lambdaTypes$, and $\alpha,\beta\in\lambdaTypVar$ if $x'\notin\FV(M)\cup\GV(M)$ then $\lambda x:t.M\lambdaA\lambda x':t.(M\left[x:=x'\right])$ and if $\beta\notin\TFV(M)\cup\TGV(M)$ then $\Lambda \alpha.M\lambdaA\Lambda \beta:t.(M\left[\alpha:=\beta\right])$.
+The \define{$\beta$-reduction}, denoted by $\lambdaB$, is a binary relation on $\lambdaTerms$. For all $M,N\in\lambdaTerms$, $x\in\lambdaValVar$, $t\in\lambdaTypes$, and $\alpha\in\lambdaTypVar$ if $\GV(M)\cap\FV(N)=\emptyset$ then $(\lambda x:t.M)N\lambdaB M\left[x:=N\right]$ and if $\TGV(M)\cap\TFV(N)=\emptyset$ then $(\Lambda\alpha.M)t\lambdaB M\left[\alpha:=t\right]$.
 
-The \define{$\beta$-reduction}, denoted by $\lambdaB$, is a binary relation on $\lambdaTerms$. For all $M,N\in\lambdaTerms$, $x\in\lambdaTypVar$, $t\in\lambdaTypes$, and $\alpha\in\lambdaTypVar$ if $\GV(M)\cap\FV(N)=\emptyset$ then $(\lambda x:t.M)N\lambdaB M\left[x:=N\right]$ and if $\TGV(M)\cap\TFV(N)=\emptyset$ then $(\Lambda\alpha.M)t\lambdaB M\left[\alpha:=t\right]$.
+The \define{$\alpha_1$-conversion}, denoted by $\lambdaAO$, is a binary relation on $\lambdaTerms$. For all $M\in\lambdaTerms$, $x,x'\in\lambdaValVar$, $t\in\lambdaTypes$, and $\alpha,\beta\in\lambdaTypVar$ if $x'\notin\FV(M)\cup\GV(M)$ then $\lambda x:t.M\lambdaAO\lambda x':t.(M\left[x:=x'\right])$ and if $\beta\notin\TFV(M)\cup\TGV(M)$ then $\Lambda \alpha.M\lambdaAO\Lambda \beta.(M\left[\alpha:=\beta\right])$.
+
+The \define{$\alpha_2$-conversion}, denoted by $\lambdaAT$, is a binary relation on $\lambdaTypes$. For all $t\in\lambdaTypes$, and $\alpha,\beta\in\lambdaTypVar$ if $\beta\notin\FV(t)\cup\GV(t)$ then $\forall\alpha.t\lambdaAT\forall\beta.(t\left[\alpha:=\beta\right])$.
 \end{definition}
 
 Note that right now we are not able to reduce terms within a context (e.g there is no $M\in\lambdaTerms$ such that $\lambda x:t.(\lambda y:t.y)x\lambdaB M$).
 
 \begin{definition}\label{def.2.7}
-So, for $\lambdaA$ we define a new relation $\lambdaAC$. Let $M,N,M'\in\lambdaTerms$, $x\in\lambdaTypVar$, $t\in\lambdaTypes$, and $\alpha\in\lambdaTypVar$. If $M\lambdaA M'$ then
+So, for a binary relation $\rightarrow$ on \lambdaTerms{} we define the \define{closure of $\rightarrow$ under term contexts}, denoted by \lambdaTermContext{\rightarrow}, as the smallest binary relation $\Rightarrow$ on \lambdaTerms{} containing $\rightarrow$ such that for all $N,M,M'\in\lambdaTerms$, $x\in\lambdaValVar$, $t\in\lambdaTypes$, and $\alpha\in\lambdaTypVar$. If $M\Rightarrow M'$ then
 \begin{align*}
-M&\lambdaAC M'        & MN&\lambdaAC M'N      & \lambda x:t.M&\lambdaAC\lambda x:t.M'\\
-Mt&\lambdaAC M't      & NM&\lambdaAC NM'   & \Lambda\alpha.M&\lambdaAC \Lambda\alpha.M'   
+MN&\Rightarrow M'N      & \lambda x:t.M&\Rightarrow\lambda x:t.M' & M\,t&\Rightarrow M'\,t \\
+NM&\Rightarrow NM'   & \Lambda\alpha.M&\Rightarrow \Lambda\alpha.M'   
 \end{align*}
 
-For $\lambdaB$ we define $\lambdaBC$ analogously.
+For a binary relation $\rightarrow$ on \lambdaTypes{} we define the \define{closure of $\rightarrow$ under type contexts}, denoted by \lambdaTypeContext{\rightarrow}, as the smallest binary relation $\Rightarrow$ on \lambdaTypes{} containing $\rightarrow$ such that for all $s,t,t'\in\lambdaTypes$, and $\alpha\in\lambdaTypVar$. If $t\Rightarrow t'$ then
+\begin{align*}
+\forall\alpha.t&\Rightarrow\forall\alpha.t'        & t\to s&\Rightarrow t'\to s      & s\to t&\Rightarrow s\to t'
+\end{align*}
+\end{definition}
+
+\begin{definition}~
+
+We define $\lambdaBC$ as $\lambdaTermContext{\lambdaB}$.
+
+And we define $\lambdaAC$ as union of $\lambdaTermContext{\lambdaAO}$ and $\lambdaTermContext{\Rightarrow_{\alpha_2}}$ where \[\Rightarrow_{\alpha_2}:=\{(M\,t,M\,t'),(\lambda x:t.M,\lambda x:t'.M)\mid M\in\lambdaTerms,x\in\lambdaValVar,(t,t')\in\lambdaTypeContext{\lambdaAT}\}\]
+
+Finally we define $\lambdaRed$ as $\lambdaAC^*\circ\lambdaBC$.
 \end{definition}
 
 \begin{definition}\label{def.2.8}
-Let $M\in\lambdaTerms$. The term $M$ is in \define{normal form} if there is no $N',N\in\lambdaTerms$ such that $M\lambdaAC^*N'\lambdaBC N$.
+Let $M\in\lambdaTerms$. The term $M$ is in \define{normal form} if there is no $N\in\lambdaTerms$ such that $M\lambdaRed N$.
 
-$M$ is \define{weakly normalizing} if there exists an $M'\in\lambdaTerms$ such that $N$ is in normal form and $M\lambdaRed N$.
+$M$ is \define{weakly normalizing} if there exists an $N\in\lambdaTerms$ such that $N$ is in normal form and $M\lambdaRed N$.
 
-The term $M$ is \define{strongly normalizing} if there is no infinite chain $M\lambdaAC^* M_1'\lambdaBC M_1\lambdaAC^* M_2'\lambdaBC M_2\dots$.
+The term $M$ is called \define{strongly normalizing} if there is no infinite chain $M\lambdaRed M_1\lambdaRed M_2\dots$.
 \end{definition}
 
-\begin{definition}\label{def.2.9} Let $\mathcal{V}=\{x_1,\dots,x_n\}$ be a finite subset of \lambdaValVar{} and $t_1,\dots,t_n\in\lambdaTerms$.	A \define{\lambdaTwo-basis} $\Gamma=\{(x_1:t_1),\dots,(x_n:t_n)\}$ is a mapping from $\mathcal{V}$ to \lambdaTypes{}. If the kind of basis is clear from the context we abbreviate \lambdaTwo-basis to basis. 
+\begin{definition}\label{def.2.9} Let $\mathcal{V}=\{x_1,\dots,x_n\}$ be a finite subset of \lambdaValVar{} such that $x_i\neq x_j$ for $1\leq i<j\leq n$ and $t_1,\dots,t_n\in\lambdaTerms$.	A \define{\lambdaTwo-basis} $\Gamma=\{(x_1:t_1),\dots,(x_n:t_n)\}$ is a mapping from $\mathcal{V}$ to \lambdaTypes{}. If the kind of basis is clear from the context we abbreviate \lambdaTwo-basis to basis. 
 
 The \define{free variables of a basis} $\Gamma$, denoted by $\FV(\Gamma)$, are $\bigcup\{\FV(t)\mid(x:t)\in\Gamma\}$.
 \end{definition}
 
-For a basis $\Gamma$ and another basis $\Sigma$, $x\in\lambdaValVar\setminus\dom(\Gamma)$, and $t\in\lambdaTypes$ we will abbreviate $\Gamma\cup\{(x:t)\}$ to $\Gamma,x:t$ and $\Gamma\cup\Sigma$ to $\Gamma,\Sigma$. %TODO is the second convention use?
+For a basis $\Gamma$ and another basis $\Sigma$, $x\in\lambdaValVar\setminus\dom(\Gamma)$, and $t\in\lambdaTypes$ we will abbreviate $\Gamma\cup\{(x:t)\}$ to $\Gamma,x:t$ and $\Gamma\cup\Sigma$ to $\Gamma,\Sigma$. %TODO is the second convention used?
 
 \begin{definition}\label{def.2.10}
 Let $M$ be in \lambdaTerms{}, $t$ in \lambdaTypes, and $\Gamma$ be a basis. A statement $M:t$ is \define{derivable} from $\Gamma$, denoted by $\Gamma\lambdaModels M:t$, if $M:t$ can be produced using the following rules.
