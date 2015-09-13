@@ -1,15 +1,12 @@
 \begin{abstract}
-A type is inhabited in \lambdaTwo{} iff there is a closed \lambdaTwo{} term of this type. The inhabitation problem in \lambdaTwo{} is to determine whether a given \lambdaTwo{} type is inhabited. This work gives a formal proof for the fact that the inhabitation problem in \lambdaTwo{} is undecidable.
+A \lambdaTwo{} type is inhabited in \lambdaTwo{} iff there is a closed \lambdaTwo{} term of this type. The inhabitation problem in \lambdaTwo{} is to determine whether a given \lambdaTwo{} type is inhabited. This work gives a formal proof for the fact that the inhabitation problem in \lambdaTwo{} is undecidable.
 \end{abstract}
 
 \section{Introduction}\label{sec.1}
+We will only consider the explicitly typed \lambdaTwo{} calculus (Church style), so whenever we speak of \lambdaTwo{} terms we know that the type information is given explicitly. 
+Let us take a look at the problem. It is clear that there are closed \lambdaTwo{} terms to which no \lambdaTwo{} type can be assigned (e.g. to the term $(\lambda x:\forall\alpha\alpha.xx)(\lambda x:\forall\alpha\alpha.xx)$ no type can be assigned). But there are also \lambdaTwo{} types which can not be assigned to any closed \lambdaTwo{} term. We say that these types are empty. For instance the \lambdaTwo{} type $\forall\alpha\alpha$ is empty.
 
-interesting because
+%For a programmer it is good to know whether a function of a given type even exists
 
+The constructions presented here are mainly based on \cite{2} but the proofs go much more into detail.
 
-Here we will only consider the explicitly typed \lambdaTwo{} calculus (Church style). 
-The proof is mainly based on \cite{2} but is much more detailed.
-
-e.g. $\Lambda\alpha.\lambda x:\alpha.x$ has type $\forall\alpha(\alpha\to\alpha)$
-
-$\alpha\to\alpha$ $(\lambda y:\alpha\to\alpha.y)(\lambda x:\alpha.x)$
