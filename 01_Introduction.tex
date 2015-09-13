@@ -1,6 +1,15 @@
 \begin{abstract}
-asdfaisdkok
+A type is inhabited in \lambdaTwo{} iff there is a closed \lambdaTwo{} term of this type. The inhabitation problem in \lambdaTwo{} is to determine whether a given \lambdaTwo{} type is inhabited. This work gives a formal proof for the fact that the inhabitation problem in \lambdaTwo{} is undecidable.
 \end{abstract}
 
 \section{Introduction}\label{sec.1}
 
+interesting because
+
+
+Here we will only consider the explicitly typed \lambdaTwo{} calculus (Church style). 
+The proof is mainly based on \cite{2} but is much more detailed.
+
+e.g. $\Lambda\alpha.\lambda x:\alpha.x$ has type $\forall\alpha(\alpha\to\alpha)$
+
+$\alpha\to\alpha$ $(\lambda y:\alpha\to\alpha.y)(\lambda x:\alpha.x)$
