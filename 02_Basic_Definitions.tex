@@ -152,18 +152,20 @@ So, for a binary relation $\rightarrow$ on \lambdaTerms{} we define the \define{
 MN&\Rightarrow M'N      & \lambda x:t.M&\Rightarrow\lambda x:t.M' & M\,t&\Rightarrow M'\,t \\
 NM&\Rightarrow NM'   & \Lambda\alpha.M&\Rightarrow \Lambda\alpha.M'   
 \end{align*}
+also hold.
 
-For a binary relation $\rightarrow$ on \lambdaTypes{} we define the \define{closure of $\rightarrow$ under type contexts}, denoted by \lambdaTypeContext{\rightarrow}, as the smallest binary relation $\Rightarrow$ on \lambdaTypes{} containing $\rightarrow$ such that for all $s,t,t'\in\lambdaTypes$, and $\alpha\in\lambdaTypVar$. If $t\Rightarrow t'$ then
+For a binary relation $\rightarrow'$ on \lambdaTypes{} we define the \define{closure of $\rightarrow'$ under type contexts}, denoted by \lambdaTypeContext{\rightarrow'}, as the smallest binary relation $\Rightarrow$ on \lambdaTypes{} containing $\rightarrow'$ such that for all $s,t,t'\in\lambdaTypes$, and $\alpha\in\lambdaTypVar$. If $t\Rightarrow t'$ then
 \begin{align*}
 \forall\alpha.t&\Rightarrow\forall\alpha.t'        & t\to s&\Rightarrow t'\to s      & s\to t&\Rightarrow s\to t'
 \end{align*}
+also hold.
 \end{definition}
 
 \begin{definition}~
 
 We define $\lambdaBC$ as $\lambdaTermContext{\lambdaB}$.
 
-And we define $\lambdaAC$ as union of $\lambdaTermContext{\lambdaAO}$ and $\lambdaTermContext{\Rightarrow_{\alpha_2}}$ where \[\Rightarrow_{\alpha_2}:=\{(M\,t,M\,t'),(\lambda x:t.M,\lambda x:t'.M)\mid M\in\lambdaTerms,x\in\lambdaValVar,(t,t')\in\lambdaTypeContext{\lambdaAT}\}\]
+And we define $\lambdaAC$ as union of $\lambdaTermContext{\lambdaAO}$ and $\lambdaTermContext{\Rightarrow_{\alpha_2}}$ where \[\Rightarrow_{\alpha_2}:=\{(M\,t,M\,t'),(\lambda x:t.M,\lambda x:t'.M)\mid M\in\lambdaTerms,x\in\lambdaValVar,(t,t')\in\lambdaTypeContext{\lambdaAT}\}.\]
 
 Finally we define $\lambdaRed$ as $\lambdaAC^*\circ\lambdaBC$.
 \end{definition}
