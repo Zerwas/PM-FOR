@@ -1,20 +1,20 @@
-\section{\lambdaInhab{} is undecidable}\label{sec.4}
-Now we can show that the inhabitation problem in $\lambda2$ %explicit?
+\section{Inhabitation in \lambdaTwo{} is undecidable}\label{sec.4}
+Now we can show that the inhabitation problem in $\lambdaTwo$ %explicit?
 is undecidable by reducing \PCons{} to \lambdaInhab{}. Given a \SysP-basis $\Gamma$ we construct a \lambdaTwo-basis $\trans{\Gamma}$ such that 
 \begin{align*}
-\textit{$\Gamma\PModels\false$}&&\textit{iff}&&\textit{There is a $\lambda2$ term $M$ such that  $\trans{\Gamma}\lambdaModels M:\false$}
+\textit{$\Gamma\PModels\false$}&&\textit{iff}&&\textit{There is a $\lambdaTwo$ term $M$ such that  $\trans{\Gamma}\lambdaModels M:\false$}
 \end{align*}
 where $\false\in\lambdaTypVar$. Furthermore for every $P\in\RelP$ we have $p,p_1,p_2\in\lambdaTypVar$. 
 
 \begin{definition}\label{def.4.1}
-For a \SysP-formula $A$ we define the \define{code} of $A$, denoted by $\trans{A}$, as:
+For a \SysP-formula $A$ we define the \define{code} of $A$, denoted by $\trans{A}$, as follows.
 
 If $A$ is an atomic formula then
 \[
 \trans{A}=
 \begin{cases}
 \false &\text{if $A=\false$}\\
-(\alpha\to p_1)\to(\beta\to p_2)\to p &\text{if $A=P(\alpha,\beta)$} %TODO convention with variables greek or latin?
+(\alpha\to p_1)\to(\beta\to p_2)\to p &\text{if $A=P(\alpha,\beta)$} 
 \end{cases}
 \]
 We will abbreviate $(\alpha\to p_1)\to(\beta\to p_2)\to p$ to $\code{P}{\alpha}{\beta}$.
@@ -27,7 +27,7 @@ If $A$ is an existential formula, it follows that for some $n\in\N^+$, some atom
 For a \SysP-basis $\Gamma$ we define the code of $\Gamma$, denoted by $\trans{\Gamma}$, as $\{(x_A:\trans{A})\mid A\in\Gamma\}$.
 \end{definition}
 
-In the following lemma we prove the $\Rightarrow$ direction by constructing a $\lambda2$ term $M$ with the required type.
+In the following lemma we prove the $\Rightarrow$ direction by constructing a $\lambdaTwo$ term $M$ with the required type.
 
 \begin{lemma}\label{lem.4.2}
 Let $\Gamma$ be a \SysP-basis and $A$ a \SysP-formula such that $\Gamma\PModels A$. Then there exists a term $M\in\lambdaTerms$ such that $\trans{\Gamma}\lambdaModels M:\trans{A}$ holds.
@@ -38,13 +38,13 @@ We proof this by induction on the structure of the proof. %TODO on the length of
 \begin{itemize}
 	\item[] $A$ is produced by the \underline{Axiom} rule. It follows that $A\in\Gamma$ and therefore $(x_A:\trans{A})\in\trans{\Gamma}$. Now the term $M:=x_A$ fulfills the condition.
 	
-	\item[] $A$ is produced by the \underline{$\rightarrow$-Introduction} rule. It follows that $A=A'\to B'$ for some \SysP-formulas $A'$ and $B'$. We can now apply the induction hypothesis to $\Gamma,A'\PModels B'$ and we get that there exists an $M'\in\lambdaTerms$ such that $\trans{\Gamma},\trans{A'}\PModels M':\trans{B'}$. With the $\lambda$-Introduction rule we deduce $\trans{\Gamma}\lambdaModels \lambda x:\trans{A'}.M':\trans{A'}\to\trans{B'}$. Since $A$ has to be a universal or an existential formula $\trans{A'}\to\trans{B'}=\trans{A'\to B'}$. So $M:=\lambda x:\trans{A'}.M'$ has the required type.
+	\item[] $A$ is produced by the \underline{$\rightarrow$-Introduction} rule. It follows that $A=A'\to B'$ for some \SysP-formulas $A'$ and $B'$. We can now apply the induction hypothesis to $\Gamma,A'\PModels B'$ and we get that there exists an $M'\in\lambdaTerms$ such that $\trans{\Gamma},\trans{A'}\PModels M':\trans{B'}$. With the $\lambda$-Introduction rule we deduce $\trans{\Gamma}\lambdaModels \lambda x_{A'}:\trans{A'}.M':\trans{A'}\to\trans{B'}$. Since $A$ has to be a universal or an existential formula $\trans{A'}\to\trans{B'}=\trans{A'\to B'}$. So $M:=\lambda x_{A'}:\trans{A'}.M'$ has the required type.
 	
 	\item[] $A$ is produced by the \underline{$\rightarrow$-Elimination} rule. So there exists a \SysP-formula $B$ such that $\Gamma\PModels B\to A$ and $\Gamma\PModels B$. Now we apply the induction hypothesis and get that there exist $M_1,M_2\in\lambdaTerms$ such that $\trans{\Gamma}\lambdaModels M_1:\trans{B\to A}$ and $\trans{\Gamma}\lambdaModels M_2:\trans{B}$. Again we have that $\trans{B\to A}=\trans{B}\to\trans{A}$. It follows that $M:=M_1M_2$ has the type $\trans{A}$.
 	
 	\item[] $A$ is produced by the \underline{$\forall$-Introduction} rule. It follows that $A=\forall\beta B$ for some $\beta\in\VarP\setminus\FV(\Gamma)$ and some \SysP-formula $B$. By applying the induction hypothesis to $\Gamma\PModels B$ we get that there exists an $M'\in\lambdaTerms$ such that $\trans{\Gamma}\lambdaModels M':\trans{B}$. We deduce that $M:=\Lambda\beta.M'$ has type $\forall\beta.\trans{B}=\trans{\forall\beta B}$ as desired. 
 	
-	\item[] $A$ is produced by the \underline{$\forall$-Elimination} rule. There is a \SysP-formula $B$ and variables $\alpha,b\in\VarP$ such that $\Gamma\PModels\forall\alpha B$ and $A=B\left[\alpha:=b\right]$. The induction hypothesis implies that there exits an $M'\in\lambdaTerms$ such that $\trans{\Gamma}\lambdaModels M':\trans{\forall\alpha B}$. Since $\trans{\forall\alpha B}=\forall\alpha.\trans{B}$ the term $M:=M'\,b$ has the type $\trans{B}\left[\alpha:=b\right]=\trans{B\left[\alpha:=b\right]}$.
+	\item[] $A$ is produced by the \underline{$\forall$-Elimination} rule. Then there is a \SysP-formula $B$ and variables $\alpha,b\in\VarP$ such that $\Gamma\PModels\forall\alpha B$ and $A=B\left[\alpha:=b\right]$. The induction hypothesis implies that there exits an $M'\in\lambdaTerms$ such that $\trans{\Gamma}\lambdaModels M':\trans{\forall\alpha B}$. Since $\trans{\forall\alpha B}=\forall\alpha.\trans{B}$ the term $M:=M'\,b$ has the type $\trans{B}\left[\alpha:=b\right]=\trans{B\left[\alpha:=b\right]}$.
 \end{itemize}
 \end{proof}
 
@@ -56,19 +56,18 @@ Let $\Gamma$ be a \SysP-basis, $M\in\lambdaTerms$, $P\in\RelP$, and $\predTFst,\
 Then $\predTFst, \predTSnd\in\VarP$ (remember that $\VarP\subseteq\lambdaTypVar$). Furthermore $\Gamma\PModels P(\predTFst,\predTSnd)$ holds.
 \end{lemma}
 \begin{proof}
-Note that all well typed $\lambda2$ terms are strongly normalizing (see %TODO reference
-). Hence, $M$ is well typed in $\lambda2$, we can assume that $M$ is in normal form. %TODO define normal form, and typerhaltungstheorem!
+Note that $M$ is a well types \lambdaTwo{} term and hence, by Theorem \ref{the.2.12}, there is a $N\in\lambdaTerms$ such that $N$ is in normal form and $M\lambdaRed^*N$. From Theorem \ref{the.2.13} it follows that the statement $N:\code{P}{\predTFst}{\predTSnd}$ is derivable from $\trans{\Gamma}$. Therefore we can assume w.l.o.g. that $M$ is in normal form.
 
 We now proof the lemma by structural induction on the term $M$.
 \begin{itemize}
-	\item[] \underline{$M=x$} for some $y\in\lambdaValVar$.\\
+	\item[] \underline{$M=x$} for some $x\in\lambdaValVar$.\\
 		It follows that $(x:\code{P}{\predTFst}{\predTSnd})\in\trans{\Gamma}$.
 		Now the definition of $\trans{\Gamma}$ yields that $P(\predTFst,\predTSnd)\in\Gamma$. Therefore $\predTFst,\predTSnd\in\VarP$ and $\Gamma\PModels P(s,t)$ holds trivially.
 	\item[] \underline{$M=M_1M_2$} for some $M_1,M_2\in\lambdaTerms$.\\
 		Since $M$ is in normal form we have that $M_1=xN_1\dots N_k$ for some $x\in\lambdaValVar$, $k\in\N$, and some $N_1,\dots,N_k\in\lambdaTerms\cup\lambdaTypes$. %TODO There is only one kind of %TODO functional neccessary P(a,b)
 		%type with target | this is not a target -> $\code{P}{\alpha}{\beta}$ 
 		
-		It follows that $x=x_A$ and $(x:\trans{A})\in\trans{\Gamma}$ for some universal formula $A=\forall\predVec(P^1(\predFst[1],\predSnd[1])\to\dots\to P^n(\predFst[n],\predSnd[n])\to P(\predFst,\predSnd))$ in $\Gamma$ where $\predVec=\predVec[1]\dots\predVec[m]$ for some $m\in\N$ and some $\predVec[1],\dots,\predVec[m]\in\VarP$.
+		We conclude that $x=x_A$ and $(x:\trans{A})\in\trans{\Gamma}$ for some universal formula $A=\forall\predVec(P^1(\predFst[1],\predSnd[1])\to\dots\to P^n(\predFst[n],\predSnd[n])\to P(\predFst,\predSnd))$ in $\Gamma$ where $\predVec=\predVec[1]\dots\predVec[m]$ for some $m\in\N$ and some $\predVec[1],\dots,\predVec[m]\in\VarP$.
 		%for some $P^i\in\RelP$ and some $\predFst[i], \predSnd[i]\in\VarP$ for all $i\in\{1,\dots,n\}$, $\predFst,\predSnd\in\VarP$, and $\predVec=\predVec[1]\dots\predVec[m]$ for some $\predVec[1],\dots,\predVec[m]\in\VarP$. %forall ai exists j: ai=aj or ai=bj
 		
 		%$\vec{\alpha}=\alpha_\mapping{1}\dots\alpha_\mapping{m}$ where $\mappingSymbol\colon \{1,\dots,m\}\to\{1,\dots,n\}$ is a mapping. %more than injective since a_v(i)=a_v(j) => i=j
@@ -103,9 +102,9 @@ We now proof the lemma by structural induction on the term $M$.
 	\item[] \underline{$M=\lambda x:t'.M'$} for some $M'\in\lambdaTerms$, some $x\in\lambdaValVar$, and some $t'\in\lambdaTypes$ (w.l.o.g. $x\notin\dom(\Gamma)$).\\
 		It follows that $t'=\predTFst\to p_1$ and $\trans{\Gamma},x:\predTFst\to p_1\lambdaModels M':(\predTSnd\to p_2)\to p$.
 		
-		If $M'=yx$ for some $y\in\lambdaTypVar$ then it has to be that $y=x_{P(\predTFst,\predTSnd)}$ and $(y:(\predTFst\to p_1)\to(\predTSnd\to p_2)\to p)\in\trans{\Gamma}$. It follows that $P(\predTFst,\predTSnd)\in\Gamma$ and therefore $\predTFst,\predTSnd\in\VarP$ and $\Gamma\PModels P(\predTFst,\predTSnd)$.
+		If $M'=yx$ for some $y\in\lambdaValVar$ then it has to be that $y=x_{P(\predTFst,\predTSnd)}$ and $(y:(\predTFst\to p_1)\to(\predTSnd\to p_2)\to p)\in\trans{\Gamma}$. It follows that $P(\predTFst,\predTSnd)\in\Gamma$ and therefore $\predTFst,\predTSnd\in\VarP$ and $\Gamma\PModels P(\predTFst,\predTSnd)$.
 		
-		If $M'=\lambda y:\predTSnd\to p_2.zxy$ for some $y,z\in\lambdaTypVar$ then $z=x_{P(\predTFst,\predTSnd)}$ and therefore $(z:(\predTFst\to p_1)\to(\predTSnd\to p_2)\to p)\in\trans{\Gamma}$. We get that $P(\predTFst,\predTSnd)\in\Gamma$ and conclude that $\predTFst,\predTSnd\in\VarP$ and $\Gamma\PModels P(\predTFst,\predTSnd)$.
+		If $M'=\lambda y:\predTSnd\to p_2.zxy$ for some $y,z\in\lambdaValVar$ then $z=x_{P(\predTFst,\predTSnd)}$ and therefore $(z:(\predTFst\to p_1)\to(\predTSnd\to p_2)\to p)\in\trans{\Gamma}$. We get that $P(\predTFst,\predTSnd)\in\Gamma$ and conclude that $\predTFst,\predTSnd\in\VarP$ and $\Gamma\PModels P(\predTFst,\predTSnd)$.
 		%$\Gamma,x,y \lambdaModels M''=zxy:p$
 		
 		All other cases for $M'$ are impossible because there are no \SysP-formulas $A$ such that $\trans{A}$ has the required type. 
@@ -135,7 +134,7 @@ Again we can assume that $M$ is in normal form.
 	\item[] \underline{$M=x$} for some $y\in\lambdaValVar$.\\
 		It follows that $(x:\false)\in\trans{\Gamma}$. Now the definition of $\trans{\Gamma}$ yields that $\false\in\Gamma$. Therefore $\Gamma\PModels \false$ holds.
 	\item[] \underline{$M=M_1M_2$} for some $M_1,M_2\in\lambdaTerms$.\\
-		Because $M$ is in normal form we have that $M_1=xN_1\dots N_k$ for some $x\in\lambdaTypVar$, $k\in\N$, and some $N_1,\dots N_k\in\lambdaTerms\cup\lambdaTypes$.
+		Because $M$ is in normal form we have that $M_1=xN_1\dots N_k$ for some $x\in\lambdaValVar$, $k\in\N$, and some $N_1,\dots N_k\in\lambdaTerms\cup\lambdaTypes$.
 		We know that $x=x_A$ for some $A\in\Gamma$.
 		
 		Firstly $A$ could be a universal formula. It follows that $A$ is of the form $A=\forall\predVec(P^1(\predFst[1],\predSnd[1])\to\dots\to P^n(\predFst[n],\predSnd[n])\to\false)$ where $\predVec=\predVec[1]\dots\predVec[m]$ for some $m\in\N$ and some $\predVec[1],\dots,\predVec[m]\in\VarP$. In this case $M=x\vec{t}\vec{N}$ for some $\predTVec=\predTVec[1]\dots \predTVec[m]$ with $\predTVec[1],\dots,\predTVec[m]\in\lambdaTypes$ and some $\vec{N}=N_1\dots N_n$ with $N_1,\dots,N_n\in\lambdaTerms$. Now $\Gamma\PModels\false$ can be deduced as in the previous proof.
@@ -150,11 +149,11 @@ Again we can assume that $M$ is in normal form.
 		
 		For $i\in\{1,\dots,n-1\}$ we can apply Lemma \ref{lem.4.3} to $\trans{\Gamma}\lambdaModels N_i:\code{P^i}{\predTFst[i]}{\predTSnd[i]}$ to get that $\predTFst[i],\predTSnd[i]\in\VarP$ and that $\Gamma\PModels P^i(\predTFst[i],\predTSnd[i])$. But to proof that \false{} is a semantic consequence of $\Gamma$ we still need $\Gamma\PModels\forall\beta(P^n(\predTFst[n],\predTSnd[n])\to\false)$.
 		
-		To deduce this we have to take a closer look at $L$. First note that because either $\predFst[n]=\beta=\predTFst[n]$ or there exits an $i\in\{1,\dots,n-1\}$ such that $\predFst[n]\in\FV(P^i(\predFst[i],\predSnd[i]))$ which implies that $\predTFst[n]=\predTFst[i]$ or $\predTFst[n]=\predTSnd[i]$. In all cases we get that $\predTFst[n]\in\VarP$. A similar argument yields $\predTSnd[n]\in\VarP$.
+		To deduce this we have to take a closer look at $L$. First note that because either $\predFst[n]=\predTFst[n]$ or there exits an $i\in\{1,\dots,n-1\}$ such that $\predFst[n]\in\FV(P^i(\predFst[i],\predSnd[i]))$ which implies that $\predTFst[n]=\predTFst[i]$ or $\predTFst[n]=\predTSnd[i]$. In all cases we get that $\predTFst[n]\in\VarP$. A similar argument yields $\predTSnd[n]\in\VarP$.
 		
-		If, for some $y\in\lambdaValVar$, $l\in\N$, and $t_1,\dots,t_l,t'\in\lambdaTypes$ with $M':=yt_1\dots t_l$, the term $L$ is equal to $y$, to $\Lambda\beta.y$, to $\Lambda\beta.M'\,t'$, or to $M'\,t'$ then $y=x_A$ for some universal formula $A=\forall\vec{\alpha}(P^n(\predTFst,\predTSnd)\to\false)\in\Gamma$. It is easy to see that in all three cases we can indeed deduce $\Gamma\PModels\forall\beta(P^n(\predTFst[n],\predTSnd[n])\to\false)$.
+		If, for some $y\in\lambdaValVar$, $l\in\N$, and $s,t,t',t_1,\dots,t_l\in\lambdaTypes$ with $M':=yt_1\dots t_l$, the term $L$ is equal to $y$, to $\Lambda\beta.y$, to $\Lambda\beta.M'\,t'$, or to $M'\,t'$ then $y=x_A$ for some universal formula $A=\forall\vec{\alpha}(P^n(\predTFst,\predTSnd)\to\false)\in\Gamma$. It is easy to see that in all three cases we can indeed deduce $\Gamma\PModels\forall\beta(P^n(\predTFst[n],\predTSnd[n])\to\false)$.
 		
-		If $L=\Lambda\beta.M_1M_2$ for some $M_1,M_2\in\lambdaTerms$ it follows that $M_1=x_A\vec{t'}N'_1\dots N'_{n'}$ for some universal formula $A\in\Gamma$, $l\in\N$, some $\vec{t'}=t'_1\dots t'_l$ where $t'_1,\dots,t'_l\in\lambdaTypes$, $n'\in\N$, and some $N'_1,\dots,N'_{n'}\in\lambdaTerms$. We get that $L=\Lambda\beta.x_A\vec{t'}\vec{N'}$ where $\vec{N'}:=N'_1\dots N'_{n'}M_2$. Hence,  $\beta\notin\FV(\trans{\Gamma})$, we can use the $\forall$-Introduction rule to deduce $\trans{\Gamma}\lambdaModels x_A\vec{t'}\vec{N'}:\code{P^n}{\predTFst[n]}{\predTSnd[n]}\to\false$. Now we can conclude $\Gamma\PModels P^n(\predTFst[n],\predTSnd[n])\to\false)$ as in the previous proof. %TODO maybe be more specific about which proof is meant
+		If $L=\Lambda\beta.M_1M_2$ for some $M_1,M_2\in\lambdaTerms$ it follows that $M_1=x_A\vec{t'}N'_1\dots N'_{n'}$ for some universal formula $A\in\Gamma$, $l\in\N$, some $\vec{t'}=t'_1\dots t'_l$ where $t'_1,\dots,t'_l\in\lambdaTypes$, $n'\in\N$, and some $N'_1,\dots,N'_{n'}\in\lambdaTerms$. We get that $L=\Lambda\beta.x_A\vec{t'}\vec{N'}$ where $\vec{N'}:=N'_1\dots N'_{n'}M_2$. Hence,  $\beta\notin\FV(\trans{\Gamma})$, we can use the $\forall$-Introduction rule to deduce $\trans{\Gamma}\lambdaModels x_A\vec{t'}\vec{N'}:\code{P^n}{\predTFst[n]}{\predTSnd[n]}\to\false$. Now we can conclude $\Gamma\PModels P^n(\predTFst[n],\predTSnd[n])\to\false$ as in the proof of Lemma \ref{lem.4.3}. %TODO maybe be more specific about which proof is meant
 		Since $\beta$ is also not in $\FV(\Gamma)$ we can use the $\forall$-Introduction of System \SysP{} to deduce $\Gamma\PModels\forall\beta(P^n(\predTFst[n],\predTSnd[n])\to\false)$ as desired.
 		
 		If $L=\Lambda\beta.\lambda y:t'.N$ for some $y\in\lambdaValVar$, some $t'\in\lambdaTypes$, and some $N\in\lambdaTerms$ then $t'=\code{P^n}{\predTFst[n]}{\predTSnd[n]}$. Furthermore:
@@ -193,10 +192,10 @@ Again we can assume that $M$ is in normal form.
 		\end{figure}
 		
 	\item[] \underline{$M=\lambda x:t_1.M'$} for some $M'\in\lambdaTerms$, some $x\in\lambdaValVar\setminus\dom(\Gamma)$, and some $t_1\in\lambdaTypes$.\\
-		It follows that $t=t_1\to t_2$ for some $t_2\in\lambdaTypes$ which contradicts $t=\false$. So this case is impossible.
+		It follows that $\false=t_1\to t_2$ for some $t_2\in\lambdaTypes$ which is impossible.
 
 	\item[] \underline{$M=\Lambda\gamma.M'$} for some $M'\in\lambdaTerms$ and some $\gamma\in\lambdaTypVar$.\\ %\setminus\FV(\Gamma)$.\\
-		It follows that $t=\forall\gamma.t'$ for some $t'\in\lambdaTypes$. Again the fact that $t=\false$ leads to a contradiction and makes this case impossible.
+		It follows that $\false=\forall\gamma.t'$ for some $t'\in\lambdaTypes$. Again is a contradiction and makes this case impossible.
 		
 
 	\item[] \underline{$M=M'\,t'$} for some $M'\in\lambdaTerms$ and some $t'\in\lambdaTypes$.\\
@@ -212,12 +211,11 @@ Again we can assume that $M$ is in normal form.
 
 \begin{lemma}\label{lem.4.5}
 \begin{align*}
-\Gamma\PModels\false&&\text{iff}&&\text{There is a $\lambda2$ term $M$ such that } \trans{\Gamma}\lambdaModels M:\false
+\Gamma\PModels\false&&\text{iff}&&\text{There is a $\lambdaTwo$ term $M$ such that } \trans{\Gamma}\lambdaModels M:\false
 \end{align*}
 \end{lemma}
 \begin{proof}
-The $\Leftarrow$ direction follows from Lemma %TODO here Lemma in Cons proof Claims
-\ref{lem.4.4}. And the $\Rightarrow$ direction follows from Lemma \ref{lem.4.2} with $A=\false$.
+The $\Leftarrow$ direction follows from Lemma \ref{lem.4.4}. And the $\Rightarrow$ direction follows from Lemma \ref{lem.4.2} with $A=\false$.
 \end{proof}
 
 \begin{theorem}\label{the.4.6}

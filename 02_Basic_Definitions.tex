@@ -68,7 +68,7 @@ If we have a type of the form $(t_1\to(t_2\to(\dots \to(t_{n-1}\to t_n)\cdots)))
 		\end{cases}\]
 \end{definition}
 
-We will often abbreviate $(\dots(M\left[a_n:=b_n\right])\dots)\left[a_1:=b_1\right]$ to $M\left[\vec{a}:=\vec{b}\right]$ where $\vec{a}=a_1\dots a_n$ and $\vec{b}=b_1\dots b_n$.
+In the following we will often abbreviate $(\dots(M\left[a_n:=b_n\right])\dots)\left[a_1:=b_1\right]$ to $M\left[\vec{a}:=\vec{b}\right]$ where $\vec{a}=a_1\dots a_n$ and $\vec{b}=b_1\dots b_n$.
 
 \begin{definition}\label{def.2.3}
 	Let $M\in\lambdaTerms$. The \define{set of free variables of $M$}, denoted by $\FV(M)$, is defined inductively as follows:
@@ -206,7 +206,7 @@ A term $M\in\lambdaTerms$ is \define{well typed} if there exists a basis $\Gamma
 The following two theorems are well known (for formal proofs see \cite{1}).
 
 \begin{theorem}\label{the.2.12}
-Let $M,M'$ be in \lambdaTerms{} and $M\lambdaAC M'$ or $M\lambdaBC M'$, $t$ in \lambdaTypes, and $\Gamma$ be a basis. If $\Gamma\lambdaModels M:t$ then $\Gamma\lambdaModels M':t$.
+Let $M,M'$ be in \lambdaTerms{} and $M\lambdaAC^* M'$ or $M\lambdaBC^* M'$, $t$ in \lambdaTypes, and $\Gamma$ be a basis. If $\Gamma\lambdaModels M:t$ then $\Gamma\lambdaModels M':t$.
 \end{theorem}
 
 \begin{theorem}\label{the.2.13}

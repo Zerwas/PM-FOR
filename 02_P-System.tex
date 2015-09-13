@@ -102,7 +102,6 @@ If $r=+(1,Q')$ for some $Q'\in\autStates$ then $\Gamma_{Q,+(1,Q')}$ contains the
 \begin{itemize}
 	\item $\forall\alpha\beta(Q(\alpha)\to S(\alpha,\beta)\to Q'(\beta))$ \\change of state
 	\item $\forall\alpha\beta\gamma\delta(Q(\alpha)\to S(\alpha,\beta)\to R_1(\alpha,\gamma)\to R_1(\beta,\delta)\to P(\delta,\gamma))$\\increment register 1
-	\item $\forall\alpha\beta\delta(Q(\alpha)\to S(\alpha,\beta)\to R_1(\beta,\delta)\to D(\delta))$ \\prevent zero in register 1
 	\item $\forall\alpha\beta\gamma(Q(\alpha)\to S(\alpha,\beta)\to R_2(\alpha,\gamma)\to R_2(\beta,\gamma))$ \\do not change the value register 2
 \end{itemize}
 
@@ -120,12 +119,15 @@ For $r=+(2,Q')$ for some $Q'\in\autStates$ or $r=-(2,Q_1,Q_2)$ for some $Q_1,Q_2
 We also need a set $\Gamma_1$ to ensure that our representation works correctly. The following formula are in $\Gamma_1$:
 \begin{itemize}
 	\item $\forall\alpha\beta(S(\alpha,\beta)\to G(\beta))$
-	\item $\forall\alpha(D(\alpha)\to G(\alpha))$	
+	\item $\forall\alpha(D(\alpha)\to G(\alpha))$
+	\item $\forall\alpha\beta(P(\alpha,\beta)\to D(\alpha))$\\no predecessor is the end of a chain	
 	%\item $\forall\alpha(D(\alpha)\to\forall\beta(P(\alpha,\beta)\to\false)\to\false)$\\every %element that is not the end of a chain has a predecessor
 	\item $\forall\alpha(G(\alpha)\to\forall\beta(R_1(\alpha,\beta)\to\false)\to\false)$\\every element that represents a configuration has a value for register 1
 	\item $\forall\alpha(G(\alpha)\to\forall\beta(R_2(\alpha,\beta)\to\false)\to\false)$\\every element that represents a configuration has a value for register 2
 	\item $\forall\alpha(G(\alpha)\to\forall\beta(S(\alpha,\beta)\to\false)\to\false)$\\every element that represents a configuration has a successor
 \end{itemize}
+Note that in the last three formulas the only task of $G(\alpha)$ is to make these formulas existential formulas (e.g. $\forall\alpha(\forall\beta(S(\alpha,\beta)\to\false)\to\false)$ is not an existential formula). 
+
 We define $\conGM$ as $\bigcup_{Q\in\autStates\setminus\{Q_f\}}\Gamma_{Q,R(Q)}\cup\{\forall\alpha(Q_f(\alpha)\to\false)\}\cup\Gamma_1$. We have added the formula $\forall\alpha(Q_f(\alpha)\to\false)$ to be able to deduce \false{} if our automaton terminates.
 Finally we can define $\Gamma_M$ as $\Gamma_{C_0}\cup\conGM$, where $C_0=\langle Q_0,0,0\rangle$ is the initial configuration.
 \begin{lemma}\label{cla.3.5}
@@ -134,7 +136,7 @@ Finally we can define $\Gamma_M$ as $\Gamma_{C_0}\cup\conGM$, where $C_0=\langle
 	\end{align*}
 \end{lemma}
 \begin{proof}
-	Assume $M$ does not terminate then there is an infinite chain $C_0\Rightarrow_M C_1\Rightarrow_M C_2\Rightarrow_M\cdots$ ($C_i=\langle Q_i,m_i,n_i\rangle$ for $i\in\N$). Now we construct a model of $\Gamma_M$ which interprets \false{} with $\bot$ this contradicts $\Gamma_M\PModels\false$.
+	Assume $M$ does not terminate it follows that there is an infinite chain $C_0\Rightarrow_M C_1\Rightarrow_M C_2\Rightarrow_M\cdots$ ($C_i=\langle Q_i,m_i,n_i\rangle$ for $i\in\N$). Now we construct a model of $\Gamma_M$ which interprets \false{} with $\bot$ this contradicts $\Gamma_M\PModels\false$.
 
 	To illustrate the idea we will use a graphical notation for an interpretation $I$.
 	By
@@ -266,7 +268,7 @@ We proof the other direction by induction on the length of the computation. But 
 		\input{Figure.Tableau.12}
 	\end{figure}
 	
-	Now we already have deduced $\Gamma_D$, to see why define $\widehat{a}:=b$, $\widehat{b}_i:=b_i$ for $i\in\{0,\dots,n\}$, $\widehat{a}_0:=d$, and $\widehat{a}_{i+1}:=a_i$ for $i\in\{0,\dots,m\}$.
+	Now we have already deduced $\Gamma_D$. To see why we define $\widehat{a}:=b$, $\widehat{b}_i:=b_i$ for $i\in\{0,\dots,n\}$, $\widehat{a}_0:=d$, and $\widehat{a}_{i+1}:=a_i$ for $i\in\{0,\dots,m\}$. It follows that $\Gamma_D\subseteq(\Gamma_C\cup\{S(a,b),G(b),Q'(b),R_2(b,b_0),R_1(b,d),P(d,a_0),D(d),G(d)\})$.
 	Hence we can deduce \false{} by induction hypothesis.\\
 	
 	The other case, that $\boldsymbol{r=-(Q,1,Q_1,Q_2)}$, has to be split into two cases again. If $\boldsymbol{m=0}$ then $\widehat{Q}=Q_2$, $\widehat{m}=0$, and $\widehat{n}=n$. We only need to ensure that the successor state is $Q_2$ and that register 1 is still zero.
