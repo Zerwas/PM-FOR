@@ -221,7 +221,7 @@ The inhabitation problem for \lambdaTwo{}, denoted by \lambdaInhab, is defined a
 But we can rephrase this problem so that it becomes more general:
 Given a basis $\Gamma$ and a \lambdaTwo{} type $t$.
 \[\text{Is there a \lambdaTwo{} term $M$ such that } \Gamma\lambdaModels M:t?\]
-Obviously the second version is a special case of the first one. For the other direction consider a basis $\Gamma=\{(x_1:t_1),\dots,(x_n:t_n)\}$ and a \lambdaTwo{} type $t$. Clearly, for every term $M$, $\Gamma\lambdaModels M:t$ holds iff $\emptyset\lambdaModels \lambda x_1:t_1.\dots\lambda x_n:t_n.M:t_1\to\dots\to t_n\to t$.
+Obviously the first version is a special case of the second one. For the other direction consider a basis $\Gamma=\{(x_1:t_1),\dots,(x_n:t_n)\}$ and a \lambdaTwo{} type $t$. Clearly, for every term $M$, $\Gamma\lambdaModels M:t$ holds iff $\emptyset\lambdaModels \lambda x_1:t_1.\dots\lambda x_n:t_n.M:t_1\to\dots\to t_n\to t$.
 \end{definition}
 \subsection{First-order logic}
 \begin{definition}\label{def.2.15}
