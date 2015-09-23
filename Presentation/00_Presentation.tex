@@ -1,0 +1,84 @@
+\documentclass{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{fixltx2e}
+\usepackage{microtype}
+
+\usepackage[style=british]{csquotes}
+
+%\usetheme[nogerman, nototalpages, noheader, nosectionnum,%
+%    einrichtung={Institute of Theoretical Computer Science\ },%
+%    professur={Chair of Automata Theory}]{TUDCD}
+
+\setbeamerfont{block title}{size=\small}
+
+\title{Unification modulo\hspace{30pt} Boolean Rings}
+
+\author{Florian	Starke}
+
+\date{\today}
+
+%\datecity{Dresden}
+
+
+\DefineNamedColor{named}{FgColour}{cmyk}{0,0.75,0.90,0}
+\setbeamercolor{alerted text}{fg=FgColour}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{wasysym}
+\usepackage{upgreek}
+
+\usepackage{booktabs}
+\usepackage{setspace}
+\usepackage{xspace}
+\usepackage{rotating}
+\usepackage[square]{natbib}
+
+\usepackage{mdframed}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usetikzlibrary{automata}
+\usetikzlibrary{positioning}
+
+\hypersetup{%
+    pdftitle={Title},
+    pdfauthor={Author},
+    pdfsubject={Title},
+    pdfkeywords={Title},
+    pdftoolbar=true,
+    bookmarksopen=true,
+    bookmarksnumbered=false,
+    bookmarksopenlevel=1,
+    hyperfootnotes=false,
+    pdfdisplaydoctitle,
+    plainpages=false,
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=black,
+}
+
+\newcommand{\approxq}{\stackrel{?}{\approx}}
+\newcommand{\moreGeneral}{\lesssim^X_E}
+\newcommand{\eqClass}{\sim^X_E}
+\newcommand{\BTwo}{{\mathcal{B}_2}}
+\newcommand{\PSet}{{\mathcal{P}_S}}
+\newcommand{\TermSet}{T(\Sigma,V)}
+\newcommand{\TermAlgebra}{\mathcal{T}(\Sigma,V)}
+
+\begin{document}
+
+\maketitle
+\addtocounter{framenumber}{-1}
+\title{Unification modulo Boolean Rings}
+
+\section*{Structure}
+\begin{frame}
+\frametitle{Structure}
+\tableofcontents 
+\end{frame}
+\section*{end}
+\end{document}
