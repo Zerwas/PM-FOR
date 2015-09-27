@@ -1,0 +1,39 @@
+\section{luiuh}
+\begin{frame}{asd}{asd}
+%\uncover<2->{$I:=\left\lbrace f(x,x)\approx x\right\rbrace$ }\vspace{15pt}
+\begin{mdframed}
+	\begingroup
+	\addtolength{\jot}{0.3cm}
+	\begin{align*}
+		&(\text{Axiom}) &&\Gamma,A\PModels A\vphantom{\frac{\Gamma}{\Gamma}}\\
+		&(\rightarrow\text{-Introduction}) &&\frac{\Gamma,A\PModels B}{\Gamma\PModels A\to B}\\
+		&(\rightarrow\text{-Elimination}) &&\frac{\Gamma\PModels A\to B \hspace{0.4cm}\Gamma\PModels A}{\Gamma\PModels B}\\ 
+		  & (\forall\text{-Introduction}) &   & \frac{\Gamma\PModels B}{\Gamma\PModels \forall\alpha B} &   & \alpha\notin\FV(\Gamma) \\
+		&(\forall\text{-Elimination}) &&\frac{\Gamma\PModels \forall\alpha B }{\Gamma\PModels B\left[ \alpha:=b\right] }
+		&& b\in\VarP
+	\end{align*}
+	\endgroup
+\end{mdframed}
+\end{frame}
+
+\begin{frame}{asd}{asd}
+\begin{mdframed} 
+	\begingroup
+	\addtolength{\jot}{0.3cm}
+	\begin{align*}
+		&(\text{Axiom}) &&\Gamma,x:t\lambdaModels x:t\vphantom{\frac{t_1}{t_1}}\\
+		&(\lambda\text{-Introduction}) &&\frac{\Gamma,x:t_1\lambdaModels M:t_2}{\Gamma\lambdaModels \lambda x:t_1.M:t_1\to t_2}\\
+		&(\lambda\text{-Elimination}) &&\frac{\Gamma\lambdaModels M_1:t_1\to t_2 \hspace{0.4cm}\Gamma\lambdaModels M_2:t_1}{\Gamma\lambdaModels M_1M_2:t_2}\\
+& (\forall\text{-Introduction}) &   & \frac{\Gamma\lambdaModels M:t}{\Gamma\lambdaModels \Lambda\alpha.M:\forall\alpha.t}                 &   & \alpha\notin\FV(\Gamma) \\
+& (\forall\text{-Elimination})  &   & \frac{\Gamma\lambdaModels M:\forall\alpha.t }{\Gamma\lambdaModels M\,t':t\left[ \alpha:=t'\right] } 
+	\end{align*}
+	\endgroup
+\end{mdframed}
+\end{frame}
+
+\begin{frame}{asd}{asd}
+\begin{figure}
+	\centering
+	\input{Figure.C2.1}
+\end{figure}
+\end{frame}
