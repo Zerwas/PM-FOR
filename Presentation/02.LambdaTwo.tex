@@ -1,16 +1,33 @@
 \section{luiuh}
 
+\begin{frame}{Bewohntheitsproblem}{asd}
+\alt<2>{
+Gegeben eine Basis $\Gamma$ und ein \lambdaTwo{} Typ $t$.
+\[\text{Gibt es einen \lambdaTwo{} Term $M$ sodass } \Gamma\lambdaModels M:t?\]}{
+Gegeben ein \lambdaTwo{} Typ $t$.
+\[\text{Gibt es einen \lambdaTwo{} Term $M$ sodass } \emptyset\lambdaModels M:t?\]}
+\end{frame}
+
+\begin{frame}{\SysP-Formeln}{asd}
+Eine pr\"adikatenlogische Formel $\varphi$ ist eine
+\begin{description}
+	\item[atomare Formel] falls $\varphi=\false$ oder $\varphi=P(a,b)$.
+	\uncover<2->{\item[universelle Formel] falls $\varphi=\forall\vec{\alpha}(A_1\to A_2 \to\dots\to A_n)$ und f\"ur alle $\alpha\in\FV(A_n)\cap\GV(\varphi)$
+	 existiert ein $i<n$ sodass $\alpha\in\FV(A_i)$.}
+	\uncover<3->{\item[existentielle Formel] falls $\varphi=\forall\vec{\alpha}(A_1\to A_2 \to\dots\to A_{n-1}\to\hspace{1cm}\forall\beta(A_n\to\false)\to\false)$ und f\"ur alle $\alpha\in(\FV(A_n)\cap\GV(\varphi))\setminus\{\beta\}$ existiert ein $i<n$ sodass $\alpha\in\FV(A_i)$.}
+\end{description}
+\end{frame}
+
 \begin{frame}{\SysP-Formeln}{asd}
 	\begin{align*}
-		& \forall\alpha\beta P(\alpha,\beta) && \uncover<2->{\text{keine \SysP-Formel}\\
+		& \forall\alpha P(\alt{\color{red}\alpha\color{black}}{\alpha}<2>,b) && \uncover<2->{\text{keine \SysP-Formel}\\
 		& \forall\alpha (Q(\alpha,\alpha)\to P(\alpha,b))} && \uncover<3->{\text{\SysP-Formel}\\
 		& \forall\beta (P(\beta,a)\to\false)\to\false} && \uncover<4->{\text{\SysP-Formel}\\
-		& \forall\alpha(\forall\beta (P(\beta,\alpha)\to\false)\to\false)} && \uncover<5->{\text{keine \SysP-Formel}}
+		& \forall\alpha(\forall\beta (P(\beta,\alt{\color{red}\alpha\color{black}}{\alpha}<5>)\to\false)\to\false)} && \uncover<5->{\text{keine \SysP-Formel}}
 	\end{align*}
 \end{frame}
 
 \begin{frame}{asd}{asd}
-%\uncover<2->{$I:=\left\lbrace f(x,x)\approx x\right\rbrace$ }\vspace{15pt}
 \begin{mdframed}
 	\begingroup
 	\addtolength{\jot}{0.3cm}
