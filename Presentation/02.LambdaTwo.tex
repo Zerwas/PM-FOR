@@ -110,6 +110,62 @@ Eine pr\"adikatenlogische Formel $\varphi$ ist eine
 	
 \end{frame}
 
+\begin{frame}{Beweis}{asd}
+\begin{figure}
+\centering
+\begin{tikzpicture}[node distance = 5cm]
+	\node (a) {$\Gamma,A\PModels A$};
+	\uncover<2->{\node[right of = a] (b) {$\trans{\Gamma},x:\trans{A}\lambdaModels x:\trans{A}$};
+	\path (a) edge[bend left=9,->,>=latex'] node[above,label] {Konstruktion} (b);}
+\end{tikzpicture}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Beweis}{asd}
+\begin{figure}
+\centering
+\begin{tikzpicture}[node distance = 0.5cm]
+	\node (a1) {$\Gamma\PModels A\to B$};
+	\node[above of = a1] (a2) {$\Gamma,A\PModels B$};
+	%draw line
+	\getwidthofnode{\sright}{a1}
+	\draw (a1)+(-\sright/2,+0.25cm) -- +(\sright/2,+0.25cm);
+	\uncover<2->{\node[right of = a2,node distance = 5cm] (b2) {$\trans{\Gamma},x:\trans{A}\lambdaModels M:\trans{B}$};
+	\path (a2) edge[bend left=9,->] node[above,label] {IH} (b2);
+	}
+	\uncover<3->{
+	\node[right of = a1,node distance = 5cm] (b1) {$\trans{\Gamma}\lambdaModels\lambda x:\trans{A}.M:\trans{A}\to\trans{B}$};
+	%draw line
+	\getwidthofnode{\sright}{b1}
+	\draw (b1)+(-\sright/2,+0.25cm) -- +(\sright/2,+0.25cm);
+	}
+\end{tikzpicture}
+\end{figure}
+\end{frame}
+%TODO falls zu wenig folien noch ->eli und \forall-Intro
+
+\begin{frame}{Beweis}{asd}
+\begin{figure}
+\centering
+\begin{tikzpicture}[node distance = 0.5cm]
+	\node (a1) {$\Gamma\PModels A\left[\alpha:=b\right]$};
+	\node[above of = a1] (a2) {$\Gamma\PModels\forall\alpha A$};
+	%draw line
+	\getwidthofnode{\sright}{a1}
+	\draw (a1)+(-\sright/2,+0.25cm) -- +(\sright/2,+0.25cm);
+	\uncover<2->{\node[right of = a2,node distance = 5cm] (b2) {$\trans{\Gamma}\lambdaModels M:\forall\alpha.\trans{A}$};
+	\path (a2) edge[bend left=9,->] node[above,label] {IH} (b2);
+	}
+	\uncover<3->{
+	\node[right of = a1,node distance = 5cm] (b1) {$\trans{\Gamma}\lambdaModels M\,b:\trans{A}\left[\alpha:=b\right]$};
+	%draw line
+	\getwidthofnode{\sright}{b1}
+	\draw (b1)+(-\sright/2,+0.25cm) -- +(\sright/2,+0.25cm);
+	}
+\end{tikzpicture}
+\end{figure}
+\end{frame}
+
 %rückrichtung
 \begin{frame}{Beweis}{asd}
 	\begin{align*}
