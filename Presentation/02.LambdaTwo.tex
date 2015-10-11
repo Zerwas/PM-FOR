@@ -1,6 +1,5 @@
-\section{luiuh}
-
-\begin{frame}{\lambdaTwo{} Typen und Terme}{asd}
+\section{\lambdaTwo}
+\begin{frame}{\lambdaTwo}{Typen und Terme}
 \lambdaTwo{} Typen
 \[\lambdaTypes=a\mid t_1\to t_2\mid\forall\alpha.t\]
 %\[\lambdaTypes=\lambdaTypVar\mid\lambdaTypes\to\lambdaTypes\mid\forall\lambdaTypVar.\lambdaTypes\]
@@ -9,7 +8,22 @@
 %\[\lambdaTerms=\lambdaValVar\mid\lambdaTerms\lambdaTerms\mid\lambda\lambdaValVar:\lambdaTypes.\lambdaTerms\mid\Lambda\lambdaTypVar.\lambdaTerms\mid\lambdaTerms\,\lambdaTypes\]}
 \end{frame}
 
-\begin{frame}{Bewohntheitsproblem}{asd}
+\begin{frame}{\lambdaTwo}{Regeln}
+\begin{mdframed} 
+	\begingroup
+	\addtolength{\jot}{0.3cm}
+	\begin{align*}
+		&(\text{Axiom}) &&\Gamma,x:t\lambdaModels x:t\vphantom{\frac{t_1}{t_1}}\\
+		&(\lambda\text{-Introduction}) &&\frac{\Gamma,x:t_1\lambdaModels M:t_2}{\Gamma\lambdaModels \lambda x:t_1.M:t_1\to t_2}\\
+		&(\lambda\text{-Elimination}) &&\frac{\Gamma\lambdaModels M_1:t_1\to t_2 \hspace{0.4cm}\Gamma\lambdaModels M_2:t_1}{\Gamma\lambdaModels M_1M_2:t_2}\\
+& (\forall\text{-Introduction}) &   & \frac{\Gamma\lambdaModels M:t}{\Gamma\lambdaModels \Lambda\alpha.M:\forall\alpha.t}                 &   & \alpha\notin\FV(\Gamma) \\
+& (\forall\text{-Elimination})  &   & \frac{\Gamma\lambdaModels M:\forall\alpha.t }{\Gamma\lambdaModels M\,t':t\left[ \alpha:=t'\right] } 
+	\end{align*}
+	\endgroup
+\end{mdframed}
+\end{frame}
+
+\begin{frame}{\lambdaTwo}{Bewohntheitsproblem \lambdaInhab}
 \alt<2>{
 Gegeben eine Basis $\Gamma$ und ein \lambdaTwo{} Typ $t$.
 \[\text{Gibt es einen \lambdaTwo{} Term $M$ sodass } \Gamma\lambdaModels M:t?\]}{
@@ -17,7 +31,8 @@ Gegeben ein \lambdaTwo{} Typ $t$.
 \[\text{Gibt es einen \lambdaTwo{} Term $M$ sodass } \emptyset\lambdaModels M:t?\]}
 \end{frame}
 
-\begin{frame}{\SysP-Formeln}{asd}
+\section{System \protect\SysP}
+\begin{frame}{System \SysP}{Formeln}
 Eine pr\"adikatenlogische Formel $\varphi$ ist eine
 \begin{description}
 	\item[atomare Formel] falls $\varphi=\false$ oder $\varphi=P(a,b)$.
@@ -27,7 +42,7 @@ Eine pr\"adikatenlogische Formel $\varphi$ ist eine
 \end{description}
 \end{frame}
 
-\begin{frame}{\SysP-Formeln}{asd}
+\begin{frame}{System \SysP}{Formeln Beispiele}
 	\begin{align*}
 		& \forall\alpha P(\alt{\color{red}\alpha\color{black}}{\alpha}<2>,b) && \uncover<2->{\text{keine \SysP-Formel}\\
 		& \forall\alpha (Q(\alpha,\alpha)\to P(\alpha,b))} && \uncover<3->{\text{\SysP-Formel}\\
@@ -36,7 +51,7 @@ Eine pr\"adikatenlogische Formel $\varphi$ ist eine
 	\end{align*}
 \end{frame}
 
-\begin{frame}{asd}{asd}
+\begin{frame}{System \SysP}{Regeln}
 \begin{mdframed}
 	\begingroup
 	\addtolength{\jot}{0.3cm}
@@ -52,23 +67,14 @@ Eine pr\"adikatenlogische Formel $\varphi$ ist eine
 \end{mdframed}
 \end{frame}
 
-\begin{frame}{asd}{asd}
-\begin{mdframed} 
-	\begingroup
-	\addtolength{\jot}{0.3cm}
-	\begin{align*}
-		&(\text{Axiom}) &&\Gamma,x:t\lambdaModels x:t\vphantom{\frac{t_1}{t_1}}\\
-		&(\lambda\text{-Introduction}) &&\frac{\Gamma,x:t_1\lambdaModels M:t_2}{\Gamma\lambdaModels \lambda x:t_1.M:t_1\to t_2}\\
-		&(\lambda\text{-Elimination}) &&\frac{\Gamma\lambdaModels M_1:t_1\to t_2 \hspace{0.4cm}\Gamma\lambdaModels M_2:t_1}{\Gamma\lambdaModels M_1M_2:t_2}\\
-& (\forall\text{-Introduction}) &   & \frac{\Gamma\lambdaModels M:t}{\Gamma\lambdaModels \Lambda\alpha.M:\forall\alpha.t}                 &   & \alpha\notin\FV(\Gamma) \\
-& (\forall\text{-Elimination})  &   & \frac{\Gamma\lambdaModels M:\forall\alpha.t }{\Gamma\lambdaModels M\,t':t\left[ \alpha:=t'\right] } 
-	\end{align*}
-	\endgroup
-\end{mdframed}
+\begin{frame}{System \SysP}{Konsistenzproblem \PCons}
+	Gegeben eine Basis $\Gamma$. 
+	\begin{center}
+		Gilt $\Gamma\PModels\false$ nicht?
+	\end{center}
 \end{frame}
 
-%TODO cons inhab
-
+\section{Beweis}
 \begin{frame}{Beweis}{Konstruktion}
 	\[\PCons{} \leq \lambdaInhab{}\]
 	\uncover<2->{Zu einer gegeben \SysP-Basis $\Gamma$ konstruieren wir ein \lambdaTwo-Basis $\trans{\Gamma}$ sodass
@@ -95,7 +101,7 @@ Eine pr\"adikatenlogische Formel $\varphi$ ist eine
 \end{frame}
 
 %hinrichtung
-\begin{frame}{Beweis}{asd}
+\begin{frame}{Beweis}{$\Rightarrow$-Richtung}
 	\begin{align*}
 	\textit{$\Gamma\PModels\false$}&&\Rightarrow&&\textit{Es existiert ein $\lambdaTwo$ Term $M$ sodass  $\trans{\Gamma}\lambdaModels M:\false$}
 	\end{align*}
@@ -106,7 +112,7 @@ Eine pr\"adikatenlogische Formel $\varphi$ ist eine
 	
 \end{frame}
 
-\begin{frame}{Beweis}{asd}
+\begin{frame}{Beweis}{$\Rightarrow$-Richtung}
 \begin{figure}
 \centering
 \begin{tikzpicture}[node distance = 5cm]
@@ -117,7 +123,7 @@ Eine pr\"adikatenlogische Formel $\varphi$ ist eine
 \end{figure}
 \end{frame}
 
-\begin{frame}{Beweis}{asd}
+\begin{frame}{Beweis}{$\Rightarrow$-Richtung}
 \begin{figure}
 \centering
 \begin{tikzpicture}[node distance = 0.5cm]
@@ -140,7 +146,7 @@ Eine pr\"adikatenlogische Formel $\varphi$ ist eine
 \end{frame}
 %TODO falls zu wenig folien noch ->eli und \forall-Intro
 
-\begin{frame}{Beweis}{asd}
+\begin{frame}{Beweis}{$\Rightarrow$-Richtung}
 \begin{figure}
 \centering
 \begin{tikzpicture}[node distance = 0.5cm]
@@ -163,7 +169,7 @@ Eine pr\"adikatenlogische Formel $\varphi$ ist eine
 \end{frame}
 
 %rückrichtung
-\begin{frame}{Beweis}{asd}
+\begin{frame}{Beweis}{$\Leftarrow$-Richtung}
 	\begin{align*}
 	\textit{$\Gamma\PModels\false$}&&\Leftarrow&&\textit{Es existiert ein $\lambdaTwo$ Term $M$ sodass  $\trans{\Gamma}\lambdaModels M:\false$}
 	\end{align*}
@@ -175,7 +181,7 @@ Eine pr\"adikatenlogische Formel $\varphi$ ist eine
 	
 \end{frame}
 
-\begin{frame}{Beweis}{asd}
+\begin{frame}{Beweis}{$\Leftarrow$-Richtung}
 \textit{$\trans{\Gamma}\lambdaModels M:\code{P}{s}{t}\Rightarrow\Gamma\PModels P(s,t)$}
 
 ~
@@ -188,35 +194,35 @@ Eine pr\"adikatenlogische Formel $\varphi$ ist eine
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Beweis}{asd}
+\begin{frame}{Beweis}{$\Leftarrow$-Richtung}
 	\[\alt<6>{M=x_A\vec{t}N_1\dots N_{n-1} N_n}{\alt<5>{M=x_A\overline{t}_1\dots \overline{t}_mN_1\dots N_{n-1}M_2}{\alt<3-4>{M=x_Am_1\dots m_kM_2}{M=M_1M_2}}}\]
 	~
 	
 	\alt<4-6>{\centering$A=\forall\predVec(P^1(\predFst[1],\predSnd[1])\to\dots\to P^n(\predFst[n],\predSnd[n])\to P(\predFst,\predSnd))$}{\alt<2>{\centering Alle wohlgetypten \lambdaTwo{} Terme sind stark normalisierend.}{\phantom{\centering Alle wohlgetypten \lambdaTwo{} Terme sind stark normalisierend.}}}
 \end{frame}
 
-\begin{frame}{asd}{asd}
+\begin{frame}{Beweis}{$\Leftarrow$-Richtung}
 \begin{figure}
 	\centering
 	\input{Figure.C2.1}
 \end{figure}
 \end{frame}
 
-\begin{frame}{asd}{asd}
+\begin{frame}{Beweis}{$\Leftarrow$-Richtung}
 \begin{figure}
 	\centering
 	\input{Figure.C2.2}
 \end{figure}
 \end{frame}
 
-\begin{frame}{asd}{asd}
+\begin{frame}{Beweis}{$\Leftarrow$-Richtung}
 \begin{figure}
 	\centering
 	\input{Figure.C2.3}
 \end{figure}
 \end{frame}
 
-\begin{frame}{Beweis}{asd}
+\begin{frame}{Beweis}{$\Leftarrow$-Richtung}
 \textit{$\trans{\Gamma}\lambdaModels M:\false\Rightarrow\Gamma\PModels \false$}
 
 ~
@@ -229,7 +235,7 @@ Eine pr\"adikatenlogische Formel $\varphi$ ist eine
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Beweis}{asd}
+\begin{frame}{Beweis}{$\Leftarrow$-Richtung}
 	\[M=x_Am_1\dots m_kM_2\]
 	
 	\uncover<2->{
@@ -239,7 +245,7 @@ Eine pr\"adikatenlogische Formel $\varphi$ ist eine
 	\end{align*}}
 \end{frame}
 
-\begin{frame}{Beweis}{Konstruktion}
+\begin{frame}{Beweis}{Konklusion}
 \begin{align*}
 	\textit{$\Gamma\PModels\false$}&&\textit{gdw.}&&\textit{Es existiert ein $\lambdaTwo$ Term $M$ sodass  $\trans{\Gamma}\lambdaModels M:\false$}
 	\end{align*}
