@@ -1,0 +1,22 @@
+\begin{tikzpicture}[grow=up,level distance=0.7cm,
+execute at begin node=$, execute at end node=$,
+every node/.style={opacity=1},
+every child/.style={edge from parent/.style={opacity=0}}]
+\def\dist{0.7cm}
+\node(e) {\Gamma\PModels  P(\predTFst,\predTSnd)} [sibling distance = 4.5cm]
+	child {node(1) {\Gamma\PModels P^ n(\predTFst[n],\predTSnd[n])}}
+	child {node(2) {\Gamma\PModels P^ n(\predTFst[n],\predTSnd[n])\to P(a,b)}
+		child[xshift=1.5cm] {{node[label={[yshift=-0.44cm]above:\vdots}](21) {}} [sibling distance = 5.5cm]
+			child[xshift=1.5cm] {node(211) {\Gamma\PModels P^ 1(\predTFst[1],\predTSnd[1])}}
+			child[xshift=1.5cm] {node(212) {\Gamma\PModels P^ 1(\predTFst[1],\predTSnd[1])\to\dots\to P^ n(\predTFst[n],\predTSnd[n])\to P(\predTFst,\predTSnd)}
+				child {node(2121) {\Gamma\PModels \forall\predVec(P^ 1(\predFst[1],\predSnd[1])\to\dots\to P^n(\predFst[n],\predSnd[n])\to P(\predFst,\predSnd))}}}}};
+
+
+\def\nodes{,1,2,21,211,212,2121}
+\def\identifier{C1:3}
+\input{Draw.Tableau2}
+
+\path (2121) edge[bend left=9,<-,>=latex'] node[above,label] {Konstruktion} ++(10cm,0cm);
+\path (211) edge[bend left=9,<-,>=latex'] node[above,label,xshift=-0.5cm] {IH} ++(3cm,0cm);
+\path (1) edge[bend left=9,<-,>=latex'] node[above,label] {IH} ++(4cm,0cm);
+\end{tikzpicture}
