@@ -1,5 +1,6 @@
 \section{\lambdaTwo}
 \begin{frame}{\lambdaTwo}{Typen und Terme}
+\[a,\alpha\in\lambdaTypVar;t_1,t_2,t\in\lambdaTypes\uncover<2->{;x\in\lambdaValVar;10M_1,M_2,M\in\lambdaTerms}\]
 \lambdaTwo{} Typen
 \[\lambdaTypes=a\mid t_1\to t_2\mid\forall\alpha.t\]
 %\[\lambdaTypes=\lambdaTypVar\mid\lambdaTypes\to\lambdaTypes\mid\forall\lambdaTypVar.\lambdaTypes\]
@@ -23,12 +24,17 @@
 \end{mdframed}
 \end{frame}
 
+\begin{frame}{\lambdaTwo}{Probleme}
+\begin{itemize}
+	\item[] Typpr\"ufungsproblem
+	\item[] Typisierbarkeitsproblem
+	\item[] \alt<2>{\textbf{Bewohntheitsproblem}}{Bewohntheitsproblem}
+\end{itemize}
+\end{frame}
+
 \begin{frame}{\lambdaTwo}{Bewohntheitsproblem \lambdaInhab}
-\alt<2>{
 Gegeben eine Basis $\Gamma$ und ein \lambdaTwo{} Typ $t$.
-\[\text{Gibt es einen \lambdaTwo{} Term $M$ sodass } \Gamma\lambdaModels M:t?\]}{
-Gegeben ein \lambdaTwo{} Typ $t$.
-\[\text{Gibt es einen \lambdaTwo{} Term $M$ sodass } \emptyset\lambdaModels M:t?\]}
+\[\text{Gibt es einen \lambdaTwo{} Term $M$ sodass } \Gamma\lambdaModels M:t?\]
 \end{frame}
 
 \section{System \protect\SysP}
@@ -71,15 +77,19 @@ Eine pr\"adikatenlogische Formel $\varphi$ ist eine
 	Gegeben eine Basis $\Gamma$. 
 	\begin{center}
 		Gilt $\Gamma\PModels\false$ nicht?
+	\end{center} 
+	
+	\begin{center}
+		\uncover<2->{\PCons{} ist unentscheidbar.}
 	\end{center}
 \end{frame}
 
 \section{Beweis}
 \begin{frame}{Beweis}{Konstruktion}
 	\[\PCons{} \leq \lambdaInhab{}\]
-	\uncover<2->{Zu einer gegeben \SysP-Basis $\Gamma$ konstruieren wir ein \lambdaTwo-Basis $\trans{\Gamma}$ sodass
+	\uncover<2->{Zu einer gegebenen \SysP-Basis $\Gamma$ konstruieren wir ein \lambdaTwo-Basis $\trans{\Gamma}$ sodass
 	\begin{align*}
-	\textit{$\Gamma\PModels\false$}&&\textit{gdw.}&&\textit{Es existiert ein $\lambdaTwo$ Term $M$ sodass  $\trans{\Gamma}\lambdaModels M:\false$}
+	\textit{$\Gamma\PModels\false$}&&\textit{gdw.}&&\textit{Es existiert ein $\lambdaTwo$ Term $M$, sodass  $\trans{\Gamma}\lambdaModels M:\false$.}
 	\end{align*}}
 \end{frame}
 
@@ -88,8 +98,8 @@ Eine pr\"adikatenlogische Formel $\varphi$ ist eine
 	\[
 	\trans{A}:=
 	\begin{cases}
-	\false &\text{if $A=\false$}\\
-	\alt<1>{(\alpha\to p_1)\to(\beta\to p_2)\to p}{\code{P}{\alpha}{\beta}} &\text{if $A=P(\alpha,\beta)$} 
+	\false &\text{falls $A=\false$}\\
+	\alt<1>{(\alpha\to p_1)\to(\beta\to p_2)\to p}{\code{P}{\alpha}{\beta}} &\text{falls $A=P(\alpha,\beta)$} 
 	\end{cases}
 	\]
 	\uncover<3->{universelle Formel:
@@ -103,11 +113,11 @@ Eine pr\"adikatenlogische Formel $\varphi$ ist eine
 %hinrichtung
 \begin{frame}{Beweis}{$\Rightarrow$-Richtung}
 	\begin{align*}
-	\textit{$\Gamma\PModels\false$}&&\Rightarrow&&\textit{Es existiert ein $\lambdaTwo$ Term $M$ sodass  $\trans{\Gamma}\lambdaModels M:\false$}
+	\textit{$\Gamma\PModels\false$}&&\Rightarrow&&\textit{Es existiert ein $\lambdaTwo$ Term $M$, sodass  $\trans{\Gamma}\lambdaModels M:\false$.}
 	\end{align*}
 	\uncover<2->{
 	\begin{align*}
-	\textit{$\Gamma\PModels A$}&&\Rightarrow&&\textit{Es existiert ein $\lambdaTwo$ Term $M$ sodass  $\trans{\Gamma}\lambdaModels M:\trans{A}$}
+	\textit{$\Gamma\PModels A$}&&\Rightarrow&&\textit{Es existiert ein $\lambdaTwo$ Term $M$, sodass  $\trans{\Gamma}\lambdaModels M:\trans{A}$.}
 	\end{align*}}
 	
 \end{frame}
@@ -171,7 +181,7 @@ Eine pr\"adikatenlogische Formel $\varphi$ ist eine
 %rückrichtung
 \begin{frame}{Beweis}{$\Leftarrow$-Richtung}
 	\begin{align*}
-	\textit{$\Gamma\PModels\false$}&&\Leftarrow&&\textit{Es existiert ein $\lambdaTwo$ Term $M$ sodass  $\trans{\Gamma}\lambdaModels M:\false$}
+	\textit{$\Gamma\PModels\false$}&&\Leftarrow&&\textit{Es existiert ein $\lambdaTwo$ Term $M$, sodass  $\trans{\Gamma}\lambdaModels M:\false$.}
 	\end{align*}
 	\uncover<2->{
 	\begin{align*}
@@ -197,8 +207,9 @@ Eine pr\"adikatenlogische Formel $\varphi$ ist eine
 \begin{frame}{Beweis}{$\Leftarrow$-Richtung}
 	\[\alt<6>{M=x_A\vec{t}N_1\dots N_{n-1} N_n}{\alt<5>{M=x_A\overline{t}_1\dots \overline{t}_mN_1\dots N_{n-1}M_2}{\alt<3-4>{M=x_Am_1\dots m_kM_2}{M=M_1M_2}}}\]
 	~
-	
-	\alt<4-6>{\centering$A=\forall\predVec(P^1(\predFst[1],\predSnd[1])\to\dots\to P^n(\predFst[n],\predSnd[n])\to P(\predFst,\predSnd))$}{\alt<2>{\centering Alle wohlgetypten \lambdaTwo{} Terme sind stark normalisierend.}{\phantom{\centering Alle wohlgetypten \lambdaTwo{} Terme sind stark normalisierend.}}}
+	\begin{center}
+	\alt<4-6>{$A=\forall\predVec(P^1(\predFst[1],\predSnd[1])\to\dots\to P^n(\predFst[n],\predSnd[n])\to P(\predFst,\predSnd))$}{\alt<2>{Alle wohlgetypten \lambdaTwo{} Terme sind stark normalisierend.}{\phantom{Alle wohlgetypten \lambdaTwo{} Terme sind stark normalisierend.}}}
+	\end{center}
 \end{frame}
 
 \begin{frame}{Beweis}{$\Leftarrow$-Richtung}
@@ -247,8 +258,18 @@ Eine pr\"adikatenlogische Formel $\varphi$ ist eine
 
 \begin{frame}{Beweis}{Konklusion}
 \begin{align*}
-	\textit{$\Gamma\PModels\false$}&&\textit{gdw.}&&\textit{Es existiert ein $\lambdaTwo$ Term $M$ sodass  $\trans{\Gamma}\lambdaModels M:\false$}
-	\end{align*}
+	\textit{$\Gamma\PModels\false$}&&\textit{gdw.}&&\textit{Es existiert ein $\lambdaTwo$ Term $M$, sodass  $\trans{\Gamma}\lambdaModels M:\false$.}
+\end{align*}
 	\uncover<2->{\[\PCons{} \leq \lambdaInhab{}\]}
 	\uncover<3->{\[\text{\lambdaInhab{} ist unentscheidbar.}\]}
 \end{frame}
+
+\begin{frame}{Literatur}{}
+\begin{thebibliography}{9}
+\bibitem{1}
+H.P. Barendregt, Lambda calculi with types, Handbook of Logic in Computer Science, Volume \rom{2}, 1993.
+\bibitem{2}
+P. Urzyczyn, Inhabitation in Typed Lambda-Calculi (A Syntactic Approach), Typed Lambda Calculi and Applications, 1997.
+\end{thebibliography}
+\end{frame}
+
