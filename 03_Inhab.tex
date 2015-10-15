@@ -4,7 +4,7 @@ is undecidable by reducing \PCons{} to \lambdaInhab{}. Given a \SysP-basis $\Gam
 \begin{align*}
 \textit{$\Gamma\PModels\false$}&&\textit{iff}&&\textit{There is a $\lambdaTwo$ term $M$ such that  $\trans{\Gamma}\lambdaModels M:\false$}
 \end{align*}
-where $\false\in\lambdaTypVar$. Furthermore for every $P\in\RelP$ we have $p,p_1,p_2\in\lambdaTypVar$. 
+where $\false\in\lambdaTypVar$. Furthermore we have $\eta_1,\eta_2\in\lambdaTypVar$ and for every $P\in\RelP$ we have $p\in\lambdaTypVar$. 
 
 \begin{definition}\label{def.4.1}
 For a \SysP-formula $A$ we define the \define{code} of $A$, denoted by $\trans{A}$, as follows.
@@ -14,10 +14,10 @@ If $A$ is an atomic formula then
 \trans{A}:=
 \begin{cases}
 \false &\text{if $A=\false$}\\
-(\alpha\to p_1)\to(\beta\to p_2)\to p &\text{if $A=P(\alpha,\beta)$} 
+(\alpha\to \eta_1)\to(\beta\to \eta_2)\to p &\text{if $A=P(\alpha,\beta)$} 
 \end{cases}
 \]
-We will abbreviate $(\alpha\to p_1)\to(\beta\to p_2)\to p$ to $\code{P}{\alpha}{\beta}$.
+We will abbreviate $(\alpha\to \eta_1)\to(\beta\to \eta_2)\to p$ to $\code{P}{\alpha}{\beta}$.
 
 If $A$ is a universal formula, it follows that there is an $n\in\N$, atomic formulas $A_1,A_2,\dots,A_n$, and an $\predVec=\predVec[1]\dots\predVec[m]$ for some $m\in\N$ and $\predVec[1],\dots,\predVec[m]\in\VarP$ such that $A=\forall\vec{\alpha}(A_1\to A_2 \to\dots\to A_n)$, then 
 \[\trans{A}:=\forall\predVec(\trans{A_1}\to \trans{A_2} \to\dots\to\trans{ A_n})\]
@@ -56,7 +56,7 @@ Let $\Gamma$ be a \SysP-basis, $M\in\lambdaTerms$, $P\in\RelP$, and $\predTFst,\
 Then $\predTFst, \predTSnd\in\VarP$ (remember that $\VarP\subseteq\lambdaTypVar$). Furthermore $\Gamma\PModels P(\predTFst,\predTSnd)$ holds.
 \end{lemma}
 \begin{proof}
-Note that $M$ is a well types \lambdaTwo{} term and hence, by Theorem \ref{the.2.12}, there is a $N\in\lambdaTerms$ such that $N$ is in normal form and $M\lambdaRed^*N$. From Theorem \ref{the.2.13} it follows that the statement $N:\code{P}{\predTFst}{\predTSnd}$ is derivable from $\trans{\Gamma}$. Therefore we can assume w.l.o.g. that $M$ is in normal form.
+Note that $M$ is a well typed \lambdaTwo{} term and hence, by Theorem \ref{the.2.12}, there is a $N\in\lambdaTerms$ such that $N$ is in normal form and $M\lambdaRed^*N$. From Theorem \ref{the.2.13} it follows that the statement $N:\code{P}{\predTFst}{\predTSnd}$ is derivable from $\trans{\Gamma}$. Therefore we can assume w.l.o.g. that $M$ is in normal form.
 
 We now proof the lemma by structural induction on the term $M$.
 \begin{itemize}
@@ -100,17 +100,17 @@ We now proof the lemma by structural induction on the term $M$.
 		\end{figure}
 		
 	\item[] \underline{$M=\lambda x:t'.M'$} for some $M'\in\lambdaTerms$, some $x\in\lambdaValVar$, and some $t'\in\lambdaTypes$ (w.l.o.g. $x\notin\dom(\Gamma)$).\\
-		It follows that $t'=\predTFst\to p_1$ and $\trans{\Gamma},x:\predTFst\to p_1\lambdaModels M':(\predTSnd\to p_2)\to p$.
+		It follows that $t'=\predTFst\to \eta_1$ and $\trans{\Gamma},x:\predTFst\to \eta_1\lambdaModels M':(\predTSnd\to \eta_2)\to p$.
 		
-		If $M'=yx$ for some $y\in\lambdaValVar$ then it has to be that $y=x_{P(\predTFst,\predTSnd)}$ and $(y:(\predTFst\to p_1)\to(\predTSnd\to p_2)\to p)\in\trans{\Gamma}$. It follows that $P(\predTFst,\predTSnd)\in\Gamma$ and therefore $\predTFst,\predTSnd\in\VarP$ and $\Gamma\PModels P(\predTFst,\predTSnd)$.
+		If $M'=yx$ for some $y\in\lambdaValVar$ then it has to be that $y=x_{P(\predTFst,\predTSnd)}$ and $(y:(\predTFst\to \eta_1)\to(\predTSnd\to \eta_2)\to p)\in\trans{\Gamma}$. It follows that $P(\predTFst,\predTSnd)\in\Gamma$ and therefore $\predTFst,\predTSnd\in\VarP$ and $\Gamma\PModels P(\predTFst,\predTSnd)$.
 		
-		If $M'=\lambda y:\predTSnd\to p_2.zxy$ for some $y,z\in\lambdaValVar$ then $z=x_{P(\predTFst,\predTSnd)}$ and therefore $(z:(\predTFst\to p_1)\to(\predTSnd\to p_2)\to p)\in\trans{\Gamma}$. We get that $P(\predTFst,\predTSnd)\in\Gamma$ and conclude that $\predTFst,\predTSnd\in\VarP$ and $\Gamma\PModels P(\predTFst,\predTSnd)$.
+		If $M'=\lambda y:\predTSnd\to \eta_2.zxy$ for some $y,z\in\lambdaValVar$ then $z=x_{P(\predTFst,\predTSnd)}$ and therefore $(z:(\predTFst\to \eta_1)\to(\predTSnd\to \eta_2)\to p)\in\trans{\Gamma}$. We get that $P(\predTFst,\predTSnd)\in\Gamma$ and conclude that $\predTFst,\predTSnd\in\VarP$ and $\Gamma\PModels P(\predTFst,\predTSnd)$.
 		%$\Gamma,x,y \lambdaModels M''=zxy:p$
 		
 		All other cases for $M'$ are impossible because there are no \SysP-formulas $A$ such that $\trans{A}$ has the required type. 
 	\item[] \underline{$M=\Lambda\gamma.M'$} for some $M'\in\lambdaTerms$ and some $\gamma\in\lambdaTypVar$.\\ %\setminus\FV(\Gamma)$.\\
 		It follows that $\trans{\Gamma}\lambdaModels M:\forall\gamma.t'$ for some $t'\in\lambdaTypes$.
-		But this can not be since $\code{P}{\predTFst}{\predTSnd}=(\predTFst\to p_1)\to(\predTSnd\to p_2)\to p$. Therefore $M$ is not of the form $\Lambda\gamma.M'$ and this case is impossible.
+		But this can not be since $\code{P}{\predTFst}{\predTSnd}=(\predTFst\to \eta_1)\to(\predTSnd\to \eta_2)\to p$. Therefore $M$ is not of the form $\Lambda\gamma.M'$ and this case is impossible.
 
 	\item[] \underline{$M=M'\,t'$} for some $M'\in\lambdaTerms$ and some $t'\in\lambdaTypes$.\\
 		%Since $M$ is in normal form we have that either $M'=x$ for some $x\in\lambdaValVar$ and $(x:\forall\beta.t'')\in\trans{\Gamma}$ for some $\beta\in\lambdaTypVar$ and some $t''\in\lambdaTerms$ such that $t=t''\left[\beta:=t'\right]$ or $M'=xM_1\dots M_n$ for some $x\in\lambdaValVar$, $n\in\N$, and some $M_1,\dots,M_n\in\lambdaTerms\cup\lambdaTypes$.
