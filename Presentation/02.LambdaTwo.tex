@@ -32,16 +32,17 @@
 \end{frame}
 
 \begin{frame}{\lambdaTwo}{Probleme}
-\begin{itemize}
-	\item[] Typpr\"ufungsproblem
-	\item[] Typisierbarkeitsproblem
-	\item[] \alt<2>{\textbf{Bewohntheitsproblem}}{Bewohntheitsproblem}
-\end{itemize}
-\end{frame}
-
-\begin{frame}{\lambdaTwo}{Bewohntheitsproblem \lambdaInhab}
-Gegeben eine Basis $\Gamma$ und ein \lambdaTwo{} Typ $t$.
-\[\text{Gibt es einen \lambdaTwo{} Term $M$ sodass } \Gamma\lambdaModels M:t?\]
+\begin{description}
+	\item[Typpr\"ufungsproblem]~
+	
+	$\Gamma$, $M$, $t$ gegeben, $\Gamma\lambdaModels M:t$?
+	\item[Typisierbarkeitsproblem]~
+	
+	$\Gamma$, $M$ gegeben, existiert $t$, mit $\Gamma\lambdaModels M:t$?
+	\item[\alt<2>{\textbf{Bewohntheitsproblem}}{Bewohntheitsproblem}]~
+	
+	$\Gamma$, $t$ gegeben, existiert $M$ mit $\Gamma\lambdaModels M:t$?
+\end{description}
 \end{frame}
 
 \section{System \protect\SysP}
@@ -50,8 +51,8 @@ Eine pr\"adikatenlogische Formel $\varphi$ ist eine
 \begin{description}
 	\item[atomare Formel] falls $\varphi=\false$ oder $\varphi=P(a,b)$.
 	\uncover<2->{\item[universelle Formel] falls $\varphi=\forall\vec{\alpha}(A_1\to A_2 \to\dots\to A_n)$ und f\"ur alle $\alpha\in\FV(A_n)\cap\GV(\varphi)$
-	 existiert ein $i<n$ sodass $\alpha\in\FV(A_i)$.}
-	\uncover<3->{\item[existentielle Formel] falls $\varphi=\forall\vec{\alpha}(A_1\to A_2 \to\dots\to A_{n-1}\to\hspace{1cm}\forall\beta(A_n\to\false)\to\false)$ und f\"ur alle $\alpha\in(\FV(A_n)\cap\GV(\varphi))\setminus\{\beta\}$ existiert ein $i<n$ sodass $\alpha\in\FV(A_i)$.}
+	 existiert ein $i<n$, sodass $\alpha\in\FV(A_i)$.}
+	\uncover<3->{\item[existenzielle Formel] falls $\varphi=\forall\vec{\alpha}(A_1\to A_2 \to\dots\to A_{n-1}\to\hspace{1cm}\forall\beta(A_n\to\false)\to\false)$ und f\"ur alle $\alpha\in(\FV(A_n)\cap\GV(\varphi))\setminus\{\beta\}$ existiert ein $i<n$, sodass $\alpha\in\FV(A_i)$.}
 \end{description}
 \end{frame}
 
@@ -94,7 +95,7 @@ Eine pr\"adikatenlogische Formel $\varphi$ ist eine
 \section{Beweis}
 \begin{frame}{Beweis}{Konstruktion}
 	\[\PCons{} \leq \lambdaInhab{}\]
-	\uncover<2->{Zu einer gegebenen \SysP-Basis $\Gamma$ konstruieren wir ein \lambdaTwo-Basis $\trans{\Gamma}$ sodass
+	\uncover<2->{Zu einer gegebenen \SysP-Basis $\Gamma$ konstruieren wir ein \lambdaTwo-Basis $\trans{\Gamma}$, sodass
 	\begin{align*}
 	\textit{$\Gamma\PModels\false$}&&\textit{gdw.}&&\textit{Es existiert ein $\lambdaTwo$ Term $M$, sodass  $\trans{\Gamma}\lambdaModels M:\false$.}
 	\end{align*}}
@@ -111,7 +112,7 @@ Eine pr\"adikatenlogische Formel $\varphi$ ist eine
 	\]
 	\uncover<3->{universelle Formel:
 	\[\trans{A}:=\forall\predVec(\trans{A_1}\to \trans{A_2} \to\dots\to\trans{ A_n})\]}
-	\uncover<4->{existentielle Formel:
+	\uncover<4->{existenzielle Formel:
 	\[\trans{A}:=\forall\predVec(\trans{A_1}\to\dots\to\forall\beta(\trans{ A_n}\to\false)\to\false)\]}
 	\uncover<5>{Basis:
 	\[\trans{\Gamma}:=\{(x_A:\trans{A})\mid A\in\Gamma\}\]}
@@ -279,7 +280,8 @@ $\forall$-Elimination
 \bibitem{1}
 H.P. Barendregt, Lambda calculi with types, Handbook of Logic in Computer Science, Volume \rom{2}, 1993.
 \bibitem{2}
-P. Urzyczyn, Inhabitation in Typed Lambda-Calculi (A Syntactic Approach), Typed Lambda Calculi and Applications, 1997.
+P. Urzyczyn, Inhabitation in typed lambda-calculi (A Syntactic Approach), Typed Lambda Calculi
+and Applications, Lecture Notes in Computer Science 1210 (1997) pp. 373-389.
 \end{thebibliography}
 \end{frame}
 
